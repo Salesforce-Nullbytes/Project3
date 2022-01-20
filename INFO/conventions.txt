@@ -1,0 +1,53 @@
+CODE CONVENTIONS:
+  - Here we will list our repository-wide standards for namming and code formatting
+
+STANDARDS OF USE:
+  - Client team will only work on client project directory
+  - Candidate also only works on candidate directory
+  - API team will only modify their own files within each project directory
+  - With agreement by a project manager, another team's changes may be pushed
+
+API INTEGRATION
+  - In some cases, api team might need to make simultaneous updates in both projects.
+    - In these cases, the changes may be made directly onto main-working
+    - If no conflicts exist with either project,
+      it may be pulled into main after approval by all project managers
+    - If integration issues occur: it may either be rejected, or changes may be pulled
+      from 'client-working' and 'candidate-working'
+  - In order to insulate 'client' and 'candidate' from these issues:
+    - api files within 'client' should only change on the client interface
+    - api files within 'candidate' should only change its interface
+    - api changes on the connecting interface of the two projects should be avoided
+    - if experirimentation is desired
+      - a 'main-working-api' branch may be used
+        - This should be avoided if possible:
+        - Merge conflicts become more likely
+        - Latest updates from 'client' or 'candidate' are not available
+      - a 'main-integration' branch may be used
+        - pull the changes from both 'client' and 'working' (stable)
+        - If no conflicts occur, may be pushed to 'main-working' with all managers' approval
+
+BRANCHING:
+  - 'main' branch contains latest stable versions of each project
+  - 'client' branch contains latest stable version of client version
+  - 'candidate' branch contains laterst stable version of candidate project
+  - In order for a 'client' or 'candidate' version to be pulled to main:
+      1) pull 'main' (for the other project's stable verison)
+      2) pull 'client' or 'candidate' for pending commits on other side.
+      3) if no issues arise, they may be pulled after agreement by each project manager
+        - If issues do arise, they may be pushed into a 'main-working' branch
+        - Any team may update their own files to resolve the issue
+        - Once issues are resolved and branch is stable, all project manager may agree to merge to 'main'
+  - 'client-working' and 'candidate-working' may be used for tentative pushes to project's primary branch
+     - these do not have to be stable, and may depend on other updates before merging to primary branch
+     - if the resulting branch is stable, the project manager may decide to pull it to main
+  - Each team member may user a working branch with the following format:
+     - e.g. 'client-working-zach'
+     - after pushing to personal branch, open pull request into 'client-working'
+       - then delete personal branch
+     - Resolve any merge conflicts, and then merge
+     - If project manager is satisfied that no integration issues occurred,
+       then it may be pulled into 'client'
+     - if no integration issues occur with candidate directory,
+       then it may be pulled into 'main-working'
+     - When both project managers are satisfied, it may be merged into 'main'
