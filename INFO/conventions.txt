@@ -1,5 +1,5 @@
 CODE CONVENTIONS:
-  - Here we will list our repository-wide standards for namming and code formatting
+  - Here we will list our repository-wide standards for naming and code formatting
 
 STANDARDS OF USE:
   - Client team will only work on client project directory
@@ -18,7 +18,7 @@ API INTEGRATION
     - api files within 'client' should only change on the client interface
     - api files within 'candidate' should only change its interface
     - api changes on the connecting interface of the two projects should be avoided
-    - if experirimentation is desired
+    - if experimentation is desired
       - a 'main-working-api' branch may be used
         - This should be avoided if possible:
         - Merge conflicts become more likely
@@ -30,9 +30,9 @@ API INTEGRATION
 BRANCHING:
   - 'main' branch contains latest stable versions of each project
   - 'client' branch contains latest stable version of client version
-  - 'candidate' branch contains laterst stable version of candidate project
+  - 'candidate' branch contains latest stable version of candidate project
   - In order for a 'client' or 'candidate' version to be pulled to main:
-      1) pull 'main' (for the other project's stable verison)
+      1) pull 'main' (for the other project's stable version)
       2) pull 'client' or 'candidate' for pending commits on other side.
       3) if no issues arise, they may be pulled after agreement by each project manager
         - If issues do arise, they may be pushed into a 'main-working' branch
