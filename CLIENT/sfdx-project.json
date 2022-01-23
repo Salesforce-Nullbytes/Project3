@@ -1,12 +1,18 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true
+    "packageDirectories": [
+        {
+            "path": "CodeAssess",
+            "package": "CodeAssess",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.0.NEXT",
+            "default": true
+        }
+    ],
+    "name": "CLIENT",
+    "namespace": "",
+    "sfdcLoginUrl": "https://empathetic-hawk-qjaobu-dev-ed.my.salesforce.com/",
+    "sourceApiVersion": "52.0",
+    "packageAliases": {
+        "CodeAssess": "0Ho8c000000fxXHCAY"
     }
-  ],
-  "name": "CLIENT",
-  "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "52.0"
 }
