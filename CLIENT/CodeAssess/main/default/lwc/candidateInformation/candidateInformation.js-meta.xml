@@ -4,6 +4,8 @@
     <masterLabel>Candidate Information</masterLabel>
     <targets>
         <target>lightningCommunity__Page</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
     </targets>
     <isExposed>true</isExposed>
 </LightningComponentBundle>
