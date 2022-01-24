@@ -1,0 +1,10 @@
+{
+  "activeViewId" : "141d6a19-5e03-436c-8176-159c97c2ffaf",
+  "appPageId" : "567d1362-e65f-49cf-b15c-dee7a3d8861c",
+  "configurationTags" : [ ],
+  "id" : "9d125896-0b5a-4422-b0af-62d1990cb55f",
+  "label" : "Authorization",
+  "routeType" : "custom-authorization",
+  "type" : "route",
+  "urlPrefix" : "authorization"
+}

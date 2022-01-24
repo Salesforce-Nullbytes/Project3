@@ -1,0 +1,61 @@
+{
+  "appPageId" : "567d1362-e65f-49cf-b15c-dee7a3d8861c",
+  "componentName" : "community_layout:sldsFlexibleLayout",
+  "id" : "01eb73fb-2b5d-471e-b81d-a24fad9c2845",
+  "label" : "Home",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "backgroundImageConfig" : "",
+        "backgroundImageOverlay" : "rgba(0,0,0,0)",
+        "sectionConfig" : "{\"UUID\":\"54e142a1-e3ec-482d-8d27-9de638d3a707\",\"columns\":[{\"UUID\":\"f4d7e986-fb10-4068-8a0d-c61c174823d5\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":null}]}"
+      },
+      "componentName" : "community_layout:section",
+      "id" : "54e142a1-e3ec-482d-8d27-9de638d3a707",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "siteUrl" : "https://sandbox-codeassessdev1-developer-edition.cs92.force.com/"
+          },
+          "componentName" : "c:authLink",
+          "id" : "371af3cc-cb4a-464a-8cae-62b947f674c0",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "f4d7e986-fb10-4068-8a0d-c61c174823d5",
+        "regionLabel" : "Column 1",
+        "regionName" : "col1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "scopedBrandingSetId" : null,
+      "type" : "component"
+    } ],
+    "id" : "4378297f-9498-4540-a61a-0d86e4c74fb3",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "pageTitle" : "Home",
+        "recordId" : "{!recordId}"
+      },
+      "componentName" : "community_builder:seoAssistant",
+      "id" : "20bd11c4-0c6a-4b18-b4c8-bba2eadf9773",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "48018a5e-fb63-42fa-b86c-20e2f9e1e852",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "home"
+}

@@ -1,4 +1,4 @@
-public with sharing class Setup {
+public without sharing class SetupCodeAssess {
     public static void RegistrationAccount() {
         Account setupAccount = new Account(name = 'SETUPCODEASSESS');
         Insert setupAccount;
