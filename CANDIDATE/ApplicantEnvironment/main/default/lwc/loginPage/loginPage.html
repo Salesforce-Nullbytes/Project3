@@ -1,0 +1,10 @@
+<template>
+    <template if:true={showError}>
+        <div>Error: {errorText}</div>
+      </template>
+      <lightning-input type="text" label="Username"  maxlength="10" onchange={usernameChange} placeholder="Enter Username"></lightning-input> 
+      <lightning-input type="password" label="Password"  maxlength="10" onchange={passwordChange} placeholder="Enter Password"></lightning-input>
+      <div class="slds-p-around_medium">
+        <lightning-button label="Login"  onclick={handleLogin}></lightning-button>
+        </div> 
+</template>
