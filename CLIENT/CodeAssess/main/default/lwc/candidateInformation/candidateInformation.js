@@ -1,5 +1,5 @@
 import {LightningElement, api} from 'lwc';
-import getCandidateInfo from '@salesforce/apex/individualResultsController.getCandidateInfo';
+import getCandidateInfo from '@salesforce/apex/candidateInformationController.getCandidateInfo';
 
 export default class candidateInformation extends LightningElement {
     @api recordId;
@@ -16,8 +16,8 @@ export default class candidateInformation extends LightningElement {
             console.log("Success");
 
             this.candidateName = result.Candidate__r.Name;
-            //this.candidateEmail = Candidate__c.Email__c;
-            //this.candidatePhoneNumber = Candidate__c.Phone_Number__c;
+            this.candidateEmail = result.Candidate__r.Email__c;
+            this.candidatePhoneNumber = result.Candidate__r.PhoneNumber__c;
         })
         .catch((error) => {
             console.log("Failure");
