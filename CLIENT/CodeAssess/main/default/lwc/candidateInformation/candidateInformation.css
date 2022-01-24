@@ -1,0 +1,12 @@
+.information-header {
+    background-color: #DCDCDC;   
+    padding: 15px;
+    border-radius: 25px 25px 0px 0px;
+    font-size: 22px;
+}
+
+.information-content {
+    padding: 15px;
+    line-height: 24px;
+    font-size: 14px;
+}

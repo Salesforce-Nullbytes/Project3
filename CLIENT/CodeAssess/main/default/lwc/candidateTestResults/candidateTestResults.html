@@ -1,0 +1,45 @@
+<template>
+    <div class="container">
+        <div class="information-header">
+            <h3>Individual Test Results</h3>
+        </div>
+        <div class="information-content">
+            <div class="column">
+                <p>Test1</p>
+                <p>Basic Apex</p>
+                <br/>
+                <p><strong>{testOnePercentage}</strong></p>
+                <p>{testOnePassFail}</p>
+            </div>
+            <div class="column">
+                <p>Test2</p>
+                <p>Triggers</p>
+                <br/>
+                <p><strong>{testTwoPercentage}</strong></p>
+                <p>{testTwoPassFail}</p>
+            </div>
+            <div class="column">
+                <p>Test3</p>
+                <p>SOQL</p>
+                <br/>
+                <p><strong>{testThreePercentage}</strong></p>
+                <p>{testThreePassFail}</p>
+            </div>
+            <div class="column">
+                <p>Test4</p>
+                <p>Topic 4</p>
+                <br/>
+                <p><strong>{testFourPercentage}</strong></p>
+                <p>{testFourPassFail}</p>
+            </div>
+            <div class="column">
+                <p>Test5</p>
+                <p>Topic 5</p>
+                <br/>
+                <p><strong>{testFivePercentage}</strong></p>
+                <p>{testFivePassFail}</p>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</template>
