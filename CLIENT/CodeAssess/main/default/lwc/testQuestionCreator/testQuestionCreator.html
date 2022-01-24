@@ -1,7 +1,26 @@
 <template>
+
+    <lightning-combobox
+        name="topic"
+        label="Question Topic"
+        value={fileTopic}
+        placeholder="Select Question Topic"
+        options={TopicOptions}
+        onchange={handleTopicSelection} >
+    </lightning-combobox>
+
     <textarea class='promptInput' rows='5' cols='80'>
 
     </textarea>
+
+    <lightning-input type="file" 
+            accept=".cls"
+            label="Attachment" onchange={handleFileUpload}>
+    </lightning-input>
+
+    <template if:true={fileData}>
+        <p>fileData.filename</p>
+    </template>
 
     <button>
 
