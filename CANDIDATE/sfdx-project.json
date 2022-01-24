@@ -1,12 +1,18 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true
+    "packageDirectories": [
+        {
+            "path": "ApplicantEnvironment",
+            "package": "AppplicantEnvironment",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.0.NEXT",
+            "default": true
+        }
+    ],
+    "name": "CANDIDATE",
+    "namespace": "",
+    "sfdcLoginUrl": "https://cunning-unicorn-b9ru4d-dev-ed.my.salesforce.com/",
+    "sourceApiVersion": "52.0",
+    "packageAliases": {
+        "AppplicantEnvironment": "0Ho8c000000fxXWCAY"
     }
-  ],
-  "name": "CANDIDATE",
-  "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "52.0"
 }
