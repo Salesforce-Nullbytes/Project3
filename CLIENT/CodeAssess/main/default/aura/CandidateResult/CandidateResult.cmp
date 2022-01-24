@@ -16,7 +16,7 @@
             <aura:iteration items="{!v.candidateresults}" var="candidateresult">
                 <tr>  
                     <td><div class="slds-truncate" title="{!candidateresult.Name}">{!candidateresult.Name}</div></td>
-                    <td><div class="slds-truncate" title="{!candidateresult.Phone}">{!candidateresult.Phone}</div></td>                   
+                    <td><div class="slds-truncate" title="{!candidateresult.Phone}">{!candidateresult.PhoneNumber}</div></td>                   
                     <td><div class="slds-truncate" title="{!candidateresult.Email}">{!candidateresult.Email}</div></td> 
                     <td><div class="slds-truncate" title="{!candidateresult.PassRatio}">{!candidateresult.PassRatio}</div></td>                    
                 </tr>
