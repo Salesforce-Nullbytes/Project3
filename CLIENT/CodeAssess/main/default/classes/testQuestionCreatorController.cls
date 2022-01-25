@@ -1,8 +1,14 @@
 public with sharing class testQuestionCreatorController {
     @AuraEnabled
     public static List<String> topicPicklistValues() {
-        //implement this once cateogry field has been added to erd
-        return new List<String>();
+        List<Schema.PicklistEntry> valuesList = Question__c.QuestionTopic__c.getDescribe().getPicklistValues();
+
+        List<String> returnList = new List<String>();
+        for (Schema.PicklistEntry ple : valuesList) {
+            returnList.add(ple.getLabel());
+        }
+
+        return returnList;
     }
 
     @AuraEnabled
@@ -20,7 +26,7 @@ public with sharing class testQuestionCreatorController {
     }
 
     @AuraEnabled
-    public static boolean linkFile(String base64, String filename, String recordId){
+    public static String linkFile(String base64, String filename, String recordId){
         ContentVersion cv = new ContentVersion();
         cv.VersionData = EncodingUtil.base64Decode(base64);
         cv.Title = filename;
@@ -29,21 +35,21 @@ public with sharing class testQuestionCreatorController {
         try {
             INSERT cv;
         } catch(DmlException e) {
-            return false;
+            return e.getMessage();
         }
 
         ContentDocumentLink cdLink = new ContentDocumentLink();
         cdLink.ContentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id].ContentDocumentId;
         cdLink.LinkedEntityId = recordId;
-        cdLink.ShareType = 'C';
+        cdLink.ShareType = 'V';
 
         try {
             INSERT cdLink;
         } catch(DmlException e) {
-            return false;
+            return e.getMessage();
         }
 
-        return true;
+        return 'success';
     }
 
     //checks if theres a naming collision with passed file name and files names already in org as well as question name

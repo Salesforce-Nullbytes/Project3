@@ -2,16 +2,32 @@ import { LightningElement, track } from 'lwc';
 import InsertQuestion from '@salesforce/apex/testQuestionCreatorController.insertQuestion';
 import CheckNameCollision from '@salesforce/apex/testQuestionCreatorController.checkNameCollision';
 import LinkFile from '@salesforce/apex/testQuestionCreatorController.linkFile';
+import GetPicklist from '@salesforce/apex/testQuestionCreatorController.topicPicklistValues';
 
 export default class TestQuestionCreator extends LightningElement {
     //holds uploaded file's data
     @track
     fileData;
-    fileTopic;
+    questionTopic;
     questionName;
     questionPrompt;
     questionPlaceholder;
     recordId; //currently unused
+    @track
+    topicOptions;
+
+    constructor() {
+        super();
+        GetPicklist().then(result => {
+            let returnArr = [];
+            result.forEach(item => {
+                returnArr.push({label: item, value: item});
+            })
+
+            this.topicOptions = returnArr;
+            
+        });
+    }
 
     handleFileUpload(event) {
         //instantiate file variable and reader instance
@@ -27,49 +43,46 @@ export default class TestQuestionCreator extends LightningElement {
         reader.readAsDataURL(uFile);
     }
 
-    get topicOptions() {
-        //TODO implement this once topics are implemented in ERD
-    }
-
     handleTopicSelection(event) {
-        this.fileTopic = event.detail.value;
+        this.questionTopic = event.detail.value;
     }
 
     handleSubmitClicked() {
         //check if all fields are populated correctly
-        if (!this.fileData || !this.fileTopic || !this.questionPrompt || !this.questionName) {
+        if (!this.fileData || !this.questionTopic || !this.questionPrompt || !this.questionName) {
             //TODO implement some kind of visual feedback that the submission failed due to missing fields
-            console.log('no');
             return;
         }
 
-        let nameCollision;
-        CheckNameCollision({name: this.fileTopic + '_' + this.fileData['fileName'] + '.cls', qName: this.questionName}).then(result => {
-            nameCollision = result;
+        CheckNameCollision({name: this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName'] + '.cls', qName: this.questionName}).then(result => {
+            //TODO create some kind of visual feedback to show while calls are still being resolved
+            if (result) {
+                //TODO implement code for when naming collision
+                console.log('collision');
+                return;
+            }
+    
+            InsertQuestion({qName: this.questionName, topic: this.questionTopic, placeholder: this.questionPlaceholder, prompt: this.questionPrompt}).then(result => {
+                this.recordId = result;
+
+                console.log(this.fileData['base64']);
+                console.log(this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName']);
+                LinkFile({base64: this.fileData['base64'], filename: this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName'], recordId: this.recordId}).then(result => {
+
+                    if (result == 'success') {
+                        //TODO provide visual feedback on success
+                        console.log('yay');
+                    } else {
+                        //TODO provide visual feedback on failure
+                        console.log(result);
+                        console.log('sadge');
+                    }
+                });
+                
+            });
+    
         });
-
-        if (nameCollision) {
-            //TODO implement code for when naming collision
-            return;
-        }
-
-        InsertQuestion({qName,  topic,  placeholder,  prompt}).then(result => {
-            this.recordId = result;
-        });
-
-        let linkSuccess;
-        LinkFile({base64: this.fileData['base64'], filename: this.fileTopic + '_' + this.fileData['fileName'], recordId: this.recordId}).then(result => {
-            linkSuccess = result;
-        });
-
-        if (linkSuccess) {
-            //TODO provide visual feedback on success
-            console.log('yay');
-        } else {
-            //TODO provide visual feedback on failure
-            console.log('sadge');
-        }
-
+        
     }
 
     handlePromptInput(event) {
