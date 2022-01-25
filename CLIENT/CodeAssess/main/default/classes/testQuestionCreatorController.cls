@@ -58,8 +58,8 @@ public with sharing class testQuestionCreatorController {
         //check for file naming collision
         Set<String> checkSet = new Set<String>();
         
-        for (ContentVersion cv : [SELECT Title, FileExtension FROM ContentVersion]) {
-            checkSet.add(cv.Title + cv.FileExtension);
+        for (ContentVersion cv : [SELECT Title FROM ContentVersion]) {
+            checkSet.add(cv.Title);
         }
 
         Integer prevSize = checkSet.size();
