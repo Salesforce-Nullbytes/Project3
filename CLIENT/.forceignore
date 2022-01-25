@@ -4,6 +4,7 @@
 
 package.xml
 
+
 # LWC configuration files
 **/jsconfig.json
 **/.eslintrc.json
@@ -11,4 +12,8 @@ package.xml
 # LWC Jest
 **/__tests__/**
 
+# custom ignores
 **/CodeAssessMetadata/**
+
+**/expCustom/**
+**/expStandard/**
