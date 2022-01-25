@@ -1,0 +1,8 @@
+<template>
+    <template for:each={tests} for:item="test">
+        <lightning-card  key={test.Id} title={test.Name}>
+            <lightning-button label="Solve" slot="actions"></lightning-button>
+            <p class="slds-p-horizontal_small"><span style="color:#4CAF50">{test.Level}</span> {test.Type}</p>
+        </lightning-card>
+    </template>
+</template>
