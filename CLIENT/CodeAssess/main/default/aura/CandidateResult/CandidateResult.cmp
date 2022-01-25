@@ -1,4 +1,4 @@
-<aura:component controller="CanidateResultController">
+<aura:component controller="CandidateResultController" implements="flexipage:availableForAllPageTypes" access="global"   >
     <aura:attribute name="candidateresults" type="List" />
     <aura:attribute name="key" type="String" /> 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />        
@@ -7,18 +7,18 @@
         <thead>
             <tr class="slds-text-heading_label">              
                 <th scope="col"><div class="slds-truncate" title="Name">Name</div></th>
-                <th scope="col"><div class="slds-truncate" title="Type">Phone</div></th>         
-                <th scope="col"><div class="slds-truncate" title="Phone">Email</div></th> 
-                <th scope="col"><div class="slds-truncate" title="Phone">PassRatio</div></th>            
+                <th scope="col"><div class="slds-truncate" title="Candidate__c">Candidate</div></th>         
+                 <th scope="col"><div class="slds-truncate" title="Candidate__c">Candidate Name</div></th>
+                <th scope="col"><div class="slds-truncate" title="PassRatio">PassRatio</div></th>            
             </tr>
         </thead>
         <tbody>
             <aura:iteration items="{!v.candidateresults}" var="candidateresult">
                 <tr>  
                     <td><div class="slds-truncate" title="{!candidateresult.Name}">{!candidateresult.Name}</div></td>
-                    <td><div class="slds-truncate" title="{!candidateresult.Phone}">{!candidateresult.PhoneNumber}</div></td>                   
-                    <td><div class="slds-truncate" title="{!candidateresult.Email}">{!candidateresult.Email}</div></td> 
-                    <td><div class="slds-truncate" title="{!candidateresult.PassRatio}">{!candidateresult.PassRatio}</div></td>                    
+                    <td><div class="slds-truncate" title="{!candidateresult.Candidate__c}">{!candidateresult.Candidate__c}</div></td>                   
+                    <td><div class="slds-truncate" title="{!candidateresult.Candidate__r.Name}">{!candidateresult.Candidate__r.Name}</div></td>
+                    <td><div class="slds-truncate" title="{!candidateresult.PassRatio__c}">{!candidateresult.PassRatio__c}</div></td>                    
                 </tr>
             </aura:iteration>
         </tbody>

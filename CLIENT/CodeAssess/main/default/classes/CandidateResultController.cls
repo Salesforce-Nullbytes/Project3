@@ -1,11 +1,12 @@
-public with sharing class CandidateResultController {
+
+public  class CandidateResultController {
     @AuraEnabled
     public static List <CandidateResult__c> getCandidateResults() {
-        return [SELECT Id, Name, PhoneNumber, Email, PassRatio FROM CandidateResult__c ORDER BY createdDate ASC];
+        return [SELECT Id, Candidate__c, Candidate__r.Name, Name, PassRatio__c FROM CandidateResult__c ORDER BY createdDate ASC];
     }    
     @AuraEnabled
     public static List<CandidateResult__c> findByName(String searchKey) {
-        String name =  + searchKey + '%';
-        return [SELECT id, name, phonenumber, email, passratio FROM CandidateResult__c WHERE name LIKE :name ORDER BY createdDate ASC];
+        String name =   searchKey + '%';
+        return [SELECT id, Candidate__c, Candidate__r.Name,Name, passratio__c FROM CandidateResult__c  WHERE Name LIKE  :searchKey OR Candidate__r.Name LIKE :searchKey ORDER BY createdDate ASC ];
     }
 }
