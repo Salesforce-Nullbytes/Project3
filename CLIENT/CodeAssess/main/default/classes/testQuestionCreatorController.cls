@@ -6,14 +6,73 @@ public with sharing class testQuestionCreatorController {
     }
 
     @AuraEnabled
-    public static void insertQuestion(String prompt, String placeHolder, /* String topic, */ String recordId) {
+    public static String insertQuestion(String qName, String topic, String placeholder, String prompt) {
 
+        Question__c insertQ = new Question__c();
+        insertQ.Name = qName;
+        insertQ.QuestionTopic__c = topic;
+        insertQ.PlaceHolder__c = placeholder;
+        insertQ.Prompt__c = prompt;
+
+        INSERT insertQ;
+
+        return insertQ.Id;
     }
 
     @AuraEnabled
-    public static Boolean checkNameCollision(String name) {
+    public static boolean linkFile(String base64, String filename, String recordId){
+        ContentVersion cv = new ContentVersion();
+        cv.VersionData = EncodingUtil.base64Decode(base64);
+        cv.Title = filename;
+        cv.PathOnClient = filename;
+
+        try {
+            INSERT cv;
+        } catch(DmlException e) {
+            return false;
+        }
+
+        ContentDocumentLink cdLink = new ContentDocumentLink();
+        cdLink.ContentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id].ContentDocumentId;
+        cdLink.LinkedEntityId = recordId;
+        cdLink.ShareType = 'C';
+
+        try {
+            INSERT cdLink;
+        } catch(DmlException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    //checks if theres a naming collision with passed file name and files names already in org as well as question name
+    @AuraEnabled
+    public static Boolean checkNameCollision(String name, String qName) {
+        //check for file naming collision
         Set<String> checkSet = new Set<String>();
-        List<ContentVersion> rawCheckList = [SELECT Title FROM ContentVersion];
+        
+        for (ContentVersion cv : [SELECT Title, FileExtension FROM ContentVersion]) {
+            checkSet.add(cv.Title + cv.FileExtension);
+        }
+
+        Integer prevSize = checkSet.size();
+        checkSet.add(name);
+
+        if (checkSet.size() == prevSize) return true;
+        
+        //check for question naming collision
+        Set<String> qCheckSet = new Set<String>();
+
+        for (Question__c question: [SELECT Name FROM Question__c]) {
+            qCheckSet.add(question.Name);
+        }
+
+        prevSize = qCheckSet.size();
+        qCheckSet.add(qName);
+
+        if (qCheckSet.size() == prevSize) return true;
+
         return false;
     }
 }

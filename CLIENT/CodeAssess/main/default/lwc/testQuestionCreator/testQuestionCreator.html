@@ -1,28 +1,41 @@
 <template>
 
+    <lightning-input type="text" label="Question Name" placeholder="Enter question name..." required onchange={handleNameInput}></lightning-input>
+
+    <lightning-textarea 
+        name="promptInput" 
+        required value="" 
+        placeholder="Write question prompt here..." 
+        label="Question Prompt" 
+        message-when-value-missing="A question with no prompt can not be created." 
+        onchange={handlePromptInput}>
+    </lightning-textarea>
+
+    <lightning-textarea 
+        name="placeholderInput" 
+        value="" 
+        placeholder="Write class placeholder here..." 
+        label="Class Placeholder" 
+        onchange={handlePlaceholderInput}>
+    </lightning-textarea>
+
     <lightning-combobox
         name="topic"
         label="Question Topic"
-        value={fileTopic}
+        value=""
         placeholder="Select Question Topic"
         options={TopicOptions}
         onchange={handleTopicSelection} >
     </lightning-combobox>
 
-    <textarea class='promptInput' rows='5' cols='80'>
-
-    </textarea>
-
     <lightning-input type="file" 
-            accept=".cls"
+            accept=".cls, .png, .jpg"
             label="Attachment" onchange={handleFileUpload}>
     </lightning-input>
 
     <template if:true={fileData}>
-        <p>fileData.filename</p>
+        <p>{fileData.fileName}</p>
     </template>
 
-    <button>
-
-    </button>
+    <button onclick={handleSubmitClicked}>Submit</button>
 </template>
