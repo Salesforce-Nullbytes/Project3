@@ -1,5 +1,5 @@
 import {LightningElement, api} from 'lwc';
-import getCandidateSummary from '@salesforce/apex/candidateSummaryController.getCandidateSummary';
+import getCandidateSummary from '@salesforce/apex/candidateInformationController.getCandidateSummary';
 
 export default class candidateSummary extends LightningElement {
     @api recordId;
