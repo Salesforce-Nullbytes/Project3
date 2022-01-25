@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Apex Triggers</fullName>
+        <default>false</default>
+        <label>Apex Triggers</label>
+    </customValue>
+    <customValue>
+        <fullName>Aura Components</fullName>
+        <default>false</default>
+        <label>Aura Components</label>
+    </customValue>
+    <customValue>
+        <fullName>Events</fullName>
+        <default>false</default>
+        <label>Events</label>
+    </customValue>
+    <customValue>
+        <fullName>LWC</fullName>
+        <default>false</default>
+        <label>LWC</label>
+    </customValue>
+    <customValue>
+        <fullName>SOQL</fullName>
+        <default>false</default>
+        <label>SOQL</label>
+    </customValue>
+    <customValue>
+        <fullName>SOSL</fullName>
+        <default>false</default>
+        <label>SOSL</label>
+    </customValue>
+    <masterLabel>QuestionTopics</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

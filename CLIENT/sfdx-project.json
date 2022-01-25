@@ -5,23 +5,31 @@
             "package": "CodeAssess",
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
-            "default": false
+            "default": true,
+            "dependencies": [
+                {
+                    "package": "CodeAssessMetaData",
+                    "versionNumber": "0.1.0.LATEST"
+                }
+            ]
         },
         {
             "path": "CodeAssessMetadata",
             "package": "CodeAssessMetadata",
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
-            "default": true
+            "default": false
         }
     ],
     "name": "CLIENT",
     "namespace": "",
-    "sfdcLoginUrl": "https://empathetic-hawk-qjaobu-dev-ed.my.salesforce.com/",
+    "sfdcLoginUrl": "https://resilient-otter-3lcoo0-dev-ed.my.salesforce.com/",
     "sourceApiVersion": "52.0",
     "packageAliases": {
         "CodeAssess": "0Ho8c000000fxXHCAY",
         "CodeAssessMetadata": "0Ho8c000000fxXMCAY",
-        "CodeAssessMetadata@0.1.0-1": "04t8c000000xBjfAAE"
+        "CodeAssessMetadata@0.1.0-1": "04t8c000000xBjfAAE",
+        "CodeAssessMetadata@0.1.0-2": "04t8c000000xDQ1AAM",
+        "CodeAssessMetadata@0.1.0-3": "04t8c000000xDtoAAE"
     }
 }
