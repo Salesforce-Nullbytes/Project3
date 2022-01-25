@@ -54,8 +54,9 @@ export default class TestQuestionCreator extends LightningElement {
             return;
         }
 
-        CheckNameCollision({name: this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName'] + '.cls', qName: this.questionName}).then(result => {
+        CheckNameCollision({name: this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName'], qName: this.questionName}).then(result => {
             //TODO create some kind of visual feedback to show while calls are still being resolved
+            console.log(this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName']);
             if (result) {
                 //TODO implement code for when naming collision
                 console.log('collision');
