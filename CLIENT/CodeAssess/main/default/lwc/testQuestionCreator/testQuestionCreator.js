@@ -1,14 +1,33 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, track } from 'lwc';
 import InsertQuestion from '@salesforce/apex/testQuestionCreatorController.insertQuestion';
 import CheckNameCollision from '@salesforce/apex/testQuestionCreatorController.checkNameCollision';
+import LinkFile from '@salesforce/apex/testQuestionCreatorController.linkFile';
+import GetPicklist from '@salesforce/apex/testQuestionCreatorController.topicPicklistValues';
 
 export default class TestQuestionCreator extends LightningElement {
     //holds uploaded file's data
+    @track
     fileData;
+    questionTopic;
+    questionName;
+    questionPrompt;
+    questionPlaceholder;
+    recordId; //currently unused
+    @track
+    topicOptions;
 
-    fileTopic;
+    constructor() {
+        super();
+        GetPicklist().then(result => {
+            let returnArr = [];
+            result.forEach(item => {
+                returnArr.push({label: item, value: item});
+            })
 
-    recordId;
+            this.topicOptions = returnArr;
+            
+        });
+    }
 
     handleFileUpload(event) {
         //instantiate file variable and reader instance
@@ -20,29 +39,61 @@ export default class TestQuestionCreator extends LightningElement {
                 'fileName': uFile.name,
                 'base64': base64
             }
-            console.log(this.fileData);
         }
-        reader.readAsDataURL(this.fileData);
-    }
-
-    get topicOptions() {
-        //implement this once ca
+        reader.readAsDataURL(uFile);
     }
 
     handleTopicSelection(event) {
-        this.fileTopic = event.detail.fileTopic;
+        this.questionTopic = event.detail.value;
     }
 
     handleSubmitClicked() {
-        const {base64, filename, recordId} = this.fileData;
-
-        CheckNameCollision({name: this.fileTopic + '_' + this.fileData['fileName']}).then(result => {
-            //implement code for when naming collision exists
+        //check if all fields are populated correctly
+        if (!this.fileData || !this.questionTopic || !this.questionPrompt || !this.questionName) {
+            //TODO implement some kind of visual feedback that the submission failed due to missing fields
             return;
-        });
+        }
 
-        InsertQuestion({base64, filename, recordId}).then(result => {
+        CheckNameCollision({name: this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName'] + '.cls', qName: this.questionName}).then(result => {
+            //TODO create some kind of visual feedback to show while calls are still being resolved
+            if (result) {
+                //TODO implement code for when naming collision
+                console.log('collision');
+                return;
+            }
+    
+            InsertQuestion({qName: this.questionName, topic: this.questionTopic, placeholder: this.questionPlaceholder, prompt: this.questionPrompt}).then(result => {
+                this.recordId = result;
 
+                console.log(this.fileData['base64']);
+                console.log(this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName']);
+                LinkFile({base64: this.fileData['base64'], filename: this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName'], recordId: this.recordId}).then(result => {
+
+                    if (result == 'success') {
+                        //TODO provide visual feedback on success
+                        console.log('yay');
+                    } else {
+                        //TODO provide visual feedback on failure
+                        console.log(result);
+                        console.log('sadge');
+                    }
+                });
+                
+            });
+    
         });
+        
+    }
+
+    handlePromptInput(event) {
+        this.questionPrompt = event.detail.value;
+    }
+
+    handlePlaceholderInput(event) {
+        this.questionPlaceholder = event.detail.value;
+    }
+
+    handleNameInput(event) {
+        this.questionName = event.detail.value;
     }
 }
