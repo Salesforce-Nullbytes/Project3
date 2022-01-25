@@ -15,7 +15,8 @@
       "regions" : [ {
         "components" : [ {
           "componentAttributes" : {
-            "siteUrl" : "https://sandbox-codeassessdev1-developer-edition.cs92.force.com/"
+            "clientKey" : "3MVG9JamK_x9K2XLOYpKsfux2z8pug_26k8NbsHCdjUpqp.mR3znT8oc66E.ZN_a11qeYINgInT3_pcremetG",
+            "siteUrl" : "https://sandbox-dxghxfghdfgjcxfbj-developer-edition.cs92.force.com/"
           },
           "componentName" : "c:authLink",
           "id" : "371af3cc-cb4a-464a-8cae-62b947f674c0",
