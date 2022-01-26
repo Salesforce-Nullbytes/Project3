@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
-    <contactEmail>zelizach@gmail.com</contactEmail>
+    <contactEmail>admin@revaturecodeassess.com</contactEmail>
     <label>Code Assess Candidate</label>
     <oauthConfig>
-        <callbackUrl>https://sandbox-dxghxfghdfgjcxfbj-developer-edition.cs92.force.com/main/s/authorization</callbackUrl>
-        <consumerKey>3MVG9JamK_x9K2XLOYpKsfux2z8pug_26k8NbsHCdjUpqp.mR3znT8oc66E.ZN_a11qeYINgInT3_pcremetG</consumerKey>
+        <callbackUrl>https://www.yourexperiencesite.com/main/s/authorization</callbackUrl>
+        <consumerKey></consumerKey>
         <idTokenConfig>
             <idTokenIncludeAttributes>false</idTokenIncludeAttributes>
             <idTokenIncludeCustomPerms>false</idTokenIncludeCustomPerms>

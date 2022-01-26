@@ -8,8 +8,7 @@
             "default": true,
             "dependencies": [
                 {
-                    "package": "CodeAssessMetaData",
-                    "versionNumber": "0.1.0.LATEST"
+                    "package": "CodeAssessMetadata@0.1.0-3"
                 }
             ]
         },

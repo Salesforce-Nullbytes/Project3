@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
-import submitResponse from "@salesforce/apex/TestSubmitController.submitResponse";
-import compileClass from "@salesforce/apex/TestSubmitController.compileClass";
+// import submitResponse from "@salesforce/apex/TestSubmitController.submitResponse";
+// import compileClass from "@salesforce/apex/TestSubmitController.compileClass";
 
 export default class AnswerContainer extends LightningElement {
 
@@ -21,9 +21,9 @@ export default class AnswerContainer extends LightningElement {
         '    }' +
         '}';
 
-        submitResponse(responseClass,testClass).then((result) =>{
-            console.log(result);
-        })
+        // submitResponse(responseClass,testClass).then((result) =>{
+        //     console.log(result);
+        // })
 
         console.log("We be submitted");
     }
@@ -36,9 +36,9 @@ export default class AnswerContainer extends LightningElement {
         '      return(s);' +
         '    }' +
         '}';
-        compileClass(responseClass).then((result) =>{
-            console.log(result);
-        });
+        // compileClass(responseClass).then((result) =>{
+        //     console.log(result);
+        // });
 
         console.log("Running some code...");
     }
