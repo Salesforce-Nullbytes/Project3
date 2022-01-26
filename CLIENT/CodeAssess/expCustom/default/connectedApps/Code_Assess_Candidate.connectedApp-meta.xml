@@ -3,7 +3,11 @@
     <contactEmail>admin@revaturecodeassess.com</contactEmail>
     <label>Code Assess Candidate</label>
     <oauthConfig>
+<<<<<<< HEAD
         <callbackUrl>https://www.yourexperiencesite.com/main/s/authorization</callbackUrl>
+=======
+        <callbackUrl>https://sandbox-dxghxfghdfgjcxfbj-developer-edition.cs92.force.com/main/s/authorization</callbackUrl>
+>>>>>>> f3160b6e70c0b96082ca41f101c562c902b0ed5e
         <consumerKey></consumerKey>
         <idTokenConfig>
             <idTokenIncludeAttributes>false</idTokenIncludeAttributes>

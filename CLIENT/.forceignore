@@ -13,7 +13,14 @@ package.xml
 **/__tests__/**
 
 # custom ignores
+<<<<<<< HEAD
 #**/CodeAssessMetadata/**
 
 #**/expCustom/**
 #**/expStandard/**
+=======
+ **/CodeAssessMetadata/**
+
+# **/expCustom/**
+# **/expStandard/**
+>>>>>>> f3160b6e70c0b96082ca41f101c562c902b0ed5e
