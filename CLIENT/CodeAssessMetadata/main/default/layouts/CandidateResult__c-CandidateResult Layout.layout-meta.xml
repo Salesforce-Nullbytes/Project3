@@ -69,15 +69,10 @@
         <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
-    <!-- <relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
-<<<<<<< HEAD
-        <relatedList>QuestionResult__c.CandidateResult__c</relatedList>
-    </relatedLists> -->
-=======
         <relatedList>CandidateQuestionResult__c.CandidateResult__c</relatedList>
     </relatedLists>
->>>>>>> f3160b6e70c0b96082ca41f101c562c902b0ed5e
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

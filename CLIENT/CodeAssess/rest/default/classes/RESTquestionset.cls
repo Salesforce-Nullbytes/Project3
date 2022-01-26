@@ -1,11 +1,7 @@
 @RestResource(urlMapping='/questionset/*')
 global class RESTquestionset {
     @httpGet
-<<<<<<< HEAD
-    global static String getResponse() {
-=======
     global static String getList() { //don't worry about testing this class 
->>>>>>> 43132c3e5dd31763e0e97cc2cd0afa80ca4879d0
 
         RestRequest req = RestContext.request;
         RestResponse response = RestContext.response;
@@ -13,34 +9,6 @@ global class RESTquestionset {
         String context = req.requestURI;
         String urlInput = context.substring(context.lastIndexOf('/')+1);
 
-<<<<<<< HEAD
-        String output = '';
-
-        return output;
-    }
-    private class QuestionSet {
-        Boolean success;
-        List<Question> items;
-
-        QuestionSet() {
-            
-        }
-        public String serialize() {
-            return JSON.serialize(this);
-        }
-    }
-    private class Question {
-        Boolean success;
-        
-        Question() {
-            
-        }
-    }
-    public String serialize() {
-        return JSON.serialize(this);
-    }
-}
-=======
         if (urlInput == null) {
             return makeQuestionSetList();
         }
@@ -128,4 +96,3 @@ global class RESTquestionset {
     }
     
 }
->>>>>>> 43132c3e5dd31763e0e97cc2cd0afa80ca4879d0
