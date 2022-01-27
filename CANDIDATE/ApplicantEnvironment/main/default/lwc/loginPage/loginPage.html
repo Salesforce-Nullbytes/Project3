@@ -3,7 +3,9 @@
     <div style="height: 40px; background-color:#3264a8"></div>
     <br>
     <div class="center" style="width: 500px; padding: 5px; margin-right:auto;margin-left: auto; border: 1px solid #3264a8">
-      <img class="logo" src={logo} alt={companylogo} />  
+      <div class="slds-m-around_medium slds-align_absolute-center">
+      <img class="logo" src={candidateLogo} alt={candidateCompanylogo} />  
+      </div>
       <template if:true={showError}> 
           <div style="color:red" class="slds-m-around_medium">Error: {errorText}</div>
         </template>

@@ -1,6 +1,7 @@
 import { LightningElement,wire,track } from 'lwc';
 import SiteUrl from '@salesforce/apex/AuthenticationController.SiteUrl';
 import setSession from '@salesforce/apex/AuthenticationController.setSession';
+import candidateLoginLogo from '@salesforce/resourceUrl/candidateLoginLogo';
 
 export default class LoginPage extends LightningElement {
     @wire( SiteUrl )
@@ -14,6 +15,9 @@ export default class LoginPage extends LightningElement {
 
     @track
     errorText = "";
+
+    candidateLogo = candidateLoginLogo;
+    candidateCompanylogo ="candidateLogin Logo";
 
     get site() {
         return this.url.data + 'main/s/';
