@@ -1,0 +1,22 @@
+.container {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem;
+}
+h1 {
+    font-size: 2.0rem;
+}
+h2 {
+    font-size: 2.7rem;
+}
+li {
+    font-size: 1.5rem;
+}
+.submission {
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    padding: 3px;
+}

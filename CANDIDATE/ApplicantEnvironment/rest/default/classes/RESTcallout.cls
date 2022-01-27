@@ -15,6 +15,22 @@ public class RESTcallout {
 
         return;
     }
+
+    public static void getQuestionSet(String url) {
+        Http http = new Http();
+        HttpRequest req = RESTutil.getRequest('questionset/', url);
+
+        HTTPResponse res = http.send(req);
+
+        // DEBUG INFO
+        System.debug('BODY: '+res.getBody());
+        System.debug('STATUS:'+res.getStatus());
+        System.debug(res);
+
+        //TODO: Check for expired code, and reset AuthStatus
+
+        return;
+    }
     
 }
     

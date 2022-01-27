@@ -1,0 +1,20 @@
+<template>
+    <div class='container'>
+        <div>
+            <h1>Welcome to Code Assess!</h1>
+            <h2>Important Links</h2>
+            <ul>
+                <li><a href={site} target="_blank" >Code Assess Site</a></li>
+                <li><a href={login} target="_blank" >Code Assess Login</a></li>
+            </ul>
+            <div class='submission'>
+                <input class='input'
+                    type='text' 
+                    placeholder='Enter authentication code here from CodeAssess...' 
+                    size='100' />
+                <button onclick={handleAuthenticate}>Set Session</button>
+                {message}
+            </div>
+        </div>
+    </div>
+</template>
