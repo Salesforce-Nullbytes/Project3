@@ -11,12 +11,14 @@ export default class candidateSummary extends LightningElement {
 
     sum = 0;
 
+    totalTime = 0;
+    averageTime = 0;
+
     componentRendered = false;
 
     loadSummary() {
         getCandidateSummary({record : this.recordId})
         .then((result) => {
-            console.log("Success");
 
             for (let i = 0; i < result.length; i++) {
  

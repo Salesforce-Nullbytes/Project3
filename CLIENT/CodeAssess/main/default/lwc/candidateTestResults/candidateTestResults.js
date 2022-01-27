@@ -22,17 +22,21 @@ export default class candidateTestResults extends LightningElement {
     testFourTopic = 'None';
     testFiveTopic = 'None';
 
+    testOneTime = 0;
+    testTwoTime = 0;
+    testThreeTime = 0;
+    testFourTime = 0;
+    testFiveTime = 0;
+
+
     componentRendered = false;
 
     loadSummary() {
         getCandidateTestResults({record : this.recordId})
         .then((result) => {
-            console.log("Success");
 
             this.testOneTopic = result[0].Question__r.QuestionTopic__c;
-            console.log("1");
-             this.testOnePercentage = result[0].CodeCoverage__c;
-            console.log("2");
+            this.testOnePercentage = result[0].CodeCoverage__c;
             this.testOnePassFail = result[0].Result__c;
 
             this.testTwoTopic = result[1].Question__r.QuestionTopic__c;
