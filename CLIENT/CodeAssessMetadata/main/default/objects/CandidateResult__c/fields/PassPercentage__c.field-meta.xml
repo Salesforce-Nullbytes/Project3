@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PassPercentage__c</fullName>
     <externalId>false</externalId>
-    <formula>( QuestionsPassed__c  /  TotalQuestions__c ) * 100</formula>
+    <formula>QuestionsPassed__c  /  TotalQuestions__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Pass Percentage</label>
     <precision>18</precision>
