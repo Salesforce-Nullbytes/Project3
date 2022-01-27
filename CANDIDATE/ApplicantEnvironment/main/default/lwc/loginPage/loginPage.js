@@ -1,58 +1,29 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement,wire,track } from 'lwc';
+import SiteUrl from '@salesforce/apex/AuthenticationController.SiteUrl';
+import setSession from '@salesforce/apex/AuthenticationController.setSession';
 
 export default class LoginPage extends LightningElement {
+    @wire( SiteUrl )
+    url;
 
-   //@track
-//username;
+    @track
+    authCode = "";
 
-//@track
-//password;
+    @track
+    showError = false;
 
-@track
-authCode = "";
+    @track
+    errorText = "";
 
-@track
-showError = false;
-
-@track
-errorText = "";
-
-    /*usernameChange(event)
-    {
-        this.username = event.target.value;
-        this.showError = false;
+    get site() {
+        return this.url.data + 'main/s/';
     }
-    passwordChange(event)
-    {
-        this.password = event.target.value;
-        this.showError = false;
-    }*/
 
     authCodeChange(event)
     {
         this.authCode = event.target.value;
         this.showError = false;
     }
-
-    /*handleLogin(){
-        let name= "project3";
-        let pass = "project3";
-        this.showError = false;
-        console.log("username is "+this.username);
-        console.log("password is "+this.password);
-        if(this.username===name && this.password===pass){
-
-            let userinfo = [{Id:"1", name:"user1"}];
-            this.dispatchEvent(new CustomEvent('userdetails', { detail: userinfo }));
-
-        }
-        else{
-
-            this.showError = true;
-            this.errorText = "Username and password does not exist";
-        } 
-
-    }*/
 
     handleLogin(){
         //check auth code not blank
@@ -64,18 +35,31 @@ errorText = "";
         }
 
         let validation = false;
+        console.log(this.authCode);
 
-        //we have an authorization code. call the apex class passing the auth code to get token and save it
-        //if the function return true it means validation done. Dispatch uservalidated event to parent
-        //for testing to be removed after actual apex call
-        if (this.authCode === "abcdef")
-            validation = true;
+    //Call the apex controller method to set the session for the given authCode
+        setSession({ code: this.authCode })
+        .then((result) => {
+            if (result) {
+                validation = true;
+                this.dispatchEvent(new CustomEvent('uservalidated', { detail: validation }));
+            } else {
+                this.showError = true;
+                this.errorText =  "Server request failed";
+                
+            }
+        })
+        .catch((error) => {
+            this.showError = true;
+            this.errorText = "Could not connect with server.";
+            console.log(error);
+        });
 
-        if (validation === true)
-        {
-            this.dispatchEvent(new CustomEvent('uservalidated', { detail: validation }));
-        }
+
+
     }
+
+    
 
 
 }
