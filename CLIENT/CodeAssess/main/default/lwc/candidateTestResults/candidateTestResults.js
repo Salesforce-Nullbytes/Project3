@@ -22,13 +22,6 @@ export default class candidateTestResults extends LightningElement {
     testFourTopic = 'None';
     testFiveTopic = 'None';
 
-    testOneTime = 0;
-    testTwoTime = 0;
-    testThreeTime = 0;
-    testFourTime = 0;
-    testFiveTime = 0;
-
-
     componentRendered = false;
 
     loadSummary() {
