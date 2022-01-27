@@ -9,10 +9,13 @@ global class RESTquestionset {
         String context = req.requestURI;
         String urlInput = context.substring(context.lastIndexOf('/')+1);
 
-        if (urlInput == null) {
+        if (urlInput == '') {
             return makeQuestionSetList();
+        } else {
+            String body = getFullQuestionSet(urlInput);
+            if (body == '') return 'Could not find resource! (' + urlInput + ')';
+            return body;
         }
-        return 'Hello from server! (' + urlInput + ')';
     }
     public static String getFullQuestionSet(String identifier) {
         List<QuestionSet__c> entries = [
@@ -87,6 +90,7 @@ global class RESTquestionset {
         String placeholder;
         String prompt;
         String topic;
+        public String testFile;
         Question(ID myIdentifier, String myPlaceholder, String myPrompt, String myTopic) {
             identifier = myIdentifier;
             placeholder = myplaceholder;
