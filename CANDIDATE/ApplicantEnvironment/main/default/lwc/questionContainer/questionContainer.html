@@ -1,0 +1,16 @@
+<template>
+    <lightning-tabset>
+        <lightning-tab label="Description" value="1" onactive={handleActive}>
+            <lightning-card>
+                <h1 slot="title" style="text-align: center;"><u>{question.Name}</u></h1>
+                <p class="slds-var-p-around_medium">{question.Prompt}</p>
+            </lightning-card>
+        </lightning-tab>
+        <lightning-tab label="Submissions" value="2" onactive={handleActive}>
+            <lightning-card>
+                <h1 slot="title" style="text-align: center;"><u>{submission.Name}</u></h1>
+                <p class="slds-var-p-around_medium">{submission.body}</p>
+            </lightning-card>
+        </lightning-tab>
+    </lightning-tabset>
+</template>
