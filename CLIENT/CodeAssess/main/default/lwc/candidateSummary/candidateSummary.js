@@ -20,7 +20,7 @@ export default class candidateSummary extends LightningElement {
 
             for (let i = 0; i < result.length; i++) {
 
-                this.score = result[i].MethodsPassed__c / result[i].TotalMethods__c;
+                this.score = result[i].MethodsPassed__c / result[i].TotalMethods__c * 100;
                 this.sum +=  this.score;
 
                 if (this.score > this.maxScore) {
