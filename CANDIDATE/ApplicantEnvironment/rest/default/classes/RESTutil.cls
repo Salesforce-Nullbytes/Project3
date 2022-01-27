@@ -1,23 +1,8 @@
-public class GetGreeting {
+public class RESTutil {
     public enum RequestType {AUTHORIZE, REFRESH, GET}
     private enum AuthStatus {UNAUTHENTICATED, EXPIRED, VALID}
 
-    // Test function
-    public static void getGreeting(String userInput) {
-        Http http = new Http();
-        HttpRequest req = getRequest('Greeting/', userInput);
-
-        HTTPResponse res = http.send(req);
-
-        // DEBUG INFO
-        System.debug('BODY: '+res.getBody());
-        System.debug('STATUS:'+res.getStatus());
-        System.debug(res);
-
-        //TODO: Check for expired code, and reset AuthStatus
-
-        return;
-    }
+    // MAIN FUNCTIONS
     public static void Authenticate(String authCode) {
         RequestType type = RequestType.AUTHORIZE;
         Http http = new Http();
@@ -36,8 +21,6 @@ public class GetGreeting {
 
         return;
     }
-
-    // MAIN FUNCTION
     public static HttpRequest getRequest(String resource, String param) {
         ServerInfo__mdt server = getServerInfo();
         String locator = server.ServerUrl__c + 'main/services/apexrest/';
@@ -59,7 +42,8 @@ public class GetGreeting {
 
         return req;
     }
-    public static HttpRequest authRequest(RequestType type, String code) {
+    // STILL NEED METHOD TO CHECK EXPIRED AND HANDLE RESULT
+    private static HttpRequest authRequest(RequestType type, String code) {
         // code on authorize: authentication code
         // code on refresh: refresh token
 
@@ -244,4 +228,3 @@ public class GetGreeting {
         return null; // Consider throwing exception. Trigger should disallow.
     }
 }
-    
