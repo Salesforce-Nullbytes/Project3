@@ -1,0 +1,30 @@
+.THIS .btn{
+    color: black;
+    background-color: rgb(231,231,231);
+    border:none;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+.THIS .btn:hover{
+    background-color: green;
+    cursor: pointer;
+}
+
+/*.THIS .btn:focus{
+    background-color: black;
+    color: white;
+} */
+
+.THIS .bgrFocus {
+    background-color:black;
+    color:red;
+}
+
+.THIS .bgrNonFocus {
+    background-color:rgb(231,231,231);
+}
+
+.THIS .summary-buttons{
+    display: flex;
+    flex-direction: row;
+}

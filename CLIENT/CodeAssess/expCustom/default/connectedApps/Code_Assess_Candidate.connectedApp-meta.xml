@@ -4,7 +4,7 @@
     <label>Code Assess Candidate</label>
     <oauthConfig>
         <callbackUrl>https://sandbox-dxghxfghdfgjcxfbj-developer-edition.cs92.force.com/main/s/authorization</callbackUrl>
-        <consumerKey></consumerKey>
+        <consumerKey>3MVG9JamK_x9K2XIea3PFji9nl6yGIVHq6ma_ZO.xcaKRqqxB6kei6IKGFDzU43OioHluC5bs35UNj5APi8oA</consumerKey>
         <idTokenConfig>
             <idTokenIncludeAttributes>false</idTokenIncludeAttributes>
             <idTokenIncludeCustomPerms>false</idTokenIncludeCustomPerms>
