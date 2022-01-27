@@ -149,18 +149,19 @@
     <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>CandidateResult</label>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <label>Candidate Result</label>
     <nameField>
-        <label>CandidateResult Name</label>
+        <displayFormat>Candidate Result {000000000}</displayFormat>
+        <label>Candidate Result Name</label>
         <trackHistory>false</trackHistory>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>CandidateResults</pluralLabel>
+    <pluralLabel>Candidate Results</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
