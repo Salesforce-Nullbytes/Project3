@@ -1,9 +1,9 @@
 .flex-container {
     display: flex;
+    justify-content: flex-end;
 }
 
 .flex-child {
-    flex: 1;
     border: 2px;
 }  
 

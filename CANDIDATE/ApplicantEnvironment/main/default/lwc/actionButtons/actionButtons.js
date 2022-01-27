@@ -2,13 +2,13 @@ import { LightningElement } from 'lwc';
 
 export default class ActionButtons extends LightningElement {
 
-    onrunCode(){
-        this.dispatchEvent(new CustomEvent('handlecoderun'));
-        console.log('Code ran!');
+    runCode(){
+        this.dispatchEvent(new CustomEvent('runcode'));
+        console.log('Code fired!');
     }
 
-    onhandleSubmit(){
-        this.dispatchEvent(new CustomEvent('handlesubmission'));
+    handleSubmit(){
+        this.dispatchEvent(new CustomEvent('submitresponse'));
         console.log('Submit fired!');
     }
 }

@@ -1,5 +1,17 @@
-.size{
-    width: 700px;
-    height: 700px;
-    align-content: center;
+div {
+    display: flex;
+    height: 100%;
+}
+
+textarea {
+    height: 100%;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.textarea-container{
+    height: 100%;
+}
+
+.input{
+    flex: 1;
 }

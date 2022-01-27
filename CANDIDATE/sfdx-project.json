@@ -13,6 +13,7 @@
     "sfdcLoginUrl": "https://resourceful-otter-efqwmx-dev-ed.my.salesforce.com/",
     "sourceApiVersion": "52.0",
     "packageAliases": {
-        "AppplicantEnvironment": "0Ho8c000000fxXWCAY"
+        "AppplicantEnvironment": "0Ho8c000000fxXWCAY",
+        "AppplicantEnvironment@0.1.0-1": "04t8c000000xG9cAAE"
     }
 }
