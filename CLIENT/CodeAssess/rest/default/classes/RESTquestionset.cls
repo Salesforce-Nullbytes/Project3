@@ -16,18 +16,18 @@ global class RESTquestionset {
     }
     public static String getFullQuestionSet(String identifier) {
         List<QuestionSet__c> entries = [
-            SELECT id, name  FROM QuestionSet__c
+            SELECT id, name  FROM QuestionSet__c WHERE Id =: identifier
         ];
         if (entries.size() == 0) {
             System.debug('Invalid query');
-            return '';
+            return 'Invalid query';
         }
         List<QuestionSetEntry__c> questionLinks = [
             SELECT Question__c  FROM QuestionSetEntry__c WHERE QuestionSet__r.id = :identifier
         ];
         if (questionLinks.size() == 0) {
             System.debug('No questions to query');
-            return '';
+            return 'No questions to query';
         }
         Set<ID> qIDs = new Set<ID>();
         for (QuestionSetEntry__c link : questionLinks) {
