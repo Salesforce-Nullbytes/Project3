@@ -1,0 +1,80 @@
+public with sharing class TestSubmitController {
+    
+    @AuraEnabled
+    public static String submitResponse(String response, String testClass){
+        try {
+            
+            soapSforceCom200608Apex.Apex apex;
+            soapSforceCom200608Apex.CompileAndTestResult result;
+            soapSforceCom200608Apex.CompileAndTestRequest request;
+
+            apex = new soapSforceCom200608Apex.Apex();
+            apex.endpoint_x = URL.getSalesforceBaseUrl().toExternalForm() + '/services/Soap/s/53.0';
+            apex.SessionHeader = new soapSforceCom200608Apex.SessionHeader_element();
+            apex.SessionHeader.sessionId = fetchUserSessionId();
+
+            request = new soapSforceCom200608Apex.CompileAndTestRequest();
+            request.classes = new String[]{response,testClass};
+            request.checkOnly= true;
+
+            request.runTestsRequest = new soapSforceCom200608Apex.RunTestsRequest();
+            request.runTestsRequest.classes = new String[]{'TestT1'};
+            request.runTestsRequest.allTests = false;
+            request.runTestsRequest.maxFailedTests = -1;
+            request.runTestsRequest.skipCodeCoverage = true;
+            request.runTestsRequest.tests = null;
+
+            result = apex.compileAndTest(request);
+
+            //Insert logic for submitting to API
+
+            return JSON.serializePretty(result);
+
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+    
+    @AuraEnabled
+    public static String compileClass(String response){
+        try {
+            soapSforceCom200608Apex.Apex apex;
+            soapSforceCom200608Apex.CompileAndTestRequest request;
+            soapSforceCom200608Apex.CompileAndTestResult result;
+
+            apex = new soapSforceCom200608Apex.Apex();
+            apex.endpoint_x = URL.getSalesforceBaseUrl().toExternalForm() + '/services/Soap/s/53.0';
+            apex.SessionHeader = new soapSforceCom200608Apex.SessionHeader_element();
+            apex.SessionHeader.sessionId = fetchUserSessionId();
+
+            request = new soapSforceCom200608Apex.CompileAndTestRequest();
+            request.classes = new String[]{response};
+            request.checkOnly = true;
+
+            result = apex.compileAndTest(request);
+
+            return JSON.serializePretty(result.classes);
+
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    private static String fetchUserSessionId(){
+        String sessionId = '';
+        // Refer to the Page
+        PageReference reportPage = Page.sessionIdVfPage;
+        // Get the content of the VF page
+        String vfContent = reportPage.getContent().toString();
+        System.debug('vfContent '+vfContent);
+        // Find the position of Start_Of_Session_Id and End_Of_Session_Id
+        Integer startP = vfContent.indexOf('Start_Of_Session_Id') + 'Start_Of_Session_Id'.length(),
+        endP = vfContent.indexOf('End_Of_Session_Id');
+        // Get the Session Id
+        sessionId = vfContent.substring(startP, endP);
+        System.debug('sessionId '+sessionId);
+        // Return Session Id
+        return sessionId;
+    }
+
+}
