@@ -12,13 +12,14 @@ public with sharing class testQuestionCreatorController {
     }
 
     @AuraEnabled
-    public static String insertQuestion(String qName, String topic, String placeholder, String prompt) {
+    public static String insertQuestion(String qName, String topic, String placeholder, String prompt, String rawText) {
 
         Question__c insertQ = new Question__c();
         insertQ.Name = qName;
         insertQ.QuestionTopic__c = topic;
         insertQ.PlaceHolder__c = placeholder;
         insertQ.Prompt__c = prompt;
+        insertQ.TestClassText__c = EncodingUtil.base64Decode(rawText).toString();
 
         INSERT insertQ;
 

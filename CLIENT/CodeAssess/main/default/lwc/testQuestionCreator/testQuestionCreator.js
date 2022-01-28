@@ -62,7 +62,7 @@ export default class TestQuestionCreator extends LightningElement {
                 return;
             }
     
-            InsertQuestion({qName: this.questionName, topic: this.questionTopic, placeholder: this.questionPlaceholder, prompt: this.questionPrompt}).then(result => {
+            InsertQuestion({qName: this.questionName, topic: this.questionTopic, placeholder: this.questionPlaceholder, prompt: this.questionPrompt, rawText: this.fileData['base64']}).then(result => {
                 this.recordId = result;
 
                 console.log(this.fileData['base64']);
