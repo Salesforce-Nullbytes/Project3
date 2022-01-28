@@ -18,25 +18,11 @@
                     "package": "CodeAssessMetadata@0.1.0-4"
                 }
             ]
-<<<<<<< HEAD
-=======
-        },
-        {
-            "path": "CodeAssessMetadata",
-            "package": "CodeAssessMetadata",
-            "versionName": "ver 0.1",
-            "versionNumber": "0.1.0.NEXT",
-            "default": true
->>>>>>> 4398ab4e74fcefaabb83a7bdff923025ae86c042
         }
     ],
     "name": "CLIENT",
     "namespace": "",
-<<<<<<< HEAD
     "sfdcLoginUrl": "https://login.salesforce.com",
-=======
-    "sfdcLoginUrl": "https://cunning-wolf-8s8n18-dev-ed.my.salesforce.com/",
->>>>>>> 4398ab4e74fcefaabb83a7bdff923025ae86c042
     "sourceApiVersion": "52.0",
     "packageAliases": {
         "CodeAssessMetadata": "0Ho8c000000Gmd3CAC",
