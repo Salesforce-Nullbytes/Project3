@@ -11,24 +11,30 @@ public class soapSforceCom200608Apex {
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'classId','className','testMethods'};
     }
+    /*
     public class runTests_element {
         public soapSforceCom200608Apex.RunTestsRequest RunTestsRequest;
         private String[] RunTestsRequest_type_info = new String[]{'RunTestsRequest','http://soap.sforce.com/2006/08/apex',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'RunTestsRequest'};
     }
+    */
+    
     public class compileTriggersResponse_element {
         public soapSforceCom200608Apex.CompileTriggerResult[] result;
         private String[] result_type_info = new String[]{'result','http://soap.sforce.com/2006/08/apex',null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'result'};
     }
+    
+    /*
     public class executeAnonymousResponse_element {
         public soapSforceCom200608Apex.ExecuteAnonymousResult result;
         private String[] result_type_info = new String[]{'result','http://soap.sforce.com/2006/08/apex',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'result'};
     }
+    */
     public class CallOptions_element {
         public String client;
         private String[] client_type_info = new String[]{'client','http://soap.sforce.com/2006/08/apex',null,'1','1','false'};
@@ -71,12 +77,14 @@ public class soapSforceCom200608Apex {
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'id','locationsNotCovered','name','namespace','numLocations','numLocationsNotCovered','type_x'};
     }
+    /*
     public class executeAnonymous_element {
         public String String_x;
         private String[] String_x_type_info = new String[]{'String','http://soap.sforce.com/2006/08/apex',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'String_x'};
     }
+    */
     public class CompileAndTestRequest {
         public Boolean checkOnly;
         public String[] classes;
@@ -123,6 +131,7 @@ public class soapSforceCom200608Apex {
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'flowId','flowName','flowNamespace','message'};
     }
+    /*
     public class WsdlToApexResult {
         public String[] apexScripts;
         public String[] errors;
@@ -133,12 +142,15 @@ public class soapSforceCom200608Apex {
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'apexScripts','errors','success'};
     }
+    */
+    /*
     public class wsdlToApex_element {
         public soapSforceCom200608Apex.WsdlToApexInfo info;
         private String[] info_type_info = new String[]{'info','http://soap.sforce.com/2006/08/apex',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'info'};
     }
+    */
     public class RunTestsResult {
         public String apexLogId;
         public soapSforceCom200608Apex.CodeCoverageResult[] codeCoverage;
@@ -225,6 +237,7 @@ public class soapSforceCom200608Apex {
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'id','methodName','name','namespace','seeAllData','time_x'};
     }
+    /*
     public class NamespacePackagePair {
         public String namespace;
         public String packageName;
@@ -233,12 +246,15 @@ public class soapSforceCom200608Apex {
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'namespace','packageName'};
     }
+    */
+    /*
     public class wsdlToApexResponse_element {
         public soapSforceCom200608Apex.WsdlToApexResult result;
         private String[] result_type_info = new String[]{'result','http://soap.sforce.com/2006/08/apex',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'result'};
     }
+    */
     public class compileAndTest_element {
         public soapSforceCom200608Apex.CompileAndTestRequest CompileAndTestRequest;
         private String[] CompileAndTestRequest_type_info = new String[]{'CompileAndTestRequest','http://soap.sforce.com/2006/08/apex',null,'1','1','false'};
@@ -337,18 +353,21 @@ public class soapSforceCom200608Apex {
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'id','message','methodName','name','namespace','seeAllData','stackTrace','time_x','type_x'};
     }
+    /*
     public class compileTriggers_element {
         public String[] scripts;
         private String[] scripts_type_info = new String[]{'scripts','http://soap.sforce.com/2006/08/apex',null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'scripts'};
     }
+    */
     public class compileClasses_element {
         public String[] scripts;
         private String[] scripts_type_info = new String[]{'scripts','http://soap.sforce.com/2006/08/apex',null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'scripts'};
     }
+    /*
     public class WsdlToApexInfo {
         public soapSforceCom200608Apex.NamespacePackagePair[] mapping;
         public String wsdl;
@@ -357,6 +376,8 @@ public class soapSforceCom200608Apex {
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'mapping','wsdl'};
     }
+    */
+    /*
     public class ExecuteAnonymousResult {
         public Integer column;
         public String compileProblem;
@@ -375,6 +396,7 @@ public class soapSforceCom200608Apex {
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/08/apex','true','false'};
         private String[] field_order_type_info = new String[]{'column','compileProblem','compiled','exceptionMessage','exceptionStackTrace','line','success'};
     }
+    */
     public class PackageVersionHeader_element {
         public soapSforceCom200608Apex.PackageVersion[] packageVersions;
         private String[] packageVersions_type_info = new String[]{'packageVersions','http://soap.sforce.com/2006/08/apex',null,'0','-1','false'};
@@ -460,6 +482,7 @@ public class soapSforceCom200608Apex {
         private String DisableFeedTrackingHeader_hns = 'DisableFeedTrackingHeader=http://soap.sforce.com/2006/08/apex';
         private String DebuggingHeader_hns = 'DebuggingHeader=http://soap.sforce.com/2006/08/apex';
         private String[] ns_map_type_info = new String[]{'http://soap.sforce.com/2006/08/apex', 'soapSforceCom200608Apex'};
+        /*
         public soapSforceCom200608Apex.ExecuteAnonymousResult executeAnonymous(String String_x) {
             soapSforceCom200608Apex.executeAnonymous_element request_x = new soapSforceCom200608Apex.executeAnonymous_element();
             request_x.String_x = String_x;
@@ -481,6 +504,8 @@ public class soapSforceCom200608Apex {
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
+        */
+        /*
         public soapSforceCom200608Apex.CompileTriggerResult[] compileTriggers(String[] scripts) {
             soapSforceCom200608Apex.compileTriggers_element request_x = new soapSforceCom200608Apex.compileTriggers_element();
             request_x.scripts = scripts;
@@ -502,6 +527,7 @@ public class soapSforceCom200608Apex {
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
+        */
         public soapSforceCom200608Apex.CompileAndTestResult compileAndTest(soapSforceCom200608Apex.CompileAndTestRequest CompileAndTestRequest) {
             soapSforceCom200608Apex.compileAndTest_element request_x = new soapSforceCom200608Apex.compileAndTest_element();
             request_x.CompileAndTestRequest = CompileAndTestRequest;
@@ -523,6 +549,7 @@ public class soapSforceCom200608Apex {
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
+        /*
         public soapSforceCom200608Apex.WsdlToApexResult wsdlToApex(soapSforceCom200608Apex.WsdlToApexInfo info) {
             soapSforceCom200608Apex.wsdlToApex_element request_x = new soapSforceCom200608Apex.wsdlToApex_element();
             request_x.info = info;
@@ -544,6 +571,8 @@ public class soapSforceCom200608Apex {
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
+        */
+        /*
         public soapSforceCom200608Apex.RunTestsResult runTests(soapSforceCom200608Apex.RunTestsRequest RunTestsRequest) {
             soapSforceCom200608Apex.runTests_element request_x = new soapSforceCom200608Apex.runTests_element();
             request_x.RunTestsRequest = RunTestsRequest;
@@ -565,6 +594,7 @@ public class soapSforceCom200608Apex {
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
+        */
         public soapSforceCom200608Apex.CompileClassResult[] compileClasses(String[] scripts) {
             soapSforceCom200608Apex.compileClasses_element request_x = new soapSforceCom200608Apex.compileClasses_element();
             request_x.scripts = scripts;
