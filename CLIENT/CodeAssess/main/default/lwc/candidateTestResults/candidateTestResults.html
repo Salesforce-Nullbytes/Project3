@@ -4,41 +4,19 @@
             <h3>Individual Test Results</h3>
         </div>
         <div class="information-content">
-            <div class="column">
-                <p>Question 1</p>
-                <p>{testOneTopic}</p>
-                <br/>
-                <p><strong>{testOnePercentage}%</strong></p>
-                <p>{testOnePassFail}</p>
-            </div>
-            <div class="column">
-                <p>Question 2</p>
-                <p>{testTwoTopic}</p>
-                <br/>
-                <p><strong>{testTwoPercentage}%</strong></p>
-                <p>{testTwoPassFail}</p>
-            </div>
-            <div class="column">
-                <p>Question 3</p>
-                <p>{testThreeTopic}</p>
-                <br/>
-                <p><strong>{testThreePercentage}%</strong></p>
-                <p>{testThreePassFail}</p>
-            </div>
-            <div class="column">
-                <p>Question 4</p>
-                <p>{testFourTopic}</p>
-                <br/>
-                <p><strong>{testFourPercentage}%</strong></p>
-                <p>{testFourPassFail}</p>
-            </div>
-            <div class="column">
-                <p>Question 5</p>
-                <p>{testFiveTopic}</p>
-                <br/>
-                <p><strong>{testFivePercentage}%</strong></p>
-                <p>{testFivePassFail}</p>
-            </div>
+
+            <template for:each={candidateInfo} for:item="question" for:index="index">
+                <div key={candidateInfo.Question__r}>
+                    <div class="column">
+                        <p><strong>Question {question.index}</strong></p>
+                        <p>{question.Question__r.QuestionTopic__c}</p>
+                        <br/>
+                        <p>{question.percentage}%</p>
+                        <p>{question.Result__c}</p>
+                        <br/>
+                    </div>
+                </div>
+            </template>
             <div class="clear"></div>
         </div>
     </div>
