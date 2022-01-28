@@ -3,10 +3,7 @@ import { api, LightningElement } from 'lwc';
 export default class ResultBox extends LightningElement {
 
     results;
-    compileResults;
-    submitResults;
     showCompileResults = false;
-    showSubmitResults = false;
     showResults = false;
     toggleLabel = "utility:chevronup";
     loading = false;
@@ -14,15 +11,7 @@ export default class ResultBox extends LightningElement {
     @api setCompileResults(resultsInfo){
         this.results = resultsInfo;
         this.loading = false;
-        this.showSubmitResults = false;
         this.showCompileResults = true;
-    }
-
-    @api setSubmitResults(resultsInfo){
-        this.results = resultsInfo;
-        this.loading = false;
-        this.showCompileResults = false;
-        this.showSubmitResults = true;
     }
 
     @api setAsLoading(){

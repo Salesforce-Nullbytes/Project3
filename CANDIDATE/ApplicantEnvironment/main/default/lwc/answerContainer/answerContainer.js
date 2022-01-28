@@ -5,74 +5,69 @@ import compileResponse from "@salesforce/apex/TestSubmitController.compileClass"
 export default class AnswerContainer extends LightningElement {
 
     @api question;
+    openModal = false;
+    loading = false;
+    startTime;
+
+    showModal(){
+        this.openModal = true;
+    }
+
+    closeModal(){
+        this.openModal = false;
+    }
 
     handleSubmission(event){
+        let testClass = '@isTest private class TestT1{' +
+        '    public static testmethod void test1(){' +
+        '      System.assert(warmup.myString==\'HELLO\');' +
+        '    }' +
+        '}';
 
-        let testClass = "@isTest private class TestT1{" +
-        "    public static testmethod void test1(){" +
-        "      String s = C1.method1();" +
-        "      System.assert(s=='HELLO');" +
-        "    }" +
-        "    public static testmethod void test2(){" +
-        "      String s = C1.method1();" +
-        "      System.assert(s=='Hi');" +
-        "    }" +
-        "}";
-
-        let responseClass = "public class C1{" +
-        "    public static String s ='HELLO';" +
-        "    public static String method1(){" +
-        "      return(s);" +
-        "    }" +
-        "}";
+        this.openModal = false;
+        this.loading = true;
 
         let answerBox = this.template.querySelector('c-answer-box');
         let resultBox = this.template.querySelector('c-result-box');
 
         let responseString = answerBox.getCandidateResponse();
-
-        resultBox.setAsLoading();
         
-        submitResponse({response: responseClass, testClass: testClass}).then((result) =>{
+        submitResponse({response: responseString, testClass: testClass}).then((result) =>{
 
             let submitResult = JSON.parse(result); // Result Type = SOAP-API CompileAndTestResult
-            let resultInfo;
-
-            console.log(submitResult);
-
-
-            // If no tests were run there was a compilation error, we need to show those results instead.
-            if(submitResult.runTestsResult.numTestsRun == 0){
-                let compileResult = submitResult.classes[0];
-                resultInfo = {
-                    success: compileResult.success,
+            let compileResult = submitResult.classes[0];
+            let testResult = submitResult.runTestsResult;
+            let resultInfo = {
+                compilationError: false,
+                errorResult: {
                     line: compileResult.line,
                     column: compileResult.column,
                     description: compileResult.problem
-                }
-
-                resultBox.setCompileResults(resultInfo);
-            }
-            else{
-                let testResult = submitResult.runTestsResult;
-                resultInfo = {
-                    numTestsRun: testResult.numTestsRun,
-                    numFailures: testResult.numFailures,
-                    failures: testResult.failures,
-                    successes: testResult.successes,
-                    runtime: testResult.totalTime,
-                    success: submitResult.success
-                }
-
-                resultBox.setSubmitResults(resultInfo);
+                },
+                numTestsRun: testResult.numTestsRun,
+                numFailures: testResult.numFailures,
+                failures: testResult.failures, //failures/success descripe the specific methods results in detail
+                successes: testResult.successes,
+                runtime: testResult.totalTime,
+                success: submitResult.success,
+                startTime: this.startTime, //Times are server miliseconds format, not DateTime
+                endTime: Date.now(), 
+                testId: null
             }
 
-           
+            console.log(submitResult);
 
-            
-            
+            //If no tests are run then there was a compilation error
+            if(submitResult.runTestsResult.numTestsRun == 0) resultInfo.compilationError = true;
+
+            // Test Environment handles compiling result data and changing questions
+            let submission = new CustomEvent('submission',{detail: resultInfo});
+
+            this.dispatchEvent(submission);
+
+            this.loading = false;
+
         }).catch(error => console.log(error));
-        
     }
 
     handleCodeRun(event){
@@ -101,5 +96,10 @@ export default class AnswerContainer extends LightningElement {
             
         }).catch(error => console.log(error));
 
+    }
+
+    @api startQuestion(question){
+        //this.question = question;
+        this.startTime = Date.now();
     }
 }

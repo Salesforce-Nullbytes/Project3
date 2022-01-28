@@ -36,8 +36,6 @@ public with sharing class TestSubmitController {
 
             result = apex.compileAndTest(request);
 
-            AsyncSendSubmissions.enqueueSubmission(result);
-
             return JSON.serializePretty(result);
 
         } catch (Exception e) {
