@@ -15,13 +15,19 @@
     color: white;
 } */
 
+.THIS .home-btn{
+    background-color:rgb(18,61,92);
+    color:white;
+}
+
 .THIS .bgrFocus {
-    background-color:black;
-    color:red;
+    background-color:rgb(18,61,92);
+    color:white;
 }
 
 .THIS .bgrNonFocus {
-    background-color:rgb(231,231,231);
+    color: black;
+    background-color: rgb(231,231,231);
 }
 
 .THIS .summary-buttons{

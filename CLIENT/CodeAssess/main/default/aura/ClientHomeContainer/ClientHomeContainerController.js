@@ -1,22 +1,21 @@
 ({
-    homeInit : function(component, event, helper){
+    doInit : function(component, event, helper){
         var userId = $A.get("$SObjectType.CurrentUser.Id");
         component.set("v.userId", userId);
         component.set("v.showHome", "true");
         component.set("v.showTestSummary", "false");
-        let homeButtonElem = component.find('startExamButton');
-        $A.util.addClass(homeButtonElem, 'bgrFocus');
     },
     startExam : function(component, event, helper){
         //Get current test summarry setting
         let showTestSummaryValue = component.get("v.showTestSummary");
 
-        //If test summary tab selected
-        if(showTestSummaryValue === true){
-            let homeButtonElem = component.find('startExamButton');
-            let resultButtonElem = component.find('viewResultButton');
+        //If previous test tab selected
+        if(showTestSummaryValue === "true"){
+            //Home tab focus style, previous tab unfocus
+            var homeButtonElem = component.find('startExamButton');
+            var resultButtonElem = component.find('viewResultButton');
             $A.util.removeClass(resultButtonElem, 'bgrFocus');
-            $A.util.addClass(homeButtonElem, 'bgrFocus');
+            $A.util.removeClass(homeButtonElem, 'bgrNonFocus');
         }
 
         //Set start test home display as true
@@ -31,11 +30,12 @@
         let showTestSummaryValue = component.get("v.showTestSummary");
 
         //If test home tab selected
-        if(showTestSummaryValue === true){
-            let homeButtonElem = component.find('startExamButton');
-            let resultButtonElem = component.find('viewResultButton');
+        if(showTestSummaryValue === "false"){
+            //Home tab unfocus style, previous tab focus style
+            var homeButtonElem = component.find('startExamButton');
+            var resultButtonElem = component.find('viewResultButton');
             $A.util.addClass(resultButtonElem, 'bgrFocus');
-            $A.util.removeClass(homeButtonElem, 'bgrFocus');
+            $A.util.addClass(homeButtonElem, 'bgrNonFocus');
         }
 
         //Set start test home display as false

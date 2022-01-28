@@ -1,6 +1,6 @@
 <aura:component implements="flexipage:availableForAllPageTypes, forceCommunity:availableForAllPageTypes" access="global">
     <!--Init handler for initialization-->
-    <aura:handler name="init" action="{!c.homeInit}" value="{!this}" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
 
     <!--User name-->
     <aura:attribute name="userId" type="String" />
@@ -12,19 +12,19 @@
     <aura:attribute name="showTestSummary" type="Boolean" default="false" />
 
     <div class="summary-buttons">
-        <lightning:button aura:id='startExamButton' label="Start exam" onclick="{!c.startExam}" class="slds-m-left_x-small btn" ></lightning:button>
-        <lightning:button aura:id='viewResultButton' label="View previous result" onclick="{!c.viewResults}" class="slds-m-left_x-small btn" ></lightning:button>  
+        <lightning:button aura:id="startExamButton" label="Start exam" onclick="{!c.startExam}" class="slds-m-left_x-small btn home-btn" ></lightning:button>
+        <lightning:button aura:id="viewResultButton" label="Previous result" onclick="{!c.viewResults}" class="slds-m-left_x-small btn" ></lightning:button>
      </div>
-     <h1>Good</h1>
 
     <!--Show home page-->
     <aura:If isTrue="{!v.showHome}">
         <div>This is home page</div>
+        <c:testQuestionCreator></c:testQuestionCreator>
     </aura:If>
 
     <!--Show test summary page-->
     <aura:If isTrue="{!v.showTestSummary}">
         <div>This is candidate result page</div>
-        <!-- <c:candidatetestResults></c:candidatetestResults> -->
+        <c:candidateSummary></c:candidateSummary>
     </aura:If>
 </aura:component>
