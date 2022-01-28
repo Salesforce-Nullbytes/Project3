@@ -6,6 +6,10 @@
     </applicationVisibilities>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Code Assessor</label>
+    <tabSettings>
+        <tab>Code_Assesor</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
     <userPermissions>
         <enabled>true</enabled>
         <name>ApexRestServices</name>
