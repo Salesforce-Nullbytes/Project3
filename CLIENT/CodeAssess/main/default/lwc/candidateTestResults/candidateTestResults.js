@@ -39,7 +39,7 @@ export default class candidateTestResults extends LightningElement {
             this.testThreeTopic = result[2].Question__r.QuestionTopic__c;
             this.testThreePercentage = result[2].MethodsPassed__c / result[2].TotalMethods__c * 100;
             this.testThreePassFail = result[2].Result__c;
-
+            
             this.testFourTopic = result[3].Question__r.QuestionTopic__c;
             this.testFourPercentage = result[3].MethodsPassed__c / result[3].TotalMethods__c * 100;
             this.testFourPassFail = result[3].Result__c;
