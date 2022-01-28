@@ -1,5 +1,49 @@
 @RestResource(urlMapping='/questionset/*')
 global class RESTquestionset {
+
+    //@HttpPost
+    global static String submitTest(String requestBody) {
+        //String requestBody = RestContext.request.requestBody.toString();
+        submission parsed = (submission)JSON.deserializeStrict(requestBody, submission.class);
+        System.debug(parsed.start);
+        System.debug(parsed.endTime);
+        for (MethodResult result : parsed.methods) {
+            System.debug('  ' + result.name);
+            System.debug('  ' + result.outcome);
+        }
+        return 'hi';
+    }
+
+    public static void testPost() {
+        // CREATE REQUEST
+        HttpRequest req = new HttpRequest(); 
+        req.setMethod('POST');
+        req.setHeader('Content-Type','application/x-www-form-urlencoded');
+        req.setEndpoint('junk');
+
+        // SET REQUEST BODY
+        String body = '{"start":"(datetime)","endTime":"(datetime)","methods":[{"name":"name 1","outcome":"PASS"},{"name":"name 2","outcome":"FAIL"},{"name":"name 3","outcome":"PASS"}]}';        
+        req.setBody(body);
+
+        System.debug(body);
+        System.debug(req);
+
+        submitTest(body);
+
+    }
+
+    private class Submission {
+        String start;
+        String endTime;
+        public List<MethodResult> methods;
+    }
+    
+    private class MethodResult {
+        String name;
+        String outcome;
+    }
+    
+
     @httpGet
     global static String getList() { //don't worry about testing this class 
 
