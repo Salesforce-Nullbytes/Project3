@@ -4,6 +4,7 @@ public class RESTcallout {
         return getResource('Greeting/', url);
     }
 
+    @AuraEnabled(cacheable = true)
     public static String getQuestionSet(String url) {
         return getResource('questionset/', url);
     }

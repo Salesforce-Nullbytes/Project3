@@ -1,4 +1,4 @@
-import { LightningElement,api } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
 export default class TestEnvironment extends LightningElement {
 
@@ -7,8 +7,10 @@ export default class TestEnvironment extends LightningElement {
     questionIndex = 0;
     submissions = [];
 
-    connectedCallback(){
-        this.question = this.questionList[0];
+    renderedCallback(){
+        console.log(this.questionList);
+        this.question = this.questionList.questions[this.questionIndex];
+        
     }
 
     addSubmission(event){
@@ -17,7 +19,7 @@ export default class TestEnvironment extends LightningElement {
         
         this.questionIndex+=1;
 
-        if(this.questionIndex == this.questionList.length){
+        if(this.questionIndex == this.questionList.questions.length){
             this.sendTestDataToClient();
 
             let finishSetEvent = new CustomEvent('finishset');
@@ -25,7 +27,7 @@ export default class TestEnvironment extends LightningElement {
             return;
         }
 
-        this.setQuestion(this.questionList[this.questionIndex]);
+        this.setQuestion(this.questionList.questions[this.questionIndex]);
     }
 
     sendTestDataToClient(){
