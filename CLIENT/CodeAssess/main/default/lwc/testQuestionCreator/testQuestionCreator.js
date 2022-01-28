@@ -56,13 +56,13 @@ export default class TestQuestionCreator extends LightningElement {
 
         //check if all fields are populated correctly
         if (!this.fileData || !this.questionTopic || !this.questionPrompt || !this.questionName) {
-            this.showAlert('Error', 'Required fields not populated!');
+            this.showAlert('Error', 'Required fields not populated!', 'error');
             return;
         }
         
         CheckNameCollision({name: this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName'], qName: this.questionName}).then(result => {
             if (result) {
-                this.showAlert('Error', 'There is already a question or file name + category combination with the same name!');
+                this.showAlert('Error', 'There is already a question or file name + category combination with the same name!', 'error');
                 return;
             }
     
@@ -74,9 +74,9 @@ export default class TestQuestionCreator extends LightningElement {
                 LinkFile({base64: this.fileData['base64'], filename: this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName'], recordId: this.recordId}).then(result => {
 
                     if (result == 'success') {
-                        this.showAlert('Success', 'Question successfully created!');
+                        this.showAlert('Success', 'Question successfully created!', 'success');
                     } else {
-                        this.showAlert('Error', 'An error occured: ' + result);
+                        this.showAlert('Error', 'An error occured: ' + result, 'error');
                     }
                 });
                 
@@ -102,11 +102,12 @@ export default class TestQuestionCreator extends LightningElement {
         this.template.querySelector('lightning-button').removeAttribute('disabled');
     }
 
-    showAlert(alertTitle, alertMessageStr) {
+    showAlert(alertTitle, alertMessageStr, variant) {
         this.alertMessageStr = alertMessageStr;
         let event = new ShowToastEvent({
             title: alertTitle,
-            message: alertMessageStr
+            message: alertMessageStr,
+            variant: variant
         });
         this.dispatchEvent(event);
 
