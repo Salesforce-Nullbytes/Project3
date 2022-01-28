@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MethodsFailed__c</fullName>
+    <externalId>false</externalId>
+    <label>Methods Failed</label>
+    <summaryFilterItems>
+        <field>CandidateMethodResult__c.Outcome__c</field>
+        <operation>equals</operation>
+        <value>Fail</value>
+    </summaryFilterItems>
+    <summaryForeignKey>CandidateMethodResult__c.CandidateQuestionResult__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>
