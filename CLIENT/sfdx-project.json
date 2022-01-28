@@ -26,15 +26,9 @@
     "sfdcLoginUrl": "https://cunning-wolf-8s8n18-dev-ed.my.salesforce.com/",
     "sourceApiVersion": "52.0",
     "packageAliases": {
-        "CodeAssess": "0Ho8c000000fxXHCAY",
-        "CodeAssessMetadata": "0Ho8c000000fxXMCAY",
-        "CodeAssessMetadata@0.1.0-1": "04t8c000000xBjfAAE",
-        "CodeAssessMetadata@0.1.0-2": "04t8c000000xDQ1AAM",
-        "CodeAssessMetadata@0.1.0-3": "04t8c000000xDtoAAE",
-        "CodeAssessMetadata@0.1.0-4": "04t8c000000xJ7YAAU",
-        "CodeAssessMetadata@0.1.0-5": "04t8c000000xLsSAAU",
-        "CodeAssessMetadata@0.1.0-6": "04t8c000000xM0xAAE",
-        "CodeAssessMetadata@0.1.0-7": "04t8c000000xMDQAA2",
-        "CodeAssessMetadata@0.1.0-8": "04t8c000000xMLlAAM"
+        "CodeAssessMetadata": "0Ho8c000000Gmd3CAC",
+        "CodeAssess": "0Ho8c000000Gmd8CAC",
+        "CodeAssessMetadata@0.1.0-1": "04t8c000000cgWmAAI",
+        "CodeAssessMetadata@0.1.0-2": "04t8c000000cgWrAAI"
     }
 }

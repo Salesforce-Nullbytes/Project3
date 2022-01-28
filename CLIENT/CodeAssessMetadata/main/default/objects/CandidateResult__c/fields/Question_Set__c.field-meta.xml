@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Candidate__c</fullName>
+    <fullName>Question_Set__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
-    <label>Candidate</label>
-    <referenceTo>Candidate__c</referenceTo>
+    <label>Question Set</label>
+    <referenceTo>QuestionSet__c</referenceTo>
     <relationshipLabel>Candidate Results</relationshipLabel>
-    <relationshipName>CandidateResults</relationshipName>
+    <relationshipName>Candidate_Results</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
