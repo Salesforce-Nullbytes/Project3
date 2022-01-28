@@ -3,6 +3,7 @@ import InsertQuestion from '@salesforce/apex/testQuestionCreatorController.inser
 import CheckNameCollision from '@salesforce/apex/testQuestionCreatorController.checkNameCollision';
 import LinkFile from '@salesforce/apex/testQuestionCreatorController.linkFile';
 import GetPicklist from '@salesforce/apex/testQuestionCreatorController.topicPicklistValues';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class TestQuestionCreator extends LightningElement {
     //holds uploaded file's data
@@ -15,6 +16,8 @@ export default class TestQuestionCreator extends LightningElement {
     recordId; //currently unused
     @track
     topicOptions;
+    disabledAllBool = false;
+    loadingBool = false;
 
     constructor() {
         super();
@@ -48,17 +51,18 @@ export default class TestQuestionCreator extends LightningElement {
     }
 
     handleSubmitClicked() {
+        this.loadingBool = true;
+        this.disableAllInput();
+
         //check if all fields are populated correctly
         if (!this.fileData || !this.questionTopic || !this.questionPrompt || !this.questionName) {
-            //TODO implement some kind of visual feedback that the submission failed due to missing fields
+            this.showAlert('Error', 'Required fields not populated!');
             return;
         }
-
+        
         CheckNameCollision({name: this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName'], qName: this.questionName}).then(result => {
-            //TODO create some kind of visual feedback to show while calls are still being resolved
             if (result) {
-                //TODO implement code for when naming collision
-                console.log('collision');
+                this.showAlert('Error', 'There is already a question or file name + category combination with the same name!');
                 return;
             }
     
@@ -70,10 +74,9 @@ export default class TestQuestionCreator extends LightningElement {
                 LinkFile({base64: this.fileData['base64'], filename: this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName'], recordId: this.recordId}).then(result => {
 
                     if (result == 'success') {
-                        //TODO provide visual feedback on success
+                        this.showAlert('Success', 'Question successfully created!');
                     } else {
-                        //TODO provide visual feedback on failure
-                        console.log(result);
+                        this.showAlert('Error', 'An error occured: ' + result);
                     }
                 });
                 
@@ -81,6 +84,36 @@ export default class TestQuestionCreator extends LightningElement {
     
         });
         
+    }
+
+    disableAllInput() {
+        this.disabledAllBool = true;
+        this.template.querySelector('lightning-textarea').setAttribute('disabled', '');
+        this.template.querySelector('lightning-combobox').setAttribute('disabled', '');
+        this.template.querySelector('lightning-input').setAttribute('disabled', '');
+        this.template.querySelector('lightning-button').setAttribute('disabled', '');
+    }
+
+    enableAllInput() {
+        this.disabledAllBool = false;
+        this.template.querySelector('lightning-textarea').removeAttribute('disabled');
+        this.template.querySelector('lightning-combobox').removeAttribute('disabled');
+        this.template.querySelector('lightning-input').removeAttribute('disabled');
+        this.template.querySelector('lightning-button').removeAttribute('disabled');
+    }
+
+    showAlert(alertTitle, alertMessageStr) {
+        this.alertMessageStr = alertMessageStr;
+        let event = new ShowToastEvent({
+            title: alertTitle,
+            message: alertMessageStr
+        });
+        this.dispatchEvent(event);
+
+        this.disabledAllBool = false;
+        this.loadingBool = false;
+
+        this.enableAllInput();
     }
 
     handlePromptInput(event) {
