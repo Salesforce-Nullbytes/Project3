@@ -14,7 +14,7 @@ public class CandidateResultControllerTest
 		//candr.ID;
         candr.Candidate__c = newCandidate.ID;
         //candr.Candidate__r.Name = 'Test Taker';
-		candr.Name='PASS';
+		//candr.Name='PASS';
         //candr.PassPercentage__c = '';
 	
 		insert candr;
