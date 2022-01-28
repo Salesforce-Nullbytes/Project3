@@ -1,3 +1,4 @@
 <template>
     <c-login-page if:false={credentials} onuservalidated={handleUserValidated}></c-login-page>   
+    <c-test-center if:true={credentials} ></c-test-center>
 </template>

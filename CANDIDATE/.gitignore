@@ -40,3 +40,6 @@ $RECYCLE.BIN/
 .env
 
 sfdx-project.json
+
+ApplicantEnvironment/main/default/lwc/fancyAnswerBox
+ApplicantEnvironment/main/default/lwc/questionContainer
