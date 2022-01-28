@@ -2,8 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CandidateResult__c</fullName>
     <externalId>false</externalId>
-    <label>CandidateResult</label>
+    <label>Candidate Result</label>
     <referenceTo>CandidateResult__c</referenceTo>
+    <relationshipLabel>Candidate Question Results</relationshipLabel>
     <relationshipName>QuestionResults</relationshipName>
     <relationshipOrder>0</relationshipOrder>
     <reparentableMasterDetail>false</reparentableMasterDetail>
