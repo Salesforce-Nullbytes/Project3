@@ -2,18 +2,15 @@ import { LightningElement, api } from 'lwc';
 
 export default class answerBox extends LightningElement {
     @api method;
-    @api response;
 
-
+    @api
     reset(){
-       var val = this.template.ShadowRoot.queryselector("size").value;
-       val = this.method_signature;
+        let textarea = this.template.querySelector('textarea');
+        textarea.value = this.method;
     }
-    
-    sendUp(event){
-        var pass;
-        pass = event.target.value;
-        this.response = pass;
-        console.log(this.response);
+
+    @api 
+    getCandidateResponse(){
+        return this.template.querySelector('textarea').value;
     }
 }

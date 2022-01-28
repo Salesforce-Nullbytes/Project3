@@ -1,20 +1,22 @@
 public class RESTcallout {
     // Test function
-    public static void getGreeting(String userInput) {
-        Http http = new Http();
-        HttpRequest req = RESTutil.getRequest('Greeting/', userInput);
-
-        HTTPResponse res = http.send(req);
-
-        // DEBUG INFO
-        System.debug('BODY: '+res.getBody());
-        System.debug('STATUS:'+res.getStatus());
-        System.debug(res);
-
-        //TODO: Check for expired code, and reset AuthStatus
-
-        return;
+    public static String getGreeting(String url) {
+        return getResource('Greeting/', url);
     }
-    
+
+    public static String getQuestionSet(String url) {
+        return getResource('questionset/', url);
+    }
+
+    private static String getResource(String locator, String param) {
+        Http http = new Http();
+        HttpRequest req = RESTutil.getRequest('questionset/', param);
+        if (req == null) {
+            System.debug('Session was invalid. Please try again.');
+            return 'TRY_AGAIN';
+        }
+        HTTPResponse res = http.send(req);
+        return res.getBody();
+    }
 }
     

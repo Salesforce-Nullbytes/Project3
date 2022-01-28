@@ -1,40 +1,42 @@
 public class RESTutil {
     public enum RequestType {AUTHORIZE, REFRESH, GET}
-    private enum AuthStatus {UNAUTHENTICATED, EXPIRED, VALID}
-
-    // MAIN FUNCTIONS
-    public static void Authenticate(String authCode) {
-        RequestType type = RequestType.AUTHORIZE;
-        Http http = new Http();
-        HttpRequest req = authRequest(type, authCode);
-
-        HTTPResponse res = http.send(req);
-        TokenSet tokens = parseTokens(res.getBody()); // parse access token from repsonse body
-        setAuthInfo(tokens);
-
-        // DEBUG INFO
-        System.debug('BODY: '+res.getBody());
-        System.debug('STATUS:'+res.getStatus());
-        System.debug(res);
-
-        //TODO: Check for expired code, and reset AuthStatus
-
-        return;
+    public enum ResponseCategory {
+        GOOD, 
+        BAD_AUTH_CODE, 
+        INVALID_CLIENT, 
+        EXPIRED_TOKEN, 
+        EXPIRED_AUTH_CODE, 
+        ALREADY_VALID,
+        AUTHORIZATION_USED,
+        UNRECOGNIZED
     }
+    private static ServerInfo__mdt getServerInfo() {
+        // Code Assess Server Info
+        ServerInfo__mdt server = [
+            SELECT ServerUrl__c, LoginUrl__c, Key__c, Secret__c
+            FROM ServerInfo__mdt 
+            WHERE MasterLabel = 'Server'
+            LIMIT 1
+        ];
+        return server;
+    }
+
+    // HttpRequest Generators:
     public static HttpRequest getRequest(String resource, String param) {
         ServerInfo__mdt server = getServerInfo();
         String locator = server.ServerUrl__c + 'main/services/apexrest/';
 
-        String token = getAccessToken();
+        String token = AuthUtil.getAccessToken();
+        System.debug(token);
         if (token == null) {
-            System.debug('ERROR: No Access Token for GET!');
+            System.debug('ERROR: No Access Token for GET request!');
+            return null;
+        }
+        if (token == 'EXPIRED_TOKEN') {
             return null;
         }
 
         String fullResource = locator + resource + param;
-        System.debug(fullResource);
-
-        // Send REST request
         HttpRequest req = new HttpRequest(); 
         req.setMethod('GET');
         req.setEndpoint(fullResource);
@@ -42,16 +44,11 @@ public class RESTutil {
 
         return req;
     }
-    // STILL NEED METHOD TO CHECK EXPIRED AND HANDLE RESULT
-    private static HttpRequest authRequest(RequestType type, String code) {
-        // code on authorize: authentication code
-        // code on refresh: refresh token
-
+    public static HttpRequest authRequest(RequestType type, String code) {
         Boolean authorize = false;
         Boolean refresh = false;
 
         String grantType = '';
-        // VALIDATIONS
         switch on type {
             when AUTHORIZE { 
                 grantType = 'authorization_code';
@@ -93,138 +90,81 @@ public class RESTutil {
         return req;
     }
 
-    // TOKEN UTILTIY
-    private static String getAccessToken() {
-        AuthenticationInfo__c authInfo = getAuthInfo();
-        switch on enumStatus(authInfo.Status__c) {
-            when VALID {
-                return authInfo.AccessToken__c;
-            }
-            when EXPIRED {
-                return setAccessToken(RequestType.REFRESH, authInfo.RefreshToken__c);
-            }
-        }
-        System.debug('ERROR: Cannot retrieve access token when unauthenticated!');
-        return null;
-    }
-    private static String setAccessToken(RequestType type, String code) {
-        Http http = new Http();
-        HttpRequest req = authRequest(type, code);
-
-        HTTPResponse res = http.send(req);
-        TokenSet tokens = parseTokens(res.getBody()); // parse access token from repsonse body
-        setAuthInfo(tokens);
-
-        // DEBUG INFO
-        System.debug(type);
-        System.debug('BODY: '+res.getBody());
-        System.debug('STATUS:'+res.getStatus());
-        System.debug('TOKEN:'+tokens);
-
-        // TODO: verify contents, and handle exceptions on invalid token grant
-
-        return tokens.access;
-    }
-    private static void setAuthInfo(TokenSet tokens) {
-        // Save updated token
-        AuthenticationInfo__c authInfo = getAuthInfo();
-        authInfo.AccessToken__c = tokens.access;
-        authInfo.RefreshToken__c = tokens.refresh;
-        authInfo.Status__c = strStatus(AuthStatus.VALID);
-        Update authInfo;
-    }
-
-    // Parser Utility
-    private static TokenSet parseTokens(String response) {
+    // All types of contingencies on REST connection result
+    public static ResponseCategory checkError(String response) {
         JSONParser parser = JSON.createParser(response);
 
         String accessToken;
         String refreshToken;
         
+        String error;
+        String errorDescription;
+        String message;
+        String errorCode;
         while (parser.NextToken() != null) {
             if (parser.getCurrentToken() == JSONToken.FIELD_NAME) {
                 switch on parser.getText() {
-                    when 'access_token' {
+                    when 'error' {
                         parser.NextValue();
-                        accessToken = parser.getText();
+                        error = parser.getText();
                     }
-                    when 'refresh_token' {
+                    when 'error_description' {
                         parser.NextValue();
-                        refreshToken = parser.getText();
+                        errorDescription = parser.getText();
+                    }
+                    when 'message' {
+                        parser.NextValue();
+                        message = parser.getText();
+                    }
+                    when 'errorCode' {
+                        parser.NextValue();
+                        errorCode = parser.getText();
                     }
                 }
             }
         }
 
-        if (accessToken == null) {
-            System.debug('ACCESS TOKEN NOT FOUND!');
-            return null;
+        if (error != null) {
+            switch on error {
+                when 'invalid_client_id' {
+                    System.debug('Check Metadata: client ID mismatch!');
+                    return ResponseCategory.INVALID_CLIENT;
+                }
+                when 'invalid_grant' {
+                    System.debug(errorDescription);
+                    if (errorDescription == 'invalid authorization code') {
+                        System.debug('Re-check Authorization code');
+                        return ResponseCategory.BAD_AUTH_CODE;
+                    }
+                    if (errorDescription == 'expired authorization code') {
+                        if (AuthUtil.tokenValid()) {
+                            System.debug('already Authorized');
+                            return ResponseCategory.AUTHORIZATION_USED;
+                        }
+                        System.debug('authorization code is already expired');
+                        return ResponseCategory.EXPIRED_AUTH_CODE;
+                    }
+                }
+            }
+            System.debug('Unrecognized response error: ' + error);
+            return ResponseCategory.UNRECOGNIZED;
         }
-        return new TokenSet(accessToken, refreshToken);
-    }
-    private class TokenSet {
-        String access;
-        String refresh;
-        TokenSet(String accessToken, String refreshToken) {
-            access = accessToken;
-            refresh = refreshToken;
+        if (message != null) {
+            if (message == 'Session expired or invalid') {
+                if (AuthUtil.tokenValid()) {
+                    System.debug('Expired session, updating status');
+                    // Cannot send a new HttpRequest in same transaction after DML
+                    // Must indicate to user that the transaction must be retried.
+                    AuthUtil.expireToken();
+                    return ResponseCategory.EXPIRED_TOKEN;
+                }
+                // If refresh token fails, the Server admin deleted the connection.
+                System.debug('Please get a new authentication code. Session was killed.');
+                return ResponseCategory.EXPIRED_AUTH_CODE;
+            }
+            System.debug('Unrecognized response error: ' + error);
+            return ResponseCategory.UNRECOGNIZED;
         }
-    }
-
-    // AuthStatus Utility
-    private static String strStatus(AuthStatus status) {
-        String result = null;
-        switch on status {
-            when UNAUTHENTICATED { result = 'Unauthenticated'; }
-            when EXPIRED { result = 'Expired'; }
-            when VALID { result = 'Valid'; }
-        }
-        return result;
-    }
-    private static AuthStatus enumStatus(String status) {
-        AuthStatus result = null;
-        switch on status {
-            when 'Unauthenticated' { result = AuthStatus.UNAUTHENTICATED; }
-            when 'Expired' { result = AuthStatus.EXPIRED; }
-            when 'Valid' { result = AuthStatus.VALID; }
-        }
-        return result;
-    }
-
-    // RETRIEVERS
-    private static ServerInfo__mdt getServerInfo() {
-        // Code Assess Server Info
-        ServerInfo__mdt server = [
-            SELECT ServerUrl__c, LoginUrl__c, Key__c, Secret__c
-            FROM ServerInfo__mdt 
-            WHERE MasterLabel = 'Server'
-            LIMIT 1
-        ];
-        return server;
-    }
-    private static AuthenticationInfo__c getAuthInfo() {
-        ID currUser = UserInfo.getUserId();
-        //System.debug(currUser);
-
-        AuthenticationInfo__c[] auths = [
-            SELECT AccessToken__c, RefreshToken__c, Status__c
-            FROM AuthenticationInfo__c 
-            WHERE User__c = :currUser
-        ];
-
-        // VALIDATE AUTORIZATION INFO
-        if (auths.size() == 1) {
-            return auths[0];
-        }
-        if (auths.size() == 0) {
-            // Set to null by default
-            AuthenticationInfo__c auth = new AuthenticationInfo__c();
-            auth.User__c = currUser;
-            Insert auth;
-            return auth;
-        }
-
-        System.debug('ERROR: Each user must have only 1 authentication info record!');
-        return null; // Consider throwing exception. Trigger should disallow.
+        return ResponseCategory.GOOD;
     }
 }

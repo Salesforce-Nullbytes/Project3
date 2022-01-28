@@ -1,3 +1,13 @@
 <template>
-    
+    <div class="mainContainer">
+        <div class="answerContainer">
+            <c-answer-box method={question.method}></c-answer-box>
+        </div>
+        <div class="resultContainer">
+            <c-result-box></c-result-box>
+        </div>
+        <div class="buttonContainer">
+            <c-action-buttons onsubmitresponse={handleSubmission} onruncode={handleCodeRun}></c-action-buttons>
+        </div>
+    </div>
 </template>
