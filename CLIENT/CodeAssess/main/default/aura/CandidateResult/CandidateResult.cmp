@@ -9,7 +9,13 @@
                 <th scope="col"><div class="slds-truncate" title="Name">Name</div></th>
                 <th scope="col"><div class="slds-truncate" title="Candidate__c">Candidate</div></th>         
                  <th scope="col"><div class="slds-truncate" title="Candidate__c">Candidate Name</div></th>
-                <th scope="col"><div class="slds-truncate" title="PassRatio">PassRatio</div></th>            
+                <th scope="col"><div class="slds-truncate" title="PassPercentage__c">PassPercentage</div></th> 
+                <th scope="col"><div class="slds-truncate" title="QuestionsPassed__c">QuestionsPassed</div></th>
+                <th scope="col"><div class="slds-truncate" title="StartTime__c">StartTime</div></th> 
+                <th scope="col"><div class="slds-truncate" title="Status__c">Status</div></th> 
+                <th scope="col"><div class="slds-truncate" title="SubmitTime__c">SubmitTime</div></th> 
+                <th scope="col"><div class="slds-truncate" title="TotalQuestions__c">TotalQuestions</div></th>
+                            
             </tr>
         </thead>
         <tbody>
@@ -18,7 +24,12 @@
                     <td><div class="slds-truncate" title="{!candidateresult.Name}">{!candidateresult.Name}</div></td>
                     <td><div class="slds-truncate" title="{!candidateresult.Candidate__c}">{!candidateresult.Candidate__c}</div></td>                   
                     <td><div class="slds-truncate" title="{!candidateresult.Candidate__r.Name}">{!candidateresult.Candidate__r.Name}</div></td>
-                    <td><div class="slds-truncate" title="{!candidateresult.PassRatio__c}">{!candidateresult.PassRatio__c}</div></td>                    
+                    <td><div class="slds-truncate" title="{!candidateresult.PassPercentage__c}">{!candidateresult.PassPercentage__c}</div></td>  
+                    <td><div class="slds-truncate" title="{!candidateresult.QuestionsPassed__c}">{!candidateresult.QuestionsPassed__c}</div></td>  
+                    <td><div class="slds-truncate" title="{!candidateresult.StartTime__c}">{!candidateresult.StartTime__c}</div></td> 
+                    <td><div class="slds-truncate" title="{!candidateresult.Status__c}">{!candidateresult.Status__c}</div></td>  
+                    <td><div class="slds-truncate" title="{!candidateresult.SubmitTime__c}">{!candidateresult.SubmitTime__c}</div></td> 
+                    <td><div class="slds-truncate" title="{!candidateresult.TotalQuestions__c}">{!candidateresult.TotalQuestions__c}</div></td>            
                 </tr>
             </aura:iteration>
         </tbody>
