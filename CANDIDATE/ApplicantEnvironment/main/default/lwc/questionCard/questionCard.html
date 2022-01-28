@@ -1,0 +1,8 @@
+<template>
+    <template if:true={questionSet}>
+    <lightning-card title={questionSet.name}>
+        <lightning-button label="Solve" slot="actions" onclick={handleSolve}></lightning-button>
+        
+    </lightning-card>
+    </template>
+</template>

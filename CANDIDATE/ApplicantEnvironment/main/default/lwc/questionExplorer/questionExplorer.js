@@ -1,24 +1,100 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, wire } from 'lwc';
+import getQuestionSet from '@salesforce/apex/RESTcallout.getQuestionSet';
 
 export default class QuestionExplorer extends LightningElement {
-    @api tests = [
+    questionSet = [
         {
-            Id: "1",
-            Name: "Account Trigger",
-            Level: "Easy",
-            Type: "Trigger"
+            id: '1',
+            name: 'set1',
+            questions: [
+                {
+                    prompt: "Create a class that contains a public string named \'myString\'",
+                    name: "Warm-up Question",
+                    method: "public class warmup{\n\t//Write code here\n}"
+                },
+                {
+                    prompt: "Create a class that contains a public string named \'myString\'",
+                    name: "Warm-up Question 2",
+                    method: "public class warmup{\n\t//Write code here\n}"
+                },
+                {
+                    prompt: "Create a class that contains a public string named \'myString\'",
+                    name: "Warm-up Question 3",
+                    method: "public class warmup{\n\t//Write code here\n}"
+                }
+            ]
         },
         {
-            Id: "2",
-            Name: "Order Trigger",
-            Level: "Hard",
-            Type: "Trigger"
+            id: '2',
+            name: 'set2',
+            questions: [
+                {
+                    prompt: "Create a class that contains a public string named \'myString\'",
+                    name: "Warm-up Question",
+                    method: "public class warmup{\n\t//Write code here\n}"
+                },
+                {
+                    prompt: "Create a class that contains a public string named \'myString\'",
+                    name: "Warm-up Question 2",
+                    method: "public class warmup{\n\t//Write code here\n}"
+                },
+                {
+                    prompt: "Create a class that contains a public string named \'myString\'",
+                    name: "Warm-up Question 3",
+                    method: "public class warmup{\n\t//Write code here\n}"
+                }
+            ]
         },
         {
-            Id: "3",
-            Name: "Unit Test",
-            Level: "Medium",
-            Type: "Test"
+            id: '3',
+            name: 'set3',
+            questions: [
+                {
+                    prompt: "Create a class that contains a public string named \'myString\'",
+                    name: "Warm-up Question",
+                    method: "public class warmup{\n\t//Write code here\n}"
+                },
+                {
+                    prompt: "Create a class that contains a public string named \'myString\'",
+                    name: "Warm-up Question 2",
+                    method: "public class warmup{\n\t//Write code here\n}"
+                },
+                {
+                    prompt: "Create a class that contains a public string named \'myString\'",
+                    name: "Warm-up Question 3",
+                    method: "public class warmup{\n\t//Write code here\n}"
+                }
+            ]
+        }];
+    
+
+    retryGetList() {
+        getQuestionSet().then(result => {
+            this.questionSet = result;
+            console.log(result);
+        })
+        .catch(error => {console.log(error)});
+    }
+    /*
+    @wire(getQuestionSet,{url: ''})
+    getQuestionList({error, data}) {
+        if(data) {
+            if(data=='TRY_AGAIN') {
+                this.retryGetList();
+            }
+            this.questionSet = data;
+            console.log(data);
         }
-    ];
+        else if(error) {
+            this.retryGetList();
+        }
+    }*/
+
+    handleSelect(event) {
+        let selectevent = new CustomEvent('questionselect',{
+            detail: event.detail
+        });
+        this.dispatchEvent(selectevent);
+        console.log(event.detail);
+    }
 }

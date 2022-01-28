@@ -1,6 +1,8 @@
 import { LightningElement, api } from 'lwc';
-import submitResponse from "@salesforce/apex/TestSubmitController.submitResponse";
-import compileResponse from "@salesforce/apex/TestSubmitController.compileClass";
+
+// import submitResponse from "@salesforce/apex/TestSubmitController.submitResponse";
+// import compileClass from "@salesforce/apex/TestSubmitController.compileClass";
+
 
 export default class AnswerContainer extends LightningElement {
 
