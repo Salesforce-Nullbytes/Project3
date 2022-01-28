@@ -19,27 +19,10 @@
     border-top: 2px solid gray;
 }
 
-.testResults {
-    padding-left: 2rem;
-    padding-bottom: 1rem;
-}
-
-.successful{
-    color: green;
-}
-
 .errorContainer{
     background-color: rgba(255, 0, 0, 0.2);
     padding: 1rem;
     margin-top: 1rem;
-}
-
-.error {
-    color: red;
-}
-
-li{
-    list-style: none;
 }
 
 .slds-card div{

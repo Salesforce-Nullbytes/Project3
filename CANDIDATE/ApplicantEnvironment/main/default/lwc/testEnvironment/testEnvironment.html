@@ -1,11 +1,10 @@
 <template>
     <div class="slds-grid main">
         <div class="slds-col slds-size_1-of-5">
-            <!-- questoin container-->
-            <p>Question stuff</p>
+            <c-question-container question={question}></c-question-container>
         </div>
         <div class="slds-col slds-size_4-of-5">
-            <c-answer-container question={question} onnewsubmission={addSubmission}></c-answer-container>
+            <c-answer-container question={question} onsubmission={addSubmission}></c-answer-container>
         </div>
     </div>
 </template>

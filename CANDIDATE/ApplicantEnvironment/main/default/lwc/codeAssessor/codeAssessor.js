@@ -2,7 +2,7 @@ import { LightningElement } from 'lwc';
 
 export default class CodeAssessor extends LightningElement {
 
-    credentials = false;
+    credentials = true;
 
     /*getUserDetails(event)
     {
