@@ -11,7 +11,12 @@ public without sharing class AuthenticationController {
 
     @AuraEnabled
     public static Boolean setSession(String code){
-        RESTutil.Authenticate(code);
+        AuthUtil.Authenticate(code);
         return true;
+    }
+
+    @AuraEnabled
+    public static Boolean isAuthenticated(){
+        return AuthUtil.isAuthenticated();
     }
 }
