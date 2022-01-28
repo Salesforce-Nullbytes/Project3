@@ -1,0 +1,62 @@
+<template>
+    
+        <lightning-card  title="Results Panel" class="header">
+            <lightning-button variant="base" icon-name={toggleLabel} slot="actions" onclick={toggleResultsPanel}></lightning-button>
+                <div if:true={showResults}>
+                    <div if:true={showCompileResults}>
+                        <div if:true={results.success} class="resultsContainer">
+                            <p>Compile Reults: <span class="successful">SUCCESSFUL</span></p>
+                        </div>
+                        <div if:false={results.success} class="resultsContainer">
+                            <h1 class="slds-text-heading_small error">Compilation Error:</h1>
+                            <div class="errorContainer error">
+                                <p>{results.description}</p>
+                                <p>Line {results.line}:{results.column}</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div if:true={showSubmitResults}>
+                        <div class ='resultsContainer'>
+                            <h1 class="slds-text-heading_small">
+                                Test Results: 
+                                <span class="success" if:true={results.success}> PASS</span>
+                                <span class="error" if:false={results.success}> FAIL</span>
+                            </h1>
+                        </div>
+                        <div class="testResults">
+                            <template iterator:it={results.successes}>
+                                <li key={it.value.methodName}>
+                                    <p class="successful">{it.value.methodName}</p>
+                                </li>
+                            </template>
+                            <template iterator:it={results.failures}>
+                                <li key={it.value.methodName}>
+                                    <p class="error">{it.value.methodName}</p>
+                                </li>
+                            </template>
+                        </div>
+                        
+                    </div>
+
+                    <template if:false={showCompileResults} >
+                        <template if:false={showSubmitResults} >
+                            <div class="resultsContainer">
+                                <i>No code has been run.. </i>
+                            </div>
+                            
+                        </template>
+                    </template>
+
+                    <template if:true={loading} >
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+                </div>
+                
+                
+        </lightning-card>
+        
+    
+    
+</template>

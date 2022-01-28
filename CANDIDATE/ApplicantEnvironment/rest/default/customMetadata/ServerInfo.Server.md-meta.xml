@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Server</label>
+    <protected>true</protected>
+    <values>
+        <field>Key__c</field>
+        <value xsi:type="xsd:string">3MVG9JamK_x9K2XLOYpKsfux2z8pug_26k8NbsHCdjUpqp.mR3znT8oc66E.ZN_a11qeYINgInT3_pcremetG</value>
+    </values>
+    <values>
+        <field>LoginUrl__c</field>
+        <value xsi:type="xsd:string">https://test.salesforce.com/</value>
+    </values>
+    <values>
+        <field>Secret__c</field>
+        <value xsi:type="xsd:string">EF486190714B1FF418D8DAAC3AA04AF1084983C97E9B1E3FFEA15D04E953208C</value>
+    </values>
+    <values>
+        <field>ServerUrl__c</field>
+        <value xsi:type="xsd:string">https://sandbox-dxghxfghdfgjcxfbj-developer-edition.cs92.force.com/</value>
+    </values>
+</CustomMetadata>
