@@ -1,7 +1,8 @@
 import { LightningElement, api } from 'lwc';
 
-// import submitResponse from "@salesforce/apex/TestSubmitController.submitResponse";
-// import compileClass from "@salesforce/apex/TestSubmitController.compileClass";
+import submitResponse from "@salesforce/apex/TestSubmitController.submitResponse";
+import compileResponse from "@salesforce/apex/TestSubmitController.compileClass";
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 
 export default class AnswerContainer extends LightningElement {
@@ -10,6 +11,10 @@ export default class AnswerContainer extends LightningElement {
     openModal = false;
     loading = false;
     startTime;
+
+    renderedCallback(){
+        this.startTime = new Date(Date.now());
+    }
 
     showModal(){
         this.openModal = true;
@@ -22,54 +27,64 @@ export default class AnswerContainer extends LightningElement {
     handleSubmission(event){
         let testClass = '@isTest private class TestT1{' +
         '    public static testmethod void test1(){' +
-        '      System.assert(warmup.myString==\'HELLO\');' +
+        '      System.assert(warmup.myString=='+'\'HELLO\''+');' +
         '    }' +
         '}';
+        let answerBox = this.template.querySelector('c-answer-box');
+        let responseString = answerBox.getCandidateResponse();
 
         this.openModal = false;
         this.loading = true;
 
-        let answerBox = this.template.querySelector('c-answer-box');
-        let resultBox = this.template.querySelector('c-result-box');
-
-        let responseString = answerBox.getCandidateResponse();
-        
         submitResponse({response: responseString, testClass: testClass}).then((result) =>{
 
             let submitResult = JSON.parse(result); // Result Type = SOAP-API CompileAndTestResult
-            let compileResult = submitResult.classes[0];
             let testResult = submitResult.runTestsResult;
-            let resultInfo = {
-                compilationError: false,
-                errorResult: {
-                    line: compileResult.line,
-                    column: compileResult.column,
-                    description: compileResult.problem
-                },
-                numTestsRun: testResult.numTestsRun,
-                numFailures: testResult.numFailures,
-                failures: testResult.failures, //failures/success descripe the specific methods results in detail
-                successes: testResult.successes,
-                runtime: testResult.totalTime,
-                success: submitResult.success,
-                startTime: this.startTime, //Times are server miliseconds format, not DateTime
-                endTime: Date.now(), 
-                testId: null
+            let submissionElement = {
+                url : this.question.url,
+                name : this.question.name,
+                startTime : this.startTime,
+                endTime : new Date(Date.now()),
+                methods : []
+            }
+            
+            if(testResult.successes){
+                testResult.successes.forEach(element => {
+                    let methodOutcome = {
+                        name: element.methodName,
+                        outcome : "PASS"
+                    }
+    
+                    submissionElement.methods.push(methodOutcome);
+                });
+            }
+            
+            if(testResult.failures){
+                testResult.failures.forEach(element => {
+                    let methodOutcome = {
+                        name: element.methodName,
+                        outcome : "FAIL"
+                    }
+    
+                    submissionElement.methods.push(methodOutcome);
+                });
             }
 
             console.log(submitResult);
 
-            //If no tests are run then there was a compilation error
-            if(submitResult.runTestsResult.numTestsRun == 0) resultInfo.compilationError = true;
-
             // Test Environment handles compiling result data and changing questions
-            let submission = new CustomEvent('submission',{detail: resultInfo});
+            let submission = new CustomEvent('submission',{detail: submissionElement});
 
             this.dispatchEvent(submission);
 
+            this.showSuccessToast();
+
             this.loading = false;
 
-        }).catch(error => console.log(error));
+        }).catch(error => {
+            this.showErrorToast(error);
+            this.loading = false;
+        });
     }
 
     handleCodeRun(event){
@@ -96,12 +111,34 @@ export default class AnswerContainer extends LightningElement {
             
             resultBox.setCompileResults(resultInfo);
             
-        }).catch(error => console.log(error));
+        }).catch(error => {
+            this.showErrorToast(error)
+        });
 
     }
 
-    @api startQuestion(question){
-        //this.question = question;
-        this.startTime = Date.now();
+    @api startQuestion(){
+        this.startTime = new Date(Date.now());
+        let answerBox = this.template.querySelector('c-answer-box');
+        answerBox.reset();
+    }
+
+    showSuccessToast() {
+        const event = new ShowToastEvent({
+            title: 'Submission',
+            variant: 'success',
+            message:
+                'Your answer has been successfully submitted',
+        });
+        this.dispatchEvent(event);
+    }
+
+    showErrorToast(error){
+        const event = new ShowToastEvent({
+            title: 'ERROR',
+            variant: 'error',
+            message: error
+        });
+        this.dispatchEvent(event);
     }
 }
