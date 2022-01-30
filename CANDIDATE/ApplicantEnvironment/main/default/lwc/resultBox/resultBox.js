@@ -20,6 +20,12 @@ export default class ResultBox extends LightningElement {
         this.loading = true;
     }
 
+    @api reset(){
+        if(this.showResults) this.toggleResultsPanel();
+        this.results = null;
+        this.showCompileResults = false;
+    }
+
     toggleResultsPanel(){
         this.showResults = !this.showResults;
         this.toggleLabel = this.toggleLabel == "utility:chevrondown" ? "utility:chevronup" : "utility:chevrondown";

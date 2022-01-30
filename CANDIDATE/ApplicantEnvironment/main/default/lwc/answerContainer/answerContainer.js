@@ -1,4 +1,4 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track} from 'lwc';
 
 import submitResponse from "@salesforce/apex/TestSubmitController.submitResponse";
 import compileResponse from "@salesforce/apex/TestSubmitController.compileClass";
@@ -26,7 +26,7 @@ export default class AnswerContainer extends LightningElement {
 
         let answerBox = this.template.querySelector('c-answer-box');
         let responseString = answerBox.getCandidateResponse();
-        let isTrigger = question.topic == "Apex Triggers";
+        let isTrigger = this.question.topic == "Apex Triggers";
 
         this.openModal = false;
         this.loading = true;
@@ -36,6 +36,8 @@ export default class AnswerContainer extends LightningElement {
             let submitResult = JSON.parse(result); // Result Type = SOAP-API CompileAndTestResult
             let testResult = submitResult.runTestsResult;
             let submissionElement = this.generateAPISubmissionElement(testResult);
+
+            console.log(submitResult);
 
             // Test Environment handles compiling result data and changing questions
             let submission = new CustomEvent('submission',{detail: submissionElement});
@@ -55,7 +57,7 @@ export default class AnswerContainer extends LightningElement {
 
         let answerBox = this.template.querySelector('c-answer-box');
         let resultBox = this.template.querySelector('c-result-box');
-        let isTrigger = question.topic == "Apex Triggers";
+        let isTrigger = this.question.topic == "Apex Triggers";
         let responseString = answerBox.getCandidateResponse();
 
         resultBox.setAsLoading();
@@ -79,10 +81,14 @@ export default class AnswerContainer extends LightningElement {
 
     }
 
-    @api startQuestion(){
+    @api startQuestion(question){
+        this.question = question;
         this.startTime = new Date(Date.now());
         let answerBox = this.template.querySelector('c-answer-box');
+        let resultBox = this.template.querySelector('c-result-box');
+        answerBox.method = this.question.placeholder;
         answerBox.reset();
+        resultBox.reset();
     }
 
     //Build the object that the submission REST API Expects
@@ -93,6 +99,33 @@ export default class AnswerContainer extends LightningElement {
             startTime : this.startTime,
             endTime : new Date(Date.now()),
             methods : []
+        }
+
+        //We need the method name for API object, without testResults must be parsed out
+        if(testResult.numTestsRun == 0){
+            let isTestChunks = this.question.testFile.split('@isTest');
+            isTestChunks.splice(0,2); //Remove class Declaration
+
+            let methods = [];
+
+            //Method name is the word between void and (
+            isTestChunks.forEach(element => {
+                let voidIndex = element.indexOf("void");
+                let bracketIndex = element.indexOf("(");
+                let subElement = element.substring(voidIndex,bracketIndex);
+                let words = subElement.split(" ");
+                let methodName = words[1];
+                methods.push(methodName);
+            });
+
+            methods.forEach(method =>{
+                let methodOutcome = {
+                    name: method,
+                    outcome : "FAIL"
+                }
+
+                submissionElement.methods.push(methodOutcome);
+            })
         }
         
         if(testResult.successes){

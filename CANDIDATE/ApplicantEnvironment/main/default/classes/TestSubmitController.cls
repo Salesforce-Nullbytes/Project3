@@ -7,6 +7,7 @@ public with sharing class TestSubmitController {
             soapSforceCom200608Apex.Apex apex;
             soapSforceCom200608Apex.CompileAndTestResult result;
             soapSforceCom200608Apex.CompileAndTestRequest request;
+            String testClassName;
 
             apex = new soapSforceCom200608Apex.Apex();
             apex.endpoint_x = URL.getSalesforceBaseUrl().toExternalForm() + '/services/Soap/s/53.0';
@@ -25,16 +26,15 @@ public with sharing class TestSubmitController {
 
             request.checkOnly= true;
 
+            testClassName = parseOutTestClassName(testClass);
             request.runTestsRequest = new soapSforceCom200608Apex.RunTestsRequest();
-            request.runTestsRequest.classes = new String[]{'TestT1'};
+            request.runTestsRequest.classes = new String[]{testClassName};
             request.runTestsRequest.allTests = false;
             request.runTestsRequest.maxFailedTests = -1;
             request.runTestsRequest.skipCodeCoverage = true;
             request.runTestsRequest.tests = null;
 
             result = apex.compileAndTest(request);
-
-            //Insert logic for submitting to API
 
             return JSON.serializePretty(result);
 
@@ -94,6 +94,15 @@ public with sharing class TestSubmitController {
 
         }
         return sessionId;
+    }
+
+    private static String parseOutTestClassName(String testClass){
+        Integer openBraceIndex = testClass.indexOf('{');
+        String classDeclaration = testClass.substring(0,openBraceIndex);
+        List<String> classDecTokens = classDeclaration.split(' ');
+        Integer classTokenIndex = classDecTokens.indexOf('class');
+    
+        return classDecTokens[classTokenIndex + 1];
     }
 
 }

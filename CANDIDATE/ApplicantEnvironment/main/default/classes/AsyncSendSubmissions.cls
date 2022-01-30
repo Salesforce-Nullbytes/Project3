@@ -1,8 +1,8 @@
 public class AsyncSendSubmissions implements Queueable{
 
-    private soapSforceCom200608Apex.CompileAndTestResult results;
+    private Object results;
     
-    public AsyncSendSubmissions(soapSforceCom200608Apex.CompileAndTestResult resultParam) {
+    public AsyncSendSubmissions(Object resultParam) {
         results = resultParam;
     }
 
@@ -11,7 +11,12 @@ public class AsyncSendSubmissions implements Queueable{
          System.debug('waiting for api team integration');
     }
 
-    public static void enqueueSubmission(soapSforceCom200608Apex.CompileAndTestResult resultsParam) {
-        System.enqueueJob(new AsyncSendSubmissions(resultsParam));
+    @AuraEnabled
+    public static void enqueueSubmission(Object resultsParam) {
+        try {
+            System.enqueueJob(new AsyncSendSubmissions(resultsParam));
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 }
