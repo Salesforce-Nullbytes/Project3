@@ -12,16 +12,9 @@ export default class AnswerContainer extends LightningElement {
     loading = false;
     startTime;
 
+    //First question start time is null bc no call to startQuestion
     renderedCallback(){
-        this.startTime = new Date(Date.now());
-    }
-
-    showModal(){
-        this.openModal = true;
-    }
-
-    closeModal(){
-        this.openModal = false;
+        if(!this.startTime) this.startTime = new Date(Date.now());
     }
 
     handleSubmission(event){
@@ -30,6 +23,7 @@ export default class AnswerContainer extends LightningElement {
         '      System.assert(warmup.myString=='+'\'HELLO\''+');' +
         '    }' +
         '}';
+
         let answerBox = this.template.querySelector('c-answer-box');
         let responseString = answerBox.getCandidateResponse();
 
@@ -40,41 +34,10 @@ export default class AnswerContainer extends LightningElement {
 
             let submitResult = JSON.parse(result); // Result Type = SOAP-API CompileAndTestResult
             let testResult = submitResult.runTestsResult;
-            let submissionElement = {
-                url : this.question.url,
-                name : this.question.name,
-                startTime : this.startTime,
-                endTime : new Date(Date.now()),
-                methods : []
-            }
-            
-            if(testResult.successes){
-                testResult.successes.forEach(element => {
-                    let methodOutcome = {
-                        name: element.methodName,
-                        outcome : "PASS"
-                    }
-    
-                    submissionElement.methods.push(methodOutcome);
-                });
-            }
-            
-            if(testResult.failures){
-                testResult.failures.forEach(element => {
-                    let methodOutcome = {
-                        name: element.methodName,
-                        outcome : "FAIL"
-                    }
-    
-                    submissionElement.methods.push(methodOutcome);
-                });
-            }
-
-            console.log(submitResult);
+            let submissionElement = this.generateAPISubmissionElement(testResult);
 
             // Test Environment handles compiling result data and changing questions
             let submission = new CustomEvent('submission',{detail: submissionElement});
-
             this.dispatchEvent(submission);
 
             this.showSuccessToast();
@@ -98,9 +61,7 @@ export default class AnswerContainer extends LightningElement {
         
         compileResponse({response: responseString}).then((result) =>{
 
-            let compileResult = JSON.parse(result)[0];
-
-            console.log(compileResult);
+            let compileResult = JSON.parse(result)[0]; // Result Type = SOAP-API CompileTestResult
 
             let resultInfo = {
                 success: compileResult.success,
@@ -123,12 +84,54 @@ export default class AnswerContainer extends LightningElement {
         answerBox.reset();
     }
 
+    //Build the object that the submission REST API Expects
+    generateAPISubmissionElement(testResult){
+        let submissionElement = {
+            url : this.question.identifier,
+            name : this.question.name,
+            startTime : this.startTime,
+            endTime : new Date(Date.now()),
+            methods : []
+        }
+        
+        if(testResult.successes){
+            testResult.successes.forEach(element => {
+                let methodOutcome = {
+                    name: element.methodName,
+                    outcome : "PASS"
+                }
+
+                submissionElement.methods.push(methodOutcome);
+            });
+        }
+        
+        if(testResult.failures){
+            testResult.failures.forEach(element => {
+                let methodOutcome = {
+                    name: element.methodName,
+                    outcome : "FAIL"
+                }
+
+                submissionElement.methods.push(methodOutcome);
+            });
+        }
+
+        return submissionElement;
+    }
+
+    showModal(){
+        this.openModal = true;
+    }
+
+    closeModal(){
+        this.openModal = false;
+    }
+
     showSuccessToast() {
         const event = new ShowToastEvent({
             title: 'Submission',
             variant: 'success',
-            message:
-                'Your answer has been successfully submitted',
+            message:'Your answer has been successfully submitted',
         });
         this.dispatchEvent(event);
     }

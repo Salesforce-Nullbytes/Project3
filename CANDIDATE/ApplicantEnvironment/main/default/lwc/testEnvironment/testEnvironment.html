@@ -1,7 +1,10 @@
 <template>
     <div if:true={showResults} >
-        RESULTS PAGE
-        <lightning-button variant="neutral" label="Finish" onclick={returnToQuestionExplorer}></lightning-button>
+        <c-score-card total-score={results}></c-score-card>
+        <div class="finish-btn-container">
+            <lightning-button variant="neutral" label="Finish" onclick={returnToQuestionExplorer}></lightning-button>
+        </div>
+        
     </div>
     <template if:false={showResults}>
         <div class="slds-grid main" if:true={question}>
