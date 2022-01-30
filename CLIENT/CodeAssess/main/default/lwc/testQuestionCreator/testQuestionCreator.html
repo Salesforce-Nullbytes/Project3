@@ -1,41 +1,53 @@
 <template>
 
-    <lightning-input type="text" label="Question Name" placeholder="Enter question name..." required onchange={handleNameInput}></lightning-input>
-
-    <lightning-textarea 
-        name="promptInput" 
-        required value="" 
-        placeholder="Write question prompt here..." 
-        label="Question Prompt" 
-        message-when-value-missing="A question with no prompt can not be created." 
-        onchange={handlePromptInput}>
-    </lightning-textarea>
-
-    <lightning-textarea 
-        name="placeholderInput" 
-        value="" 
-        placeholder="Write class placeholder here..." 
-        label="Class Placeholder" 
-        onchange={handlePlaceholderInput}>
-    </lightning-textarea>
-
-    <lightning-combobox
-        name="topic"
-        label="Question Topic"
-        value=""
-        placeholder="Select Question Topic"
-        options={topicOptions}
-        onchange={handleTopicSelection} >
-    </lightning-combobox>
-
-    <lightning-input type="file" 
-            accept=".cls, .png, .jpg"
-            label="Attachment" onchange={handleFileUpload}>
-    </lightning-input>
-
-    <template if:true={fileData}>
-        <p>{fileData.fileName}</p>
-    </template>
-
-    <button onclick={handleSubmitClicked}>Submit</button>
+    <div class='mainContainer'>
+        <template if:true={loadingBool}>
+            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+        </template>
+    
+        <lightning-input class='elements' type="text" label="Question Name" placeholder="Enter question name..." required onchange={handleNameInput}></lightning-input>
+    
+        <lightning-textarea 
+            name="promptInput" 
+            required value="" 
+            placeholder="Write question prompt here..." 
+            label="Question Prompt" 
+            message-when-value-missing="A question with no prompt can not be created." 
+            onchange={handlePromptInput}
+            class='elements'>
+        </lightning-textarea>
+    
+        <lightning-textarea 
+            name="placeholderInput" 
+            value="" 
+            placeholder="Write class placeholder here..." 
+            label="Class Placeholder" 
+            onchange={handlePlaceholderInput}
+            class='elements'>
+        </lightning-textarea>
+    
+        <lightning-combobox
+            name="topic"
+            label="Question Topic"
+            value=""
+            placeholder="Select Question Topic"
+            options={topicOptions}
+            onchange={handleTopicSelection} 
+            class='elements'>
+        </lightning-combobox>
+    
+        <lightning-input type="file" 
+                accept=".cls"
+                label="Attachment" onchange={handleFileUpload}
+                class='elements'>
+        </lightning-input>
+    
+        <template if:true={fileData}>
+            <p class='elements'>{fileData.fileName}</p>
+        </template>
+    
+    
+        <lightning-button label="Submit" title="Non-primary action" onclick={handleSubmitClicked} class="elements slds-m-left_x-small"></lightning-button>
+    </div>
+    
 </template>

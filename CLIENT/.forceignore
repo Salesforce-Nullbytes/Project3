@@ -12,10 +12,11 @@ package.xml
 # LWC Jest
 **/__tests__/**
 
+
 # custom ignores
- **/CodeAssessMetadata/**
+ /CodeAssessMetadata/**
 
 **/expCustom/**
 **/expStandard/**
 
-# **/CodeAssess/**
+# /CodeAssess/**
