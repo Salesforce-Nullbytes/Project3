@@ -26,15 +26,15 @@ public class TestSubmitControllerTest {
   public static void TP_compileClass(){
 
     Test.setMock(WebServiceMock.class, new SOAPMock());
-  try {
-    String output = TestSubmitController.compileClass(classBody);
+    try {
+      String output = TestSubmitController.compileClass(classBody,false);
 
-    System.debug('output' + output);
+      System.debug('output' + output);
 
-    System.assertNotEquals('Mock Response', output, 'TP works');
-  } catch (Exception ex) {
-    throw new AuraHandledException(ex.getMessage());
-  }
+      System.assertNotEquals('Mock Response', output, 'TP works');
+    } catch (Exception ex) {
+      throw new AuraHandledException(ex.getMessage());
+    }
       
   }
 
@@ -44,7 +44,7 @@ public class TestSubmitControllerTest {
     try {
       Test.setMock(WebServiceMock.class, new SOAPMock());
 
-      String result = TestSubmitController.compileClass( classBadBody);
+      String result = TestSubmitController.compileClass( classBadBody,false);
 
       System.debug('result ' + result);
 
@@ -62,7 +62,7 @@ public class TestSubmitControllerTest {
     try {
       Test.setMock(WebServiceMock.class, new SOAPMock());
 
-      String result = TestSubmitController.submitResponse('response', classBody);
+      String result = TestSubmitController.submitResponse('response', classBody, false);
 
       System.debug('result ' + result);
 
@@ -80,7 +80,7 @@ public class TestSubmitControllerTest {
     try {
       Test.setMock(WebServiceMock.class, new SOAPMock());
 
-      String result = TestSubmitController.submitResponse('response', classBadBody);
+      String result = TestSubmitController.submitResponse('response', classBadBody, false);
 
       System.debug('result ' + result);
 

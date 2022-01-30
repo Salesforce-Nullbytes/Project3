@@ -1,5 +1,5 @@
 <template>
-    <div class="mainContainer">
+    <div class="mainContainer" if:true={question}>
         <div class="answerContainer">
             <c-answer-box method={question.placeholder}></c-answer-box>
         </div>

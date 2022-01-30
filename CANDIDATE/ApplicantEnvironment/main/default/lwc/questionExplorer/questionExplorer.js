@@ -1,5 +1,6 @@
-import { LightningElement, wire, track } from 'lwc';
+import { LightningElement, wire } from 'lwc';
 import getQuestionSet from '@salesforce/apex/RESTcallout.getQuestionSet';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class QuestionExplorer extends LightningElement {
     
@@ -10,10 +11,10 @@ export default class QuestionExplorer extends LightningElement {
             questions : [
                 {
                     name : "Warmup 1",
-                    topic: "Apex",
+                    topic: "Apex Triggers",
                     testFile : " ",
                     prompt : "Create a class that contains a public string named \'myString\'",
-                    placeholder : "public class warmup{\n\t//Write code here\n}",
+                    placeholder : "trigger AccountTrigger on Account (before insert){\n\t//Write code here\n}",
                     identifier : "bbbb"
                 },
                 {
@@ -101,7 +102,7 @@ export default class QuestionExplorer extends LightningElement {
             this.questionSet = result;
             console.log(result);
         })
-        .catch(error => {console.log(error)});
+        .catch(error => {this.showErrorToast(error)});
     }
     /*
     @wire(getQuestionSet,{url: ''})
@@ -124,5 +125,14 @@ export default class QuestionExplorer extends LightningElement {
         });
         this.dispatchEvent(selectevent);
         console.log(event.detail);
+    }
+
+    showErrorToast(error){
+        const event = new ShowToastEvent({
+            title: 'ERROR',
+            variant: 'error',
+            message: error
+        });
+        this.dispatchEvent(event);
     }
 }

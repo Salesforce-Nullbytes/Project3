@@ -1,7 +1,9 @@
 <template>
     <template if:true={questionSet}>
         <template for:each={questionSet} for:item="question">
-            <c-question-card key={question.url} question-set={question} onsolvequestionset={handleSelect}></c-question-card>
+            <div class="card-container" key={question.url}>
+                <c-question-card  question-set={question} onsolvequestionset={handleSelect}></c-question-card>
+            </div>
         </template>
     </template>
 </template>
