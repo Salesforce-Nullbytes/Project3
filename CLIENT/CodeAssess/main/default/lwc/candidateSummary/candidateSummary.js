@@ -24,16 +24,16 @@ export default class candidateSummary extends LightningElement {
                 this.sum +=  this.score;
 
                 if (this.score > this.maxScore) {
-                    this.maxScore = this.score;
+                    this.maxScore = Math.round(this.score * 100) / 100;
                 }
 
                 if (this.score < this.minScore) {
-                   this.minScore = this.score;
+                   this.minScore = Math.round(this.score * 100) / 100;
                 }
 
             }
  
-            this.averageScore = (this.sum / result.length);
+            this.averageScore = Math.round(((this.sum / result.length) * 100) / 100);
 
             if (this.averageScore > 70) {
                 this.summaryPassFail = 'Pass';
