@@ -1,7 +1,7 @@
 public with sharing class TestSubmitController {
     
     @AuraEnabled
-    public static String submitResponse(String response, String testClass){
+    public static String submitResponse(String response, String testClass, Boolean isTrigger){
         try {
             
             soapSforceCom200608Apex.Apex apex;
@@ -14,7 +14,15 @@ public with sharing class TestSubmitController {
             apex.SessionHeader.sessionId = fetchUserSessionId();
 
             request = new soapSforceCom200608Apex.CompileAndTestRequest();
-            request.classes = new String[]{response,testClass};
+
+            if(isTrigger){
+                request.triggers = new String[]{response};
+                request.classes = new String[]{testClass};
+            }
+            else{
+                request.classes = new String[]{response,testClass};
+            }
+
             request.checkOnly= true;
 
             request.runTestsRequest = new soapSforceCom200608Apex.RunTestsRequest();
@@ -36,7 +44,7 @@ public with sharing class TestSubmitController {
     }
     
     @AuraEnabled
-    public static String compileClass(String response){
+    public static String compileClass(String response, Boolean isTrigger){
         try {
             soapSforceCom200608Apex.Apex apex;
             soapSforceCom200608Apex.CompileAndTestRequest request;
@@ -48,10 +56,19 @@ public with sharing class TestSubmitController {
             apex.SessionHeader.sessionId = fetchUserSessionId();
 
             request = new soapSforceCom200608Apex.CompileAndTestRequest();
-            request.classes = new String[]{response};
+
+            if(isTrigger){
+                request.triggers = new String[]{response};
+            }
+            else{
+                request.classes = new String[]{response};
+            }
+            
             request.checkOnly = true;
 
             result = apex.compileAndTest(request);
+
+            if(isTrigger) return JSON.serializePretty(result.triggers);
 
             return JSON.serializePretty(result.classes);
 

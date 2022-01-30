@@ -26,11 +26,12 @@ export default class AnswerContainer extends LightningElement {
 
         let answerBox = this.template.querySelector('c-answer-box');
         let responseString = answerBox.getCandidateResponse();
+        let isTrigger = question.topic == "Apex Triggers";
 
         this.openModal = false;
         this.loading = true;
 
-        submitResponse({response: responseString, testClass: testClass}).then((result) =>{
+        submitResponse({response: responseString, testClass: testClass, isTrigger: isTrigger}).then((result) =>{
 
             let submitResult = JSON.parse(result); // Result Type = SOAP-API CompileAndTestResult
             let testResult = submitResult.runTestsResult;
@@ -54,12 +55,12 @@ export default class AnswerContainer extends LightningElement {
 
         let answerBox = this.template.querySelector('c-answer-box');
         let resultBox = this.template.querySelector('c-result-box');
-
+        let isTrigger = question.topic == "Apex Triggers";
         let responseString = answerBox.getCandidateResponse();
 
         resultBox.setAsLoading();
         
-        compileResponse({response: responseString}).then((result) =>{
+        compileResponse({response: responseString, isTrigger: isTrigger}).then((result) =>{
 
             let compileResult = JSON.parse(result)[0]; // Result Type = SOAP-API CompileTestResult
 
