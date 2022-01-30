@@ -10,12 +10,17 @@ public class RESTcallout {
 
     private static String getResource(String locator, String param) {
         Http http = new Http();
-        HttpRequest req = RESTutil.getRequest('questionset/', param);
-        if (req == null) {
-            System.debug('Session was invalid. Please try again.');
-            return 'TRY_AGAIN';
+        RESTutil.RequestWrap req = RESTutil.getRequest(locator, param);
+        if (req.category != RESTutil.ResponseCategory.UNSENT) {
+            //   if RESTutil.ResponseCategory.EXPIRED_TOKEN -> Session has been reset behind the scenes. Try again.
+            //   if RESTutil.ResponseCategory.UNAUTHENTICATED -> Session was invalid. Please re-authenticate.
+            return req.category.name();
         }
-        HTTPResponse res = http.send(req);
+        HTTPResponse res = http.send(req.request);
+        RESTutil.ResponseCategory outcome = RESTutil.checkError(res.getBody());
+        if (outcome != RESTutil.ResponseCategory.GOOD) {
+            return outcome.name();
+        }
         return res.getBody();
     }
 }
