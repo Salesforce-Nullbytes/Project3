@@ -14,9 +14,9 @@ export default class candidateInformation extends LightningElement {
         getCandidateInfo({record : this.recordId})
         .then((result) => {
 
-            this.candidateName = result.Candidate__r.Name;
-            this.candidateEmail = result.Candidate__r.Email__c;
-            this.candidatePhoneNumber = result.Candidate__r.PhoneNumber__c;
+            this.candidateName = result.Contact__r.Name;
+            this.candidateEmail = result.Contact__r.Email;
+            this.candidatePhoneNumber = result.Contact__r.Phone;
         })
         .catch((error) => {
             console.log("Failure");
