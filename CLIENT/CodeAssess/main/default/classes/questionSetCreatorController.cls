@@ -9,6 +9,26 @@ public with sharing class questionSetCreatorController {
     }
 
     @AuraEnabled
+    public static Boolean checkDuplicate(String qsName){
+        try {
+            List<QuestionSet__c> qList = [SELECT Name FROM QuestionSet__c];
+            Set<String> nameSet = new Set<String>();
+            for (QuestionSet__c questionSet : qList) {
+                nameSet.add(questionSet.Name);
+            }
+            Integer prevSize = nameSet.size();
+            nameSet.add(qsName);
+            if (nameSet.size() == prevSize) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
     public static Boolean insertQuestionSet(String sName, List<String> nameList){
         try {
             try {
