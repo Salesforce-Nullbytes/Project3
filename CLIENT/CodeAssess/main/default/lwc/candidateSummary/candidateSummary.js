@@ -33,7 +33,6 @@ export default class candidateSummary extends LightningElement {
                 if (this.score < this.minScore) {
                    this.minScore = Math.round(this.score * 100) / 100;
                 }
-
             }
             
             this.startTime = new Date(result[0].CandidateResult__r.StartTime__c);

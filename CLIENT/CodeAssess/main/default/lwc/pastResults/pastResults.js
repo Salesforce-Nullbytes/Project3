@@ -1,6 +1,5 @@
 import { LightningElement } from 'lwc';
 import getCandidateResults from '@salesforce/apex/PastResultsController.getCandidateResults';
-import StayInTouchSubject from '@salesforce/schema/User.StayInTouchSubject';
 
 export default class pastResults extends LightningElement {
 
@@ -13,6 +12,7 @@ export default class pastResults extends LightningElement {
             this.candidateResults = result; 
             
             for (let i = 0; i < result.length; i++) {
+                
                 this.candidateResults[i].attempt = i + 1; 
 
                 let startDate = new Date(this.candidateResults[i].StartTime__c);
