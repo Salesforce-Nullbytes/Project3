@@ -1,0 +1,15 @@
+.container {
+    height: 100%;
+    margin-right: 1rem;
+    /*background-color: white;
+    border-radius: 0.25rem;*/
+}
+
+.heading {
+    padding-bottom: 1rem;
+    font-weight: bold;
+}
+
+.text {
+    padding-top: 1rem;
+}

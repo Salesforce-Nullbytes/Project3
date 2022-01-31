@@ -1,0 +1,6 @@
+<template>
+    <lightning-card title="Score Card">
+    <div class="slds-text-heading_medium " style="margin-bottom:10px;"><span class="scoretitle">Name: {totalScore.testname}</span> <span class="scoretitle">Test Result: {totalScore.percentage}</span > <span class="scoretitle">Time taken: {totalScore.timeTaken}</span></div>
+    <c-score-data question-results={questionResults}></c-score-data>   
+</lightning-card>
+</template>

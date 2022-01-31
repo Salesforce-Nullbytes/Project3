@@ -1,0 +1,19 @@
+<template>
+  <div style="background-color: white; width:100%; height:100%">
+    <div style="height: 40px; background-color:#3264a8"></div>
+    <br>
+    <div class="center" style="width: 500px; padding: 5px; margin-right:auto;margin-left: auto; border: 1px solid #3264a8">
+      <div class="slds-m-around_medium slds-align_absolute-center">
+      <img class="logo" src={candidateLogo} alt={candidateCompanylogo} />  
+      </div>
+      <template if:true={showError}> 
+          <div style="color:red" class="slds-m-around_medium">Error: {errorText}</div>
+        </template>
+        <p style="text-align:center">Get Your Authorization Code <a href={site} target="_blank">here</a></p>
+        <lightning-input class="slds-m-around_medium" type="text" label="Authorization Code" onchange={authCodeChange} placeholder="Enter Code Here"></lightning-input>
+        <lightning-button label="Authenticate" onclick={handleLogin} class="slds-m-around_medium slds-align_absolute-center"></lightning-button>
+    </div>
+    <br>
+    <div style="height:40px; background-color:#3264a8"></div>
+  </div>
+</template>
