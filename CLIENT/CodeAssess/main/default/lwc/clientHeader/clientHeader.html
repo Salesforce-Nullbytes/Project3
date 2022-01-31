@@ -1,15 +1,18 @@
 <template>
     <!-- Client Home Header LWC Component-->
-    <lightning-card title="CurrentUser" icon-name="custom:custom19" class="client-home-header">
-        <template if:true={currentUser}>
-            <div class="slds-m-around_medium">
-                <p>User Name:</p>
-                {currentUser.Name}
-            </div>
-            <div class="slds-m-around_medium">
-                <p>User Id:</p>
-                {currentUser.Id}
-            </div>
-        </template>        
-    </lightning-card>
+    <div class="client-home-header">
+        <lightning-card title="CurrentUser" icon-name="custom:custom19" class="client-home-card">
+            <template if:true={currentUser}>
+                <div class="slds-m-around_medium">
+                    <p>User Name:</p>
+                    {currentUser.Name}
+                </div>
+                <div class="slds-m-around_medium">
+                    <p>User Id:</p>
+                    {currentUser.Id}
+                </div>
+                <c-candidate-summary></c-candidate-summary>
+            </template>        
+        </lightning-card>
+    </div>    
 </template>
