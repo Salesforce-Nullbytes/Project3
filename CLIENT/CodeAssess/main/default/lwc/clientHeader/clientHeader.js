@@ -2,8 +2,6 @@ import { LightningElement, track } from 'lwc';
 import getCurrentUser from "@salesforce/apex/retrieveUserInfo.getCurrentUser";
 
 export default class ClientHeader extends LightningElement {
-    userId = Id;
-
     @track
     currentUser;
 
