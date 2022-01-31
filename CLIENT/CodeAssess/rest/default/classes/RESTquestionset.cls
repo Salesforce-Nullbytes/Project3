@@ -4,14 +4,15 @@ global class RESTquestionset {
     @HttpPost
     global static String submitTest() {
         String requestBody = RestContext.request.requestBody.toString();
-        Submission parsed = (Submission)JSON.deserializeStrict(requestBody, Submission.class);
-
         try {
-            User candidate = [SELECT ContactId FROM User WHERE id = :UserInfo.getUserId() AND ContactId != null LIMIT 1];
-            parseJSONtoSubmission(candidate.ContactId, requestBody);
+            //User candidate = [SELECT ContactId FROM User WHERE id = :UserInfo.getUserId() AND ContactId != null LIMIT 1];
+            //parseJSONtoSubmission(candidate.ContactId, requestBody);
+            Candidate__c cand = [SELECT id FROM Candidate__c LIMIT 1];
+            parseJSONtoSubmission(cand.id, requestBody);
         } catch (Exception e) {
             System.debug('ERROR PARSING SUBMISSION: ' + e.getMessage());
-            return 'FAILED';
+            //return 'FAILED';
+            return requestBody;
         }
         return 'SUCCESS';
     }
