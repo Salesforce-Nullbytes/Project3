@@ -1,35 +1,53 @@
 <template>
 
     <div class='mainContainer'>
-        <template if:true={loadingBool}>
-            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
-        </template>
-    
-        <lightning-input class='elements' type="text" label="Question Name" placeholder="Enter question name..." required onchange={handleNameInput}></lightning-input>
+        <div class='spinnerContainer'>
+            <template if:true={loadingBool}>
+                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+            </template>
+        </div>
+        
+        <lightning-input class='edgeElementTop' type="text" label="Question Name" placeholder="Enter question name..." required onchange={handleNameInput} value={questionName}></lightning-input>
     
         <lightning-textarea 
             name="promptInput" 
-            required value="" 
+            required value={questionPrompt} 
             placeholder="Write question prompt here..." 
             label="Question Prompt" 
             message-when-value-missing="A question with no prompt can not be created." 
             onchange={handlePromptInput}
             class='elements'>
         </lightning-textarea>
-    
-        <lightning-textarea 
-            name="placeholderInput" 
-            value="" 
-            placeholder="Write class placeholder here..." 
-            label="Class Placeholder" 
-            onchange={handlePlaceholderInput}
-            class='elements'>
-        </lightning-textarea>
+        
+        <div class='placeholderInputContainer'>
+             <lightning-textarea 
+                name="placeholderInput" 
+                value={questionPlaceholder} 
+                placeholder="Write class placeholder here..." 
+                label="Class Placeholder" 
+                onchange={handlePlaceholderInput}
+                class='classPlaceholderInput'>
+            </lightning-textarea>
+
+            <h1>OR</h1>
+
+            <lightning-input 
+                type="file" 
+                accept=".cls"
+                label="Question Placeholder Class File" onchange={handlePlaceholderFileUpload}
+                class='elements'>
+            </lightning-input>
+        
+            <template if:true={placeholderFileData}>
+                <lightning-pill label={placeholderFileData.fileName} onremove={handlePlaceholderPillRemove}></lightning-pill>
+            </template>
+        </div>
+       
     
         <lightning-combobox
             name="topic"
             label="Question Topic"
-            value=""
+            value={questionTopic}
             placeholder="Select Question Topic"
             options={topicOptions}
             onchange={handleTopicSelection} 
@@ -38,16 +56,15 @@
     
         <lightning-input type="file" 
                 accept=".cls"
-                label="Attachment" onchange={handleFileUpload}
+                label="Question Test Class File" onchange={handleFileUpload}
                 class='elements'>
         </lightning-input>
     
         <template if:true={fileData}>
-            <p class='elements'>{fileData.fileName}</p>
+            <lightning-pill label={fileData.fileName} onremove={handleTestClassPillRemove}></lightning-pill>
         </template>
     
-    
-        <lightning-button label="Submit" title="Non-primary action" onclick={handleSubmitClicked} class="elements slds-m-left_x-small"></lightning-button>
+        <lightning-button label="Submit" title="Non-primary action" onclick={handleSubmitClicked} class="edgeElementBottom slds-m-left_x-small"></lightning-button>
     </div>
     
 </template>
