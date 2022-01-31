@@ -10,7 +10,7 @@ public with sharing class PastResultsController {
     public static List <CandidateResult__c> getCandidateResults() {
         
         //For testing purposes
-        return [SELECT ID, PassPercentage__c, StartTime__c, SubmitTime__c FROM CandidateResult__c WHERE Status__c = 'Completed' AND Contact__r.id = '0031100001szMeAAAU'];
+        return [SELECT ID, PassPercentage__c, StartTime__c, SubmitTime__c FROM CandidateResult__c WHERE Status__c = 'Completed' AND Contact__c =: contactId() ];
 
         // ID currentContactID = contactId();
         // return [SELECT ID, PassPercentage__c, StartTime__c, SubmitTime__c FROM CandidateResult__c WHERE Status__c = 'Completed' AND Contact__r.id = :currentContactID];
