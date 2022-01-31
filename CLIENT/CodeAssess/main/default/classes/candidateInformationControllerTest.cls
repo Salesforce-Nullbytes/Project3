@@ -36,7 +36,7 @@ public class candidateInformationControllerTest {
         ID resultId = newCandidateResult.id;
 
         Question__c newQuestion = new Question__c();
-        newQuestion.QuestionTopic__c = 'LWC';
+        newQuestion.QuestionTopic__c = 'SOQL';
         insert newQuestion;
 
         candidateQuestionResult__c newCandidateQuestionResult = new candidateQuestionResult__c();
@@ -61,7 +61,7 @@ public class candidateInformationControllerTest {
         ID resultId = newCandidateResult.id;
 
         Question__c newQuestion = new Question__c();
-        newQuestion.QuestionTopic__c = 'LWC';
+        newQuestion.QuestionTopic__c = 'SOQL';
         insert newQuestion;
 
         candidateQuestionResult__c newCandidateQuestionResult = new candidateQuestionResult__c();
@@ -73,7 +73,7 @@ public class candidateInformationControllerTest {
         //Run Method
         List <CandidateQuestionResult__c> testCandidateQuestionResult = candidateInformationController.getCandidateTestResults(resultId);
         System.assertEquals('Pass', testCandidateQuestionResult[0].Result__c);
-        System.assertEquals('LWC', testCandidateQuestionResult[0].Question__r.QuestionTopic__c);
+        System.assertEquals('SOQL', testCandidateQuestionResult[0].Question__r.QuestionTopic__c);
         Test.stopTest();
     }
 }
