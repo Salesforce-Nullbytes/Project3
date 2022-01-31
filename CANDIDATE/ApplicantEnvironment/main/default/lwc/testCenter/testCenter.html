@@ -1,0 +1,6 @@
+<template>
+    <div class="container fullheight">
+        <c-question-explorer if:false={questionList} onquestionselect = {handleSelect}></c-question-explorer>
+        <c-test-environment if:true={questionList} question-list = {questionList} onfinishset={handleSetFinish}></c-test-environment>
+    </div>
+</template>

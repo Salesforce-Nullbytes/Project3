@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteSiteSetting xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Code Assess Server for api calls</description>
+    <disableProtocolSecurity>false</disableProtocolSecurity>
+    <isActive>true</isActive>
+    <url>https://sandbox-dxghxfghdfgjcxfbj-developer-edition.cs92.force.com</url>
+</RemoteSiteSetting>
