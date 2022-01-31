@@ -2,7 +2,7 @@ public with sharing class candidateInformationController {
     
     @AuraEnabled
     public static CandidateResult__c getCandidateInfo(id record) {
-        return [SELECT Candidate__r.Name, Candidate__r.Email__c, Candidate__r.PhoneNumber__c FROM  CandidateResult__c WHERE Id = :record LIMIT 1];
+        return [SELECT Contact__r.Name, Contact__r.Email, Contact__r.Phone FROM  CandidateResult__c WHERE Id = :record LIMIT 1];
     }
 
     @AuraEnabled

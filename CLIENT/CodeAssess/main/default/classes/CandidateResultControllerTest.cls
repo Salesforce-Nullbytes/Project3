@@ -5,14 +5,14 @@ public class CandidateResultControllerTest
     @isTest
     public static void TestSOQL() 
 	{
-        Candidate__c newCandidate = new Candidate__c();
-        newCandidate.Name = 'Test';
+        Contact newCandidate = new Contact();
+        newCandidate.FirstName = 'Test';
         insert newCandidate;
 
 		CandidateResult__c candr = new CandidateResult__c();
 		// Add all required fields
 		//candr.ID;
-        candr.Candidate__c = newCandidate.ID;
+        candr.Contact__c = newCandidate.ID;
         //candr.Candidate__r.Name = 'Test Taker';
 		//candr.Name='PASS';
         //candr.PassPercentage__c = '';
