@@ -1,0 +1,26 @@
+<template>
+    <div class="container">
+        <h3>Past Results</h3>
+        <br/>
+        <table>
+            <tr>
+                <th>Attempt #</th>
+                <th>Start Time</th>
+                <th>Submit Time</th>
+                <th>Pass/Fail</th>
+                <th>Overall Score</th>
+            </tr>
+
+            <template for:each={candidateResults} for:item="test" for:index="index">
+                <tr key={candidateResults.id}>
+                        <td>{test.attempt}</td>
+                        <td>{test.Start}</td>
+                        <td>{test.Submit}</td>
+                        <td>{test.PassFail}</td>
+                        <td>{test.PassPercentage__c}</td>
+                </tr>
+            </template>
+
+        </table>
+    </div>
+</template>
