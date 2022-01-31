@@ -18,11 +18,7 @@ export default class AnswerContainer extends LightningElement {
     }
 
     handleSubmission(event){
-        let testClass = '@isTest private class TestT1{' +
-        '    public static testmethod void test1(){' +
-        '      System.assert(warmup.myString=='+'\'HELLO\''+');' +
-        '    }' +
-        '}';
+        
 
         let answerBox = this.template.querySelector('c-answer-box');
         let responseString = answerBox.getCandidateResponse();
@@ -31,7 +27,7 @@ export default class AnswerContainer extends LightningElement {
         this.openModal = false;
         this.loading = true;
 
-        submitResponse({response: responseString, testClass: testClass, isTrigger: isTrigger}).then((result) =>{
+        submitResponse({response: responseString, testClass: this.question.testFile, isTrigger: isTrigger}).then((result) =>{
 
             let submitResult = JSON.parse(result); // Result Type = SOAP-API CompileAndTestResult
             let testResult = submitResult.runTestsResult;
