@@ -10,9 +10,10 @@
     ],
     "name": "CANDIDATE",
     "namespace": "",
-    "sfdcLoginUrl": "https://cunning-unicorn-b9ru4d-dev-ed.my.salesforce.com/",
+    "sfdcLoginUrl": "https://resilient-otter-3lcoo0-dev-ed.my.salesforce.com/",
     "sourceApiVersion": "52.0",
     "packageAliases": {
-        "AppplicantEnvironment": "0Ho8c000000fxXWCAY"
+        "AppplicantEnvironment": "0Ho8c000000fxXWCAY",
+        "AppplicantEnvironment@0.1.0-1": "04t8c000000xG9cAAE"
     }
 }

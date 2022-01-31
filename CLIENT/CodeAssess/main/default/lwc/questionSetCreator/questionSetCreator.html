@@ -1,3 +1,17 @@
 <template>
-    
+    <div class="slds-p-around_medium lgc-bg">
+        <template if:true={showLoading}>
+            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+        </template>
+
+        <lightning-pill-container items={addedQuestionsList} onitemremove={handlePillRemove}></lightning-pill-container>
+
+        <lightning-input value='' type="text" label="Question Set Name" placeholder="Enter question set name..." required onchange={handleNameInput}></lightning-input>
+
+        <template if:true={qTreeFilledBool}>
+            <lightning-tree items={questionTree} header="Questions" onselect={handleOnSelect}></lightning-tree>
+        </template>
+
+        <lightning-button label="Submit" title="Non-primary action" onclick={handleSubmitClicked} class="elements slds-m-left_x-small"></lightning-button>
+    </div>
 </template>

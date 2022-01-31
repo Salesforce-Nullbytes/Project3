@@ -1,7 +1,10 @@
 import { LightningElement, wire } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
+import CodeAssessLogo from '@salesforce/resourceUrl/CodeAssesslogo';
 
 export default class AuthCode extends LightningElement {
+
+   CodeAssessLogo = CodeAssessLogo;
 
    currentPageReference = null; 
    urlStateParameters = null;

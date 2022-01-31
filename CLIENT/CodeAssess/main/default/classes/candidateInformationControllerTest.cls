@@ -3,15 +3,16 @@ public class candidateInformationControllerTest {
     
     @isTest
     public static void runGetCandidiateInfo() {
+        Test.startTest();
         //Setup
-        Candidate__c newCandidate = new Candidate__c();
-        newCandidate.Name = 'Test';
-        newCandidate.Email__c = 'Test@gmail.com';
-        newCandidate.PhoneNumber__c = '1231231234';
+        Contact newCandidate = new Contact();
+        newCandidate.LastName = 'Test';
+        newCandidate.Email = 'Test@gmail.com';
+        newCandidate.Phone = '1231231234';
         insert newCandidate;
 
         candidateResult__c newCandidateResult = new candidateResult__c();
-        newCandidateResult.Candidate__c = newCandidate.id;
+        newCandidateResult.Contact__c = newCandidate.id;
         insert newCandidateResult;
 
         ID resultId = newCandidateResult.id;
@@ -19,20 +20,17 @@ public class candidateInformationControllerTest {
         //Run Method
         candidateResult__c testCandidateResult = candidateInformationController.getCandidateInfo(resultId);
 
-        System.assertEquals('Test', testCandidateResult.Candidate__r.Name);
-        System.assertEquals('test@gmail.com', testCandidateResult.Candidate__r.Email__c);
-        System.assertEquals('1231231234', testCandidateResult.Candidate__r.PhoneNumber__c);
+        System.assertEquals('Test', testCandidateResult.Contact__r.Name);
+        System.assertEquals('test@gmail.com', testCandidateResult.Contact__r.Email);
+        System.assertEquals('1231231234', testCandidateResult.Contact__r.Phone);
+        Test.stopTest();
     }
 
     @isTest
     public static void runGetCandidateSummary() {
+        Test.startTest();
         //Setup
-        Candidate__c newCandidate = new Candidate__c();
-        newCandidate.Name = 'Test';
-        insert newCandidate;
-
         candidateResult__c newCandidateResult = new candidateResult__c();
-        newCandidateResult.Candidate__c = newCandidate.id;
         insert newCandidateResult;
 
         ID resultId = newCandidateResult.id;
@@ -50,17 +48,14 @@ public class candidateInformationControllerTest {
         //Run Method
         List <CandidateQuestionResult__c> testCandidateQuestionResult = candidateInformationController.getCandidateSummary(resultId);
         System.assertEquals('Pass', testCandidateQuestionResult[0].Result__c);
+        Test.stopTest();
     }
 
     @isTest
     public static void runCandidateTestResults() {
+        Test.startTest();
         //Setup
-        Candidate__c newCandidate = new Candidate__c();
-        newCandidate.Name = 'Test';
-        insert newCandidate;
-
         candidateResult__c newCandidateResult = new candidateResult__c();
-        newCandidateResult.Candidate__c = newCandidate.id;
         insert newCandidateResult;
 
         ID resultId = newCandidateResult.id;
@@ -79,5 +74,6 @@ public class candidateInformationControllerTest {
         List <CandidateQuestionResult__c> testCandidateQuestionResult = candidateInformationController.getCandidateTestResults(resultId);
         System.assertEquals('Pass', testCandidateQuestionResult[0].Result__c);
         System.assertEquals('LWC', testCandidateQuestionResult[0].Question__r.QuestionTopic__c);
+        Test.stopTest();
     }
 }

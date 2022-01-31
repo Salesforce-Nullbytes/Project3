@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
-    <contactEmail>zelizach@gmail.com</contactEmail>
+    <contactEmail>admin@revaturecodeassess.com</contactEmail>
     <label>Code Assess Candidate</label>
     <oauthConfig>
-        <callbackUrl>https://sandbox-dxghxfghdfgjcxfbj-developer-edition.cs92.force.com/main/s/authorization</callbackUrl>
+        <callbackUrl>https://www.yourexperiencesite.com/main/s/authorization</callbackUrl>
         <consumerKey></consumerKey>
         <idTokenConfig>
             <idTokenIncludeAttributes>false</idTokenIncludeAttributes>
