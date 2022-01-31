@@ -1,6 +1,8 @@
 import { LightningElement, track } from 'lwc';
 import fetchQuestionList from '@salesforce/apex/questionSetCreatorController.fetchQuestionList';
 import insertQuestionSet from '@salesforce/apex/questionSetCreatorController.insertQuestionSet';
+import checkDupe from '@salesforce/apex/questionSetCreatorController.checkDuplicate';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class QuestionSetCreator extends LightningElement {
     questionTree = [];
@@ -8,6 +10,7 @@ export default class QuestionSetCreator extends LightningElement {
     @track
     addedQuestionsList = [];
     qSetName;
+    showLoading = false;
 
     constructor() {
         super();
@@ -23,7 +26,7 @@ export default class QuestionSetCreator extends LightningElement {
                     name: item.Name,
                     disabled: false,
                     expanded: false,
-                    metatext: item.Prompt__c.substring(0, 25)
+                    metatext: item.Prompt__c.substring(0, 50) + '...'
                 });
             });
 
@@ -42,10 +45,25 @@ export default class QuestionSetCreator extends LightningElement {
 
     handleOnSelect(event) {
         if (event.detail.name != 'INTERNAL_USE_topic') {
-            this.addedQuestionsList.push({
-                label: event.detail.name,
-                name: event.detail.name
+            let dupeFound = false;
+            //duplicate detection
+            this.addedQuestionsList.forEach(item => {
+                if (item.name == event.detail.name) {
+                    let event = new ShowToastEvent({
+                        title: 'Duplicate',
+                        message: 'That question is already selected!',
+                        variant: 'warning'
+                    });
+                    this.dispatchEvent(event);
+                    dupeFound = true;
+                }
             });
+            if (!dupeFound) {
+                this.addedQuestionsList.push({
+                    label: event.detail.name,
+                    name: event.detail.name
+                });
+            }
         }
     }
 
@@ -55,17 +73,49 @@ export default class QuestionSetCreator extends LightningElement {
     }
 
     handleSubmitClicked() {
+        this.showLoading = true;
+
         let paramList = [];
         this.addedQuestionsList.forEach(item => {
             paramList.push(item.name);
         });
-        insertQuestionSet({sName: this.qSetName, nameList: paramList}).then( result => {
-            if (result) {
-                //TODO IMPLEMENT
-                console.log('reached');
-            } else {
 
+        checkDupe({qsName: this.qSetName}).then(result => {
+            console.log(result);
+            console.log(this.qSetName);
+            let msg;
+            if (result) {
+                msg = 'A set with that name already exists!';
+            } else if (paramList.length == 0) {
+                msg = 'You need at least one question selected to make a question set!'
+            } else if (this.qSetName == '' || this.qSetName == undefined || this.qSetName == null) {
+                msg = 'Question set name is required!';
             }
+
+            if (msg) {
+                let event = new ShowToastEvent({
+                    title: 'Error',
+                    message: msg,
+                    variant: 'error'
+                });
+                this.dispatchEvent(event);
+                this.showLoading = false;
+                return;
+            }
+
+            insertQuestionSet({sName: this.qSetName, nameList: paramList}).then( result => {
+                if (result) {
+                    let event = new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Question set added!',
+                        variant: 'success'
+                    });
+                    this.dispatchEvent(event);
+                } else {
+    
+                }
+                this.showLoading = false;
+            });
         });
     }
 

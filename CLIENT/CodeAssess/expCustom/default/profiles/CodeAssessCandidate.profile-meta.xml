@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
+        <apexClass>CandidateResultController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ChangePasswordController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -85,6 +89,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>RESTQuestionSetTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RESTquestionset</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SetupCodeAssess</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -105,10 +117,141 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>candidateInformationController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>candidateInformationControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>testQuestionCreatorController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <custom>true</custom>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateMethodResult__c.MethodName__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateMethodResult__c.Outcome__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateQuestionResult__c.MethodsFailed__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateQuestionResult__c.MethodsPassed__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateQuestionResult__c.MethodsSkipped__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateQuestionResult__c.Question__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateQuestionResult__c.Result__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateQuestionResult__c.StartTime__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateQuestionResult__c.SubmitTime__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateQuestionResult__c.TotalMethods__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateResult__c.Contact__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateResult__c.PassPercentage__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateResult__c.Question_Set__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateResult__c.QuestionsPassed__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateResult__c.StartTime__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateResult__c.Status__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateResult__c.SubmitTime__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CandidateResult__c.TotalQuestions__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.PlaceHolder__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.Prompt__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.TestClassText__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <layoutAssignments>
+        <layout>CandidateMethodResult__c-Candidate Method Result Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CandidateQuestionResult__c-QuestionResult Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CandidateResult__c-CandidateResult Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>QuestionSetEntry__c-QuestionSetEntry Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>QuestionSet__c-QuestionSet Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Question__c-Question Layout</layout>
+    </layoutAssignments>
     <pageAccesses>
         <apexPage>AnswersHome</apexPage>
         <enabled>false</enabled>
@@ -197,6 +340,30 @@
         <apexPage>UnderConstruction</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
+    <tabVisibilities>
+        <tab>CandidateMethodResult__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>CandidateQuestionResult__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>CandidateResult__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>QuestionSetEntry__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>QuestionSet__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Question__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
     <userLicense>Customer Community Plus Login</userLicense>
     <userPermissions>
         <enabled>true</enabled>
