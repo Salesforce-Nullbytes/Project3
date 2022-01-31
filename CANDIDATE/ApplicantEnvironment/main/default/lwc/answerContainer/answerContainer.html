@@ -1,7 +1,7 @@
 <template>
-    <div class="mainContainer">
+    <div class="mainContainer" if:true={question}>
         <div class="answerContainer">
-            <c-answer-box method={question.method}></c-answer-box>
+            <c-answer-box method={question.placeholder}></c-answer-box>
         </div>
         <div class="resultContainer">
             <c-result-box></c-result-box>

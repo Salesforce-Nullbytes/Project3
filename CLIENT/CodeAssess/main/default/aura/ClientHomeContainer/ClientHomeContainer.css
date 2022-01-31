@@ -1,0 +1,36 @@
+.THIS .btn{
+    color: black;
+    background-color: rgb(231,231,231);
+    border:none;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+.THIS .btn:hover{
+    background-color: green;
+    cursor: pointer;
+}
+
+/*.THIS .btn:focus{
+    background-color: black;
+    color: white;
+} */
+
+.THIS .home-btn{
+    background-color:rgb(18,61,92);
+    color:white;
+}
+
+.THIS .bgrFocus {
+    background-color:rgb(18,61,92);
+    color:white;
+}
+
+.THIS .bgrNonFocus {
+    color: black;
+    background-color: rgb(231,231,231);
+}
+
+.THIS .summary-buttons{
+    display: flex;
+    flex-direction: row;
+}

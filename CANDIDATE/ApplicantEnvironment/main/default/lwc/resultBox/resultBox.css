@@ -20,7 +20,7 @@
 }
 
 .errorContainer{
-    background-color: rgba(255, 0, 0, 0.2);
+    background-color: rgba(255, 0, 0, 0.15);
     padding: 1rem;
     margin-top: 1rem;
 }
