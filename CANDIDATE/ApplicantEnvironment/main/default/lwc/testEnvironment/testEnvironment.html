@@ -1,0 +1,19 @@
+<template>
+    <div if:true={showResults} >
+        <c-score-card total-score={results}></c-score-card>
+        <div class="finish-btn-container">
+            <lightning-button variant="neutral" label="Finish" onclick={returnToQuestionExplorer}></lightning-button>
+        </div>
+        
+    </div>
+    <template if:false={showResults}>
+        <div class="slds-grid main">
+            <div class="slds-col slds-size_1-of-5" if:true={question}>
+                <c-question-container question={question}></c-question-container>
+            </div>
+            <div class="slds-col slds-size_4-of-5">
+                <c-answer-container question={question} onsubmission={addSubmission}></c-answer-container>
+            </div>
+        </div>
+    </template>
+</template>

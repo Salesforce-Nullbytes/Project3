@@ -1,0 +1,18 @@
+div {
+    display: flex;
+    height: 100%;
+}
+
+textarea {
+    height: 100%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+}
+
+.textarea-container{
+    height: 100%;
+}
+
+.input{
+    flex: 1;
+}

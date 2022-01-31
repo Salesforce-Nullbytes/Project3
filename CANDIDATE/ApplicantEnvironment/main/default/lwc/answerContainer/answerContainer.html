@@ -1,3 +1,39 @@
 <template>
-    
+    <div class="mainContainer" if:true={question}>
+        <div class="answerContainer">
+            <c-answer-box method={question.placeholder}></c-answer-box>
+        </div>
+        <div class="resultContainer">
+            <c-result-box></c-result-box>
+        </div>
+        <div class="buttonContainer">
+            <c-action-buttons onsubmitresponse={showModal} onruncode={handleCodeRun}></c-action-buttons>
+        </div>
+    </div>
+    <template if:true={openModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading" aria-modal="true" aria-describedby="modal-content" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large" variant="bare-inverse" onclick={closeModal} class="slds-modal__close"></lightning-button-icon>
+                    <h2 id="modal-heading" class="slds-modal__title slds-hyphenate">Question Submission Confirmation</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content">
+                    <p>Are you sure you want to submit this question? 
+                        You will be unable to return to this question.</p>
+                    <br />
+                    <p>Click 'Submit' if you would like to move onto the next question.</p>
+                    <br />
+                    <p>Click 'Cancel' if you would like to continue working.</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" title="Cancel" onclick={closeModal} ></lightning-button>
+                    <lightning-button label="Submit" variant="brand" title="Submit" onclick={handleSubmission} ></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={loading} >
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
 </template>

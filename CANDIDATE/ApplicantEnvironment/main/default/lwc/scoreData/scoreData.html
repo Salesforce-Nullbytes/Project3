@@ -1,0 +1,46 @@
+<template>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered " aria-label="Example default base table of Opportunities">
+        <thead >
+        <tr class="slds-line-height_reset">
+        <th class="th" scope="col">
+        <div class="slds-truncate" title="Question">Question</div>
+        </th>
+        <th class="th" scope="col">
+        <div class="slds-truncate" title="Passed">Passed</div>
+        </th>
+        <th class="th" scope="col">
+        <div class="slds-truncate" title="Failed">Failed</div>
+        </th>
+        <th class="th" scope="col">
+        <div class="slds-truncate" title="Time">Time</div>
+        </th>
+        <th class="th" scope="col">
+        <div class="slds-truncate" title="Pass%">Pass%</div>
+        </th>
+        </tr>
+        </thead>
+        <tbody>
+            <template for:each={questionResults} for:item="questions" for:index="index">
+                <tr class="slds-hint-parent" key={questions.Id}>
+                    <td>
+                        {questions.name}
+                    </td>
+                    <td>
+                        {questions.passed}
+                    </td>
+                    <td>
+                        {questions.failed}
+                    </td>
+                    <td>
+                        {questions.time}
+                    </td>
+                    <td>
+                        {questions.score}
+                    </td>
+
+                </tr>
+    
+            </template>
+        </tbody>
+        </table> 
+</template>

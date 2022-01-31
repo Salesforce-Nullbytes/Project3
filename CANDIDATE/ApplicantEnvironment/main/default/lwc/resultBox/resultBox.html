@@ -1,0 +1,30 @@
+<template>
+    
+        <lightning-card  title="Compile Results" class="header">
+            <lightning-button variant="base" icon-name={toggleLabel} slot="actions" onclick={toggleResultsPanel}></lightning-button>
+                <div if:true={showResults}>
+                    <div if:true={showCompileResults}>
+                        <div if:true={results.success} class="resultsContainer">
+                            <p>Compile Reults: <span class="slds-text-color_success">SUCCESSFUL</span></p>
+                        </div>
+                        <div if:false={results.success} class="resultsContainer">
+                            <h1 class="slds-text-heading_medium slds-text-color_error">Compilation Error:</h1>
+                            <div class="errorContainer slds-card slds-text-heading_small slds-text-color_error">
+                                <p>{results.description}</p>
+                                <p>Line {results.line}:{results.column}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <template if:false={showCompileResults} >
+                        <div class="resultsContainer slds-text-heading_small">
+                            <i>No code has been run.. </i>
+                        </div>
+                    </template>
+
+                    <template if:true={loading} >
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+                </div>
+        </lightning-card>
+</template>
