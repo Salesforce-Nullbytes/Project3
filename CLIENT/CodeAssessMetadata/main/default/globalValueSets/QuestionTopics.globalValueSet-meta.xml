@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Apex Fundamentals</fullName>
+        <default>false</default>
+        <label>Apex Fundamentals</label>
+    </customValue>
+    <customValue>
         <fullName>Apex Triggers</fullName>
         <default>false</default>
         <label>Apex Triggers</label>
@@ -14,11 +19,6 @@
         <fullName>Events</fullName>
         <default>false</default>
         <label>Events</label>
-    </customValue>
-    <customValue>
-        <fullName>LWC</fullName>
-        <default>false</default>
-        <label>LWC</label>
     </customValue>
     <customValue>
         <fullName>SOQL</fullName>
