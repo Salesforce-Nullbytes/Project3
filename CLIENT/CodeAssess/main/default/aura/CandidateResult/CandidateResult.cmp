@@ -1,8 +1,12 @@
-<aura:component controller="CandidateResultController" implements="flexipage:availableForAllPageTypes" access="global"   >
+<aura:component controller="CandidateResultController"  implements="flexipage:availableForAllPageTypes" access="global"   >
     <aura:attribute name="candidateresults" type="List" />
     <aura:attribute name="key" type="String" /> 
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />        
-    <lightning:input type="text" name="searchKey" label="Enter" aura:id="searchKey" onchange="{!c.searchKeyChange}" placeholder="Search" />          
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+    <!--Code for combobox line12-16-->  
+       
+    <lightning:input type="text" name="searchKey" label="Enter" aura:id="searchKey" onchange="{!c.searchKeyChange}" placeholder="Search" /> 
+          
     <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
         <thead>
             <tr class="slds-text-heading_label">              
@@ -32,6 +36,10 @@
                     <!--<td><div class="slds-truncate" title="{!candidateresult.TotalQuestions__c}">{!candidateresult.TotalQuestions__c}</div></td>-->            
                 </tr>
             </aura:iteration>
+        </tbody>
+    </table>
+    
+               </aura:iteration>
         </tbody>
     </table>
 </aura:component>
