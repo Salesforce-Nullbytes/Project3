@@ -21,9 +21,9 @@
         </thead>
         <tbody>
             <template for:each={questionResults} for:item="questions" for:index="index">
-                <tr class="slds-hint-parent" key={questions.Id}>
+                <tr class="slds-hint-parent" key={questions.name}>
                     <td>
-                        {questions.name}
+                        Question {index}
                     </td>
                     <td>
                         {questions.passed}
