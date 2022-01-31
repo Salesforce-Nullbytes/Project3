@@ -14,7 +14,7 @@ export default class AnswerContainer extends LightningElement {
 
     //First question start time is null bc no call to startQuestion
     renderedCallback(){
-        if(!this.startTime) this.startTime = new Date(Date.now());
+        if(!this.startTime) this.startTime = this.getFormattedDateTime();
     }
 
     handleSubmission(event){
@@ -83,7 +83,7 @@ export default class AnswerContainer extends LightningElement {
 
     @api startQuestion(question){
         this.question = question;
-        this.startTime = new Date(Date.now());
+        this.startTime = this.getFormattedDateTime();
         let answerBox = this.template.querySelector('c-answer-box');
         let resultBox = this.template.querySelector('c-result-box');
         answerBox.method = this.question.placeholder;
@@ -97,7 +97,7 @@ export default class AnswerContainer extends LightningElement {
             url : this.question.identifier,
             name : this.question.name,
             startTime : this.startTime,
-            endTime : new Date(Date.now()),
+            endTime : this.getFormattedDateTime(),
             methods : []
         }
 
@@ -151,6 +151,18 @@ export default class AnswerContainer extends LightningElement {
         }
 
         return submissionElement;
+    }
+
+    addLeadingZeros(n) {
+        if (n <= 9) {
+          return "0" + n;
+        }
+        return n
+    }
+
+    getFormattedDateTime(){
+        let currentDatetime = new Date(Date.now())
+        return currentDatetime.getFullYear() + "-" + this.addLeadingZeros(currentDatetime.getMonth() + 1) + "-" + this.addLeadingZeros(currentDatetime.getDate()) + " " + this.addLeadingZeros(currentDatetime.getHours()) + ":" + this.addLeadingZeros(currentDatetime.getMinutes()) + ":" + this.addLeadingZeros(currentDatetime.getSeconds())
     }
 
     showModal(){

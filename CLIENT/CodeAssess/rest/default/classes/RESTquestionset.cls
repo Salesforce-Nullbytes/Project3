@@ -1,14 +1,14 @@
 @RestResource(urlMapping='/questionset/*')
 global class RESTquestionset {
+    private static ID getContactId() {
+        return [SELECT ContactId FROM User WHERE id = :UserInfo.getUserId() LIMIT 1]?.ContactId;
+    }
 
     @HttpPost
     global static String submitTest() {
         String requestBody = RestContext.request.requestBody.toString();
         try {
-            //User candidate = [SELECT ContactId FROM User WHERE id = :UserInfo.getUserId() AND ContactId != null LIMIT 1];
-            //parseJSONtoSubmission(candidate.ContactId, requestBody);
-            Candidate__c cand = [SELECT id FROM Candidate__c LIMIT 1];
-            parseJSONtoSubmission(cand.id, requestBody);
+            parseJSONtoSubmission(requestBody);
         } catch (Exception e) {
             System.debug('ERROR PARSING SUBMISSION: ' + e.getMessage());
             //return 'FAILED';
@@ -17,7 +17,8 @@ global class RESTquestionset {
         return 'SUCCESS';
     }
 
-    public static void parseJSONtoSubmission(ID candidateId, String requestBody) {
+    public static void parseJSONtoSubmission(String requestBody) {
+        //String body = '{"url":"a051F00000AvWODQA3","startTime":"2017-07-25 00:00:00","endTime":"2017-07-25 00:00:00","questions":[{"url":"a061F0000064vKRQAY","startTime":"2017-07-25 00:00:00","endTime":"2017-07-25 00:00:00","methods":[{"name":"method name","outcome":"PASS"},{"name":"method name","outcome":"PASS"}]},{"url":"a061F0000064vKSQAY","startTime":"2017-07-25 00:00:00","endTime":"2017-07-25 00:00:00","methods":[{"name":"method name","outcome":"FAIL"},{"name":"method name","outcome":"PASS"}]}]}';
         Submission parsed = (Submission)JSON.deserializeStrict(requestBody, submission.class);
         // System.debug('url: ' + parsed.url);
         // System.debug('startTime: ' + parsed.startTime);
@@ -25,7 +26,7 @@ global class RESTquestionset {
         // System.debug('questions:');
 
         CandidateResult__c result = new CandidateResult__c();
-        result.Candidate__c = candidateId;
+        result.Contact__c = getContactId();
         result.Question_Set__c = parsed.url;
         result.StartTime__c = Datetime.valueOf(parsed.startTime);
         result.SubmitTime__c = Datetime.valueOf(parsed.endTime);
@@ -71,26 +72,6 @@ global class RESTquestionset {
         }
         Insert methods;
     }
-
-    public static void testPost() {
-        // // CREATE REQUEST
-        // HttpRequest req = new HttpRequest(); 
-        // req.setMethod('POST');
-        // req.setHeader('Content-Type','application/x-www-form-urlencoded');
-        // req.setEndpoint('junk');
-
-        Candidate__c cand = [SELECT id FROM Candidate__c LIMIT 1];
-
-        // SET REQUEST BODY
-        String body = '{"url":"a051F00000AvWODQA3","startTime":"2017-07-25 00:00:00","endTime":"2017-07-25 00:00:00","questions":[{"url":"a061F0000064vKRQAY","startTime":"2017-07-25 00:00:00","endTime":"2017-07-25 00:00:00","methods":[{"name":"method name","outcome":"PASS"},{"name":"method name","outcome":"PASS"}]},{"url":"a061F0000064vKSQAY","startTime":"2017-07-25 00:00:00","endTime":"2017-07-25 00:00:00","methods":[{"name":"method name","outcome":"FAIL"},{"name":"method name","outcome":"PASS"}]}]}';        
-        
-        // req.setBody(body);
-        // System.debug(body);
-        // System.debug(req);
-
-        parseJSONtoSubmission(cand.id, body);
-    }    
-
     @httpGet
     global static String getList() {
         RestRequest req = RestContext.request;

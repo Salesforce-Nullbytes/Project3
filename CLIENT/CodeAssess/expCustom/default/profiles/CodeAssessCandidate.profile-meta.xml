@@ -181,7 +181,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>CandidateResult__c.Candidate__c</field>
+        <field>CandidateResult__c.Contact__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -221,21 +221,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Candidate__c.Email__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Candidate__c.PhoneNumber__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Candidate__c.User__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Question__c.PlaceHolder__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -257,9 +242,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>CandidateResult__c-CandidateResult Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Candidate__c-Candidate Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>QuestionSetEntry__c-QuestionSetEntry Layout</layout>
@@ -368,10 +350,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>CandidateResult__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Candidate__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
