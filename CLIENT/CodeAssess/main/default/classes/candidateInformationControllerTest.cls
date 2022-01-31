@@ -3,14 +3,16 @@ public class candidateInformationControllerTest {
     
     @isTest
     public static void runGetCandidiateInfo() {
+        Test.startTest();
         //Setup
         Contact newCandidate = new Contact();
+        newCandidate.LastName = 'Test';
         newCandidate.Email = 'Test@gmail.com';
         newCandidate.Phone = '1231231234';
         insert newCandidate;
 
         candidateResult__c newCandidateResult = new candidateResult__c();
-        newCandidateResult.Contact__r.id = newCandidate.id;
+        newCandidateResult.Contact__c = newCandidate.id;
         insert newCandidateResult;
 
         ID resultId = newCandidateResult.id;
@@ -21,16 +23,14 @@ public class candidateInformationControllerTest {
         System.assertEquals('Test', testCandidateResult.Contact__r.Name);
         System.assertEquals('test@gmail.com', testCandidateResult.Contact__r.Email);
         System.assertEquals('1231231234', testCandidateResult.Contact__r.Phone);
+        Test.stopTest();
     }
 
     @isTest
     public static void runGetCandidateSummary() {
+        Test.startTest();
         //Setup
-        Contact newCandidate = new Contact();
-        insert newCandidate;
-
         candidateResult__c newCandidateResult = new candidateResult__c();
-        newCandidateResult.Contact__r.id = newCandidate.id;
         insert newCandidateResult;
 
         ID resultId = newCandidateResult.id;
@@ -48,16 +48,14 @@ public class candidateInformationControllerTest {
         //Run Method
         List <CandidateQuestionResult__c> testCandidateQuestionResult = candidateInformationController.getCandidateSummary(resultId);
         System.assertEquals('Pass', testCandidateQuestionResult[0].Result__c);
+        Test.stopTest();
     }
 
     @isTest
     public static void runCandidateTestResults() {
+        Test.startTest();
         //Setup
-        Contact newCandidate = new Contact();
-        insert newCandidate;
-
         candidateResult__c newCandidateResult = new candidateResult__c();
-        newCandidateResult.Contact__r.id = newCandidate.id;
         insert newCandidateResult;
 
         ID resultId = newCandidateResult.id;
@@ -76,5 +74,6 @@ public class candidateInformationControllerTest {
         List <CandidateQuestionResult__c> testCandidateQuestionResult = candidateInformationController.getCandidateTestResults(resultId);
         System.assertEquals('Pass', testCandidateQuestionResult[0].Result__c);
         System.assertEquals('LWC', testCandidateQuestionResult[0].Question__r.QuestionTopic__c);
+        Test.stopTest();
     }
 }
