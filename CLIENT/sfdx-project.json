@@ -15,7 +15,7 @@
             "default": true,
             "dependencies": [
                 {
-                    "package": "CodeAssessMetadata@0.1.0-3"
+                    "package": "CodeAssessMetadata@0.1.0-4"
                 }
             ]
         }
