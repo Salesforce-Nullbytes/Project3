@@ -24,15 +24,101 @@ export default class candidateChart extends LightningElement {
     @track
     statNamesList = [];
 
+    //average scores for each topic
+    apexTriggersScore = 0;
+    auraComponentsScore = 0;
+    eventsScore = 0;
+    lwcScore = 0;
+    soqlScore = 0;
+    soslScore = 0;
+
+    //keep track of how many scores in each topic for average
+    apexTriggersCount = 0;
+    auraComponentsCount = 0;
+    eventsCount = 0;
+    lwcCount = 0;
+    soqlCount = 0;
+    soslCount = 0;
+
+    count = 0;
+
+
+
+
     loadSummary() {
         getCandidateTestResults({record : this.recordId})
         .then((result) => {
 
+            // gather totals for each question topic
             for (let i = 0; i < result.length; i++) {
-                this.statNamesList[i] = result[i].Question__r.QuestionTopic__c;
-                this.statList[i] = result[i].MethodsPassed__c / result[i].TotalMethods__c * 100;
+                switch (result[i].Question__r.QuestionTopic__c) {
+                    case "Apex Triggers":
+                        this.apexTriggersScore += (result[i].MethodsPassed__c / result[i].TotalMethods__c * 100);
+                        this.apexTriggersCount++;
+                        break;
+                    case "Aura Components":
+                        this.auraComponentsScore += (result[i].MethodsPassed__c / result[i].TotalMethods__c * 100);
+                        this.auraComponentsCount++;
+                        break;
+                    case "Events":
+                        this.eventsScore += (result[i].MethodsPassed__c / result[i].TotalMethods__c * 100);
+                        this.eventsCount++;
+                        break;
+                    case "LWC":
+                        this.lwcScore += (result[i].MethodsPassed__c / result[i].TotalMethods__c * 100);
+                        this.lwcCount++;
+                        break;
+                    case "SOQL":
+                        this.soqlScore += (result[i].MethodsPassed__c / result[i].TotalMethods__c * 100);
+                        this.soqlCount++;
+                        break;
+                    case "SOSL":
+                        this.soslScore += (result[i].MethodsPassed__c / result[i].TotalMethods__c * 100);
+                        this.soslCount++;
+                        break;
+                    default:
+                        console.log("Error: Unrecognized topic");
+                }
             }
 
+            //add to chart lists
+            if (this.apexTriggersCount > 0) {
+                this.statNamesList[this.count] = "Apex Triggers";
+                this.statList[this.count] = this.apexTriggersScore / this.apexTriggersCount;
+                this.count++;
+            }
+
+            if (this.auraComponentsCount > 0) {
+                this.statNamesList[this.count] = "Aura Components";
+                this.statList[this.count] = this.auraComponentsScore / this.auraComponentsCount;
+                this.count++;
+            }
+
+            if (this.eventsCount > 0) {
+                this.statNamesList[this.count] = "Events";
+                this.statList[this.count] = this.eventsScore / this.eventsCount;
+                this.count++;
+            }
+
+            if (this.lwcCount > 0) {
+                this.statNamesList[this.count] = "LWC";
+                this.statList[this.count] = this.lwcScore / this.lwcCount;
+                this.count++;
+            }
+
+            if (this.soqlCount > 0) {
+                this.statNamesList[this.count] = "SOQL";
+                this.statList[this.count] = this.soqlScore / this.soqlCount;
+                this.count++;
+            }
+
+            if (this.soslCount > 0) {
+                this.statNamesList[this.count] = "SOSL";
+                this.statList[this.count] = this.soslScore / this.soslCount;
+                this.count++;
+            }
+
+            //draw graph
             this.graphCenter[0] = Math.round(this.graphSize/2);
             this.graphCenter[1] = Math.round(this.graphSize/2);
             this.drawStatGraph();
