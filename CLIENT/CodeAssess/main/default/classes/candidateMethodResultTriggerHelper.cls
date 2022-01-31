@@ -15,7 +15,7 @@ public with sharing class candidateMethodResultTriggerHelper {
             }
         }
 
-        INSERT cqrList;
+        UPDATE cqrList;
     }
     public static void onAfterInsert(List<CandidateMethodResult__c> cmrList) {
         onAfterUpdate(cmrList);
