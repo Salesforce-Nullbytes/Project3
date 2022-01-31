@@ -5,13 +5,20 @@ public class candidateInformationControllerTest {
     public static void runGetCandidiateInfo() {
         //Setup
         Contact newCandidate = new Contact();
+<<<<<<< HEAD
         newCandidate.FirstName = 'Test';
+=======
+>>>>>>> 3dd562e735ff498767f002736db7a160d49f14e8
         newCandidate.Email = 'Test@gmail.com';
         newCandidate.Phone = '1231231234';
         insert newCandidate;
 
         candidateResult__c newCandidateResult = new candidateResult__c();
+<<<<<<< HEAD
         newCandidateResult.Contact__c = newCandidate.id;
+=======
+        newCandidateResult.Contact__r.id = newCandidate.id;
+>>>>>>> 3dd562e735ff498767f002736db7a160d49f14e8
         insert newCandidateResult;
 
         ID resultId = newCandidateResult.id;
@@ -19,7 +26,11 @@ public class candidateInformationControllerTest {
         //Run Method
         candidateResult__c testCandidateResult = candidateInformationController.getCandidateInfo(resultId);
 
+<<<<<<< HEAD
         System.assertEquals('Test', testCandidateResult.Contact__r.FirstName);
+=======
+        System.assertEquals('Test', testCandidateResult.Contact__r.Name);
+>>>>>>> 3dd562e735ff498767f002736db7a160d49f14e8
         System.assertEquals('test@gmail.com', testCandidateResult.Contact__r.Email);
         System.assertEquals('1231231234', testCandidateResult.Contact__r.Phone);
     }
@@ -28,11 +39,18 @@ public class candidateInformationControllerTest {
     public static void runGetCandidateSummary() {
         //Setup
         Contact newCandidate = new Contact();
+<<<<<<< HEAD
         newCandidate.FirstName = 'Test';
         insert newCandidate;
 
         candidateResult__c newCandidateResult = new candidateResult__c();
         newCandidateResult.Contact__c = newCandidate.id;
+=======
+        insert newCandidate;
+
+        candidateResult__c newCandidateResult = new candidateResult__c();
+        newCandidateResult.Contact__r.id = newCandidate.id;
+>>>>>>> 3dd562e735ff498767f002736db7a160d49f14e8
         insert newCandidateResult;
 
         ID resultId = newCandidateResult.id;
@@ -56,11 +74,18 @@ public class candidateInformationControllerTest {
     public static void runCandidateTestResults() {
         //Setup
         Contact newCandidate = new Contact();
+<<<<<<< HEAD
         newCandidate.FirstName = 'Test';
         insert newCandidate;
 
         candidateResult__c newCandidateResult = new candidateResult__c();
         newCandidateResult.Contact__c = newCandidate.id;
+=======
+        insert newCandidate;
+
+        candidateResult__c newCandidateResult = new candidateResult__c();
+        newCandidateResult.Contact__r.id = newCandidate.id;
+>>>>>>> 3dd562e735ff498767f002736db7a160d49f14e8
         insert newCandidateResult;
 
         ID resultId = newCandidateResult.id;
