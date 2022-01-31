@@ -54,6 +54,29 @@ public class RESTutil {
 
         return new RequestWrap(ResponseCategory.UNSENT, req);
     }
+    public static RequestWrap postRequest(String resource, String jsonBody) {
+        ServerInfo__mdt server = getServerInfo();
+        String locator = server.ServerUrl__c + 'main/services/apexrest/';
+
+        String token = AuthUtil.getAccessToken();
+        if (token == 'UNAUTHENTICATED') {
+            System.debug('ERROR: No Access Token for GET request!');
+            return new RequestWrap(ResponseCategory.UNAUTHENTICATED, null);
+        }
+        if (token == 'EXPIRED_TOKEN') {
+            return new RequestWrap(ResponseCategory.EXPIRED_TOKEN, null);
+        }
+
+        String fullResource = locator + resource;
+        HttpRequest req = new HttpRequest(); 
+        req.setMethod('POST');
+        req.setHeader('Content-Type','application/json');
+        req.setEndpoint(fullResource);
+        req.setHeader('Authorization', 'OAuth ' + token);
+        req.setBody(jsonBody);
+
+        return new RequestWrap(ResponseCategory.UNSENT, req);
+    }
     public static RequestWrap authRequest(RequestType type, String code) {
         Boolean authorize = false;
         Boolean refresh = false;
@@ -151,10 +174,15 @@ public class RESTutil {
                         System.debug('authorization code is already expired');
                         return ResponseCategory.EXPIRED_AUTH_CODE;
                     }
+                    if (errorDescription == 'token validity expired') {
+                        return AuthUtil.deauthenticate();
+                    }
+                }
+                when else {
+                    System.debug('Unrecognized response error: ' + error);
+                    return ResponseCategory.UNRECOGNIZED;
                 }
             }
-            System.debug('Unrecognized response error: ' + error);
-            return ResponseCategory.UNRECOGNIZED;
         }
         if (message != null) {
             if (message == 'Session expired or invalid') {

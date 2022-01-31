@@ -1,35 +1,94 @@
 @RestResource(urlMapping='/questionset/*')
 global class RESTquestionset {
 
-    //@HttpPost
-    global static String submitTest(String requestBody) {
-        //String requestBody = RestContext.request.requestBody.toString();
-        submission parsed = (submission)JSON.deserializeStrict(requestBody, submission.class);
-        System.debug(parsed.start);
-        System.debug(parsed.endTime);
-        for (MethodResult result : parsed.methods) {
-            System.debug('  ' + result.name);
-            System.debug('  ' + result.outcome);
+    @HttpPost
+    global static String submitTest() {
+        String requestBody = RestContext.request.requestBody.toString();
+        try {
+            //User candidate = [SELECT ContactId FROM User WHERE id = :UserInfo.getUserId() AND ContactId != null LIMIT 1];
+            //parseJSONtoSubmission(candidate.ContactId, requestBody);
+            Candidate__c cand = [SELECT id FROM Candidate__c LIMIT 1];
+            parseJSONtoSubmission(cand.id, requestBody);
+        } catch (Exception e) {
+            System.debug('ERROR PARSING SUBMISSION: ' + e.getMessage());
+            //return 'FAILED';
+            return requestBody;
         }
-        return 'hi';
+        return 'SUCCESS';
+    }
+
+    public static void parseJSONtoSubmission(ID candidateId, String requestBody) {
+        Submission parsed = (Submission)JSON.deserializeStrict(requestBody, submission.class);
+        // System.debug('url: ' + parsed.url);
+        // System.debug('startTime: ' + parsed.startTime);
+        // System.debug('endTime: ' + parsed.endTime);
+        // System.debug('questions:');
+
+        CandidateResult__c result = new CandidateResult__c();
+        result.Candidate__c = candidateId;
+        result.Question_Set__c = parsed.url;
+        result.StartTime__c = Datetime.valueOf(parsed.startTime);
+        result.SubmitTime__c = Datetime.valueOf(parsed.endTime);
+        Insert result;
+
+        CandidateQuestionResult__c[] questions = new CandidateQuestionResult__c[]{};
+        for (QuestionResult q : parsed.questions) {
+            // System.debug('.  url: ' + q.url);
+            // System.debug('.  startTime: ' + q.startTime);
+            // System.debug('.  endTime: ' + q.endTime);
+            // System.debug('.  methods:');
+
+            CandidateQuestionResult__c qResult = new CandidateQuestionResult__c();
+            qResult.CandidateResult__c = result.id;
+            qResult.Question__c = q.url;
+            qResult.StartTime__c = Datetime.valueOf(q.startTime);
+            qResult.SubmitTime__c = Datetime.valueOf(q.endTime);
+            questions.add(qResult);
+
+            // for (MethodResult m : q.methods) {
+            //     System.debug('.     name: ' + m.name);
+            //     System.debug('.     outcome: ' + m.outcome);
+            // }
+        }
+        Insert questions;
+
+        // Map Question ID (from submission) to associated CandidateQuestionResult parent ID
+        Map<String, ID> mapQuestionToResultID = new Map<String, ID>();
+        for (CandidateQuestionResult__c qResult : questions) {
+            mapQuestionToResultID.put(qResult.Question__c, qResult.id);
+        }
+
+        CandidateMethodResult__c[] methods = new CandidateMethodResult__c[]{};
+        for (QuestionResult q : parsed.questions) {
+            for (MethodResult m : q.methods) {
+                CandidateMethodResult__c mResult = new CandidateMethodResult__c();
+                mResult.CandidateQuestionResult__c = mapQuestionToResultID.get(q.url);
+                mResult.MethodName__c = m.name;
+                mResult.Outcome__c = m.outcome;
+
+                methods.add(mResult);
+            }
+        }
+        Insert methods;
     }
 
     public static void testPost() {
-        // CREATE REQUEST
-        HttpRequest req = new HttpRequest(); 
-        req.setMethod('POST');
-        req.setHeader('Content-Type','application/x-www-form-urlencoded');
-        req.setEndpoint('junk');
+        // // CREATE REQUEST
+        // HttpRequest req = new HttpRequest(); 
+        // req.setMethod('POST');
+        // req.setHeader('Content-Type','application/x-www-form-urlencoded');
+        // req.setEndpoint('junk');
+
+        Candidate__c cand = [SELECT id FROM Candidate__c LIMIT 1];
 
         // SET REQUEST BODY
-        String body = '{"start":"(datetime)","endTime":"(datetime)","methods":[{"name":"name 1","outcome":"PASS"},{"name":"name 2","outcome":"FAIL"},{"name":"name 3","outcome":"PASS"}]}';        
-        req.setBody(body);
+        String body = '{"url":"a051F00000AvWODQA3","startTime":"2017-07-25 00:00:00","endTime":"2017-07-25 00:00:00","questions":[{"url":"a061F0000064vKRQAY","startTime":"2017-07-25 00:00:00","endTime":"2017-07-25 00:00:00","methods":[{"name":"method name","outcome":"PASS"},{"name":"method name","outcome":"PASS"}]},{"url":"a061F0000064vKSQAY","startTime":"2017-07-25 00:00:00","endTime":"2017-07-25 00:00:00","methods":[{"name":"method name","outcome":"FAIL"},{"name":"method name","outcome":"PASS"}]}]}';        
+        
+        // req.setBody(body);
+        // System.debug(body);
+        // System.debug(req);
 
-        System.debug(body);
-        System.debug(req);
-
-        submitTest(body);
-
+        parseJSONtoSubmission(cand.id, body);
     }    
 
     @httpGet
@@ -141,11 +200,17 @@ global class RESTquestionset {
     
     // Helpers for JSON deserialization
     private class Submission {
-        String start;
+        String url;
+        String startTime;
+        String endTime;
+        public List<QuestionResult> questions;
+    }
+    private class QuestionResult {
+        String url;
+        String startTime;
         String endTime;
         public List<MethodResult> methods;
     }
-    
     private class MethodResult {
         String name;
         String outcome;

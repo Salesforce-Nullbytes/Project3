@@ -5,6 +5,7 @@ public class AuthUtil {
     // public static Boolean isAuthenticated()
     // public static String getAccessToken()
     // public static RESTutil.ResponseCategory refreshSession()
+    // public static RESTutil.ResponseCategory deauthenticate()
 
     // Utility items
     private enum AuthStatus {UNAUTHENTICATED, EXPIRED, VALID}
@@ -55,12 +56,16 @@ public class AuthUtil {
                 return RESTutil.ResponseCategory.EXPIRED_TOKEN.name();
             }
             System.debug('Refresh unsuccessful. Try re-authenticating.');
-            authInfo.Status__c = 'Unauthenticated';
-            Update authInfo;
-            return RESTutil.ResponseCategory.UNAUTHENTICATED.name();
+            return deauthenticate().name();
         }
         // Valid.
         return authInfo.AccessToken__c;
+    }
+    public static RESTutil.ResponseCategory deauthenticate() {
+        AuthenticationInfo__c authInfo = getAuthInfo();
+        authInfo.Status__c = 'Unauthenticated';
+        Update authInfo;
+        return RESTutil.ResponseCategory.UNAUTHENTICATED;
     }
 
     // Helper Methods
