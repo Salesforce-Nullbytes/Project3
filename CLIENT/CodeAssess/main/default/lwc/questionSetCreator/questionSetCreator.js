@@ -61,7 +61,8 @@ export default class QuestionSetCreator extends LightningElement {
         });
         insertQuestionSet({sName: this.qSetName, nameList: paramList}).then( result => {
             if (result) {
-
+                //TODO IMPLEMENT
+                console.log('reached');
             } else {
 
             }
