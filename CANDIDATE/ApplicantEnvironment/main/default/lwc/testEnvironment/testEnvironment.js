@@ -1,11 +1,12 @@
 import { LightningElement, api } from 'lwc';
-import submitResults from "@salesforce/apex/AsyncSendSubmissions.enqueueSubmission";
+import submitResults from "@salesforce/apex/RESTcallout.postSubmission";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class TestEnvironment extends LightningElement {
 
     @api questionList;
     question;
+    questionName;
     questionIndex = 0;
     submissions;
     results;
@@ -15,7 +16,7 @@ export default class TestEnvironment extends LightningElement {
         super();
         this.submissions = {
             url : null,
-            startTime : new Date(Date.now()),
+            startTime : this.getFormattedDateTime(),
             endTime : null,
             questions : []
         }
@@ -23,6 +24,7 @@ export default class TestEnvironment extends LightningElement {
 
     renderedCallback(){
         this.question = this.questionList.questions[this.questionIndex];
+        this.questionName = "Question " + (this.questionIndex + 1);
     }
 
     addSubmission(event){
@@ -40,13 +42,11 @@ export default class TestEnvironment extends LightningElement {
     }
 
     sendTestDataToClient(){
-        this.submissions.endTime = new Date(Date.now());
+        this.submissions.endTime = this.getFormattedDateTime();
         this.submissions.url = this.questionList.url;
-        
-        console.log("sending data to client...");
-        console.log(this.submissions);
 
-        submitResults({resultsParam: this.submissions}).then(() => {
+        submitResults({jsonBody: JSON.stringify(this.submissions)}).then((result) => {
+            console.log(result);
             this.showSuccessToast();
         }).catch(error => {
             this.showErrorToast(error);
@@ -63,7 +63,7 @@ export default class TestEnvironment extends LightningElement {
         let results = {
             testname : this.questionList.name,
             percentage : null,
-            timeTaken: this.getMinutesElapsed(this.submissions.startTime,this.submissions.endTime),
+            timeTaken: this.getMinutesElapsed(new Date(this.submissions.startTime),new Date(this.submissions.endTime)),
             questions : []
         }
 
@@ -71,11 +71,15 @@ export default class TestEnvironment extends LightningElement {
         let totalTests = 0;
 
         this.submissions.questions.forEach(element => {
+
+            let testTime = new Date(element.startTime);
+            console.log("Time: "+testTime);
+
             let resultElement = {
-                name: element.name,
+                name: null,
                 passed: 0,
                 failed: 0,
-                time: this.getMinutesElapsed(element.startTime, element.endTime),
+                time: this.getMinutesElapsed(new Date(element.startTime), new Date(element.endTime)),
                 score: 0
             }
             element.methods.forEach(method =>{
@@ -90,6 +94,7 @@ export default class TestEnvironment extends LightningElement {
             });
             let tests = resultElement.passed + resultElement.failed;
             resultElement.score = tests == 0 ? 0 : Math.round((resultElement.passed / tests)*100);
+            resultElement.name = ""+resultElement.passed + resultElement.failed + resultElement.time + resultElement.score;
             results.questions.push(resultElement);
         });
 
@@ -105,6 +110,19 @@ export default class TestEnvironment extends LightningElement {
         let diffMs = (end - start);
         return Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
     }
+
+    addLeadingZeros(n) {
+        if (n <= 9) {
+          return "0" + n;
+        }
+        return n
+    }
+
+    getFormattedDateTime(){
+        let currentDatetime = new Date(Date.now())
+        return currentDatetime.getFullYear() + "-" + this.addLeadingZeros(currentDatetime.getMonth() + 1) + "-" + this.addLeadingZeros(currentDatetime.getDate()) + " " + this.addLeadingZeros(currentDatetime.getHours()) + ":" + this.addLeadingZeros(currentDatetime.getMinutes()) + ":" + this.addLeadingZeros(currentDatetime.getSeconds())
+    }
+      
 
     returnToQuestionExplorer(){
         this.showResults = false;

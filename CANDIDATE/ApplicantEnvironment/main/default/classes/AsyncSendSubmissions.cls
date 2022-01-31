@@ -1,20 +1,16 @@
-public class AsyncSendSubmissions implements Queueable{
+public class AsyncSendSubmissions{
 
-    private Object results;
-    
-    public AsyncSendSubmissions(Object resultParam) {
-        results = resultParam;
-    }
 
-    public void Execute(QueueableContext context) {
-         //RESTcallout.sendResults? (results);
-         System.debug('waiting for api team integration');
+    @Future(callout=true)
+    public static void sendSubmission(String results) {
+        System.debug(results);
+         RESTcallout.postSubmission(results);
     }
 
     @AuraEnabled
-    public static void enqueueSubmission(Object resultsParam) {
+    public static void enqueueSubmission(String resultsParam) {
         try {
-            System.enqueueJob(new AsyncSendSubmissions(resultsParam));
+            sendSubmission(resultsParam);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
