@@ -25,6 +25,6 @@
     <!--Show test summary page-->
     <aura:If isTrue="{!v.showTestSummary}">
         <div>This is candidate result page</div>
-        <c:candidateSummary></c:candidateSummary>
+        <c:pastResults></c:pastResults>
     </aura:If>
 </aura:component>
