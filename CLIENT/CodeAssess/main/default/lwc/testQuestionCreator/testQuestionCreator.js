@@ -9,15 +9,16 @@ export default class TestQuestionCreator extends LightningElement {
     //holds uploaded file's data
     @track
     fileData;
-    questionTopic;
-    questionName;
-    questionPrompt;
-    questionPlaceholder;
+    questionTopic ='';
+    questionName = '';
+    questionPrompt = '';
+    questionPlaceholder = '';
     recordId; //currently unused
     @track
     topicOptions;
     disabledAllBool = false;
     loadingBool = false;
+    placeholderFileData;
 
     constructor() {
         super();
@@ -46,6 +47,20 @@ export default class TestQuestionCreator extends LightningElement {
         reader.readAsDataURL(uFile);
     }
 
+    handlePlaceholderFileUpload(event) {
+        const uFile2 = event.target.files[0];
+        let reader = new FileReader();
+        reader.onload = () => {
+            let base64 = reader.result.split(',')[1];
+            this.placeholderFileData = {
+                'fileName': uFile2.name,
+                'base64': base64
+            }
+        }
+        reader.readAsDataURL(uFile2);
+        this.template.querySelector('.classPlaceholderInput').disabled = true;
+    }
+
     handleTopicSelection(event) {
         this.questionTopic = event.detail.value;
     }
@@ -65,16 +80,24 @@ export default class TestQuestionCreator extends LightningElement {
                 this.showAlert('Error', 'There is already a question or file name + category combination with the same name!', 'error');
                 return;
             }
-    
-            InsertQuestion({qName: this.questionName, topic: this.questionTopic, placeholder: this.questionPlaceholder, prompt: this.questionPrompt, rawText: this.fileData['base64']}).then(result => {
+            
+            let passPlaceholder = this.questionPlaceholder;
+            if (this.placeholderFileData) {
+                passPlaceholder = atob(this.placeholderFileData['base64']);
+                
+            }
+            InsertQuestion({qName: this.questionName, topic: this.questionTopic, placeholder: passPlaceholder, prompt: this.questionPrompt, rawText: this.fileData['base64']}).then(result => {
                 this.recordId = result;
-
-                console.log(this.fileData['base64']);
-                console.log(this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName']);
                 LinkFile({base64: this.fileData['base64'], filename: this.questionTopic.replace(' ', '_') + '_' + this.fileData['fileName'], recordId: this.recordId}).then(result => {
 
                     if (result == 'success') {
                         this.showAlert('Success', 'Question successfully created!', 'success');
+                        this.questionName = '';
+                        this.questionPlaceholder = '';
+                        this.questionPrompt = '';
+                        this.questionTopic = '';
+                        this.fileData = null;
+                        this.template.querySelector('.classPlaceholderInput').disabled = false;
                     } else {
                         this.showAlert('Error', 'An error occured: ' + result, 'error');
                     }
@@ -88,18 +111,10 @@ export default class TestQuestionCreator extends LightningElement {
 
     disableAllInput() {
         this.disabledAllBool = true;
-        this.template.querySelector('lightning-textarea').setAttribute('disabled', '');
-        this.template.querySelector('lightning-combobox').setAttribute('disabled', '');
-        this.template.querySelector('lightning-input').setAttribute('disabled', '');
-        this.template.querySelector('lightning-button').setAttribute('disabled', '');
     }
 
     enableAllInput() {
         this.disabledAllBool = false;
-        this.template.querySelector('lightning-textarea').removeAttribute('disabled');
-        this.template.querySelector('lightning-combobox').removeAttribute('disabled');
-        this.template.querySelector('lightning-input').removeAttribute('disabled');
-        this.template.querySelector('lightning-button').removeAttribute('disabled');
     }
 
     showAlert(alertTitle, alertMessageStr, variant) {
@@ -115,6 +130,15 @@ export default class TestQuestionCreator extends LightningElement {
         this.loadingBool = false;
 
         this.enableAllInput();
+    }
+
+    handlePlaceholderPillRemove() {
+        this.placeholderFileData = null;
+        this.template.querySelector('.classPlaceholderInput').disabled = false;
+    }
+
+    handleTestClassPillRemove() {
+        this.fileData = null;
     }
 
     handlePromptInput(event) {

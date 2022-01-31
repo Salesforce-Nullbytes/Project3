@@ -1,8 +1,13 @@
 public with sharing class questionSetCreatorController {
     @AuraEnabled
-    public static List<Question__c> fetchQuestionList(){
+    public static List<Question__c> fetchQuestionList(String searchTerm){
         try {
-            return [SELECT Name, QuestionTopic__c, Prompt__c FROM Question__c];
+            if (searchTerm != '') {
+                searchTerm = String.escapeSingleQuotes(searchTerm);
+                return Database.query('SELECT Name, QuestionTopic__c, Prompt__c FROM Question__c WHERE Name LIKE \'%' + searchTerm + '%\'');
+            } else {
+                return [SELECT Name, QuestionTopic__c, Prompt__c FROM Question__c];
+            }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
