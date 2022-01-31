@@ -1,14 +1,25 @@
 public class RESTutil {
     public enum RequestType {AUTHORIZE, REFRESH, GET}
     public enum ResponseCategory {
-        GOOD, 
+        GOOD,
+        UNSENT,
+        BAD_GRANT_TYPE,
         BAD_AUTH_CODE, 
         INVALID_CLIENT, 
         EXPIRED_TOKEN, 
         EXPIRED_AUTH_CODE, 
         ALREADY_VALID,
         AUTHORIZATION_USED,
+        UNAUTHENTICATED,
         UNRECOGNIZED
+    }
+    public class RequestWrap {
+        public ResponseCategory category;
+        public HttpRequest request;
+        RequestWrap(ResponseCategory cat, HttpRequest req) {
+            category = cat;
+            request = req;
+        }
     }
     private static ServerInfo__mdt getServerInfo() {
         // Code Assess Server Info
@@ -22,18 +33,17 @@ public class RESTutil {
     }
 
     // HttpRequest Generators:
-    public static HttpRequest getRequest(String resource, String param) {
+    public static RequestWrap getRequest(String resource, String param) {
         ServerInfo__mdt server = getServerInfo();
         String locator = server.ServerUrl__c + 'main/services/apexrest/';
 
         String token = AuthUtil.getAccessToken();
-        System.debug(token);
-        if (token == null) {
+        if (token == 'UNAUTHENTICATED') {
             System.debug('ERROR: No Access Token for GET request!');
-            return null;
+            return new RequestWrap(ResponseCategory.UNAUTHENTICATED, null);
         }
         if (token == 'EXPIRED_TOKEN') {
-            return null;
+            return new RequestWrap(ResponseCategory.EXPIRED_TOKEN, null);
         }
 
         String fullResource = locator + resource + param;
@@ -42,9 +52,32 @@ public class RESTutil {
         req.setEndpoint(fullResource);
         req.setHeader('Authorization', 'OAuth ' + token);
 
-        return req;
+        return new RequestWrap(ResponseCategory.UNSENT, req);
     }
-    public static HttpRequest authRequest(RequestType type, String code) {
+    public static RequestWrap postRequest(String resource, String jsonBody) {
+        ServerInfo__mdt server = getServerInfo();
+        String locator = server.ServerUrl__c + 'main/services/apexrest/';
+
+        String token = AuthUtil.getAccessToken();
+        if (token == 'UNAUTHENTICATED') {
+            System.debug('ERROR: No Access Token for GET request!');
+            return new RequestWrap(ResponseCategory.UNAUTHENTICATED, null);
+        }
+        if (token == 'EXPIRED_TOKEN') {
+            return new RequestWrap(ResponseCategory.EXPIRED_TOKEN, null);
+        }
+
+        String fullResource = locator + resource;
+        HttpRequest req = new HttpRequest(); 
+        req.setMethod('POST');
+        req.setHeader('Content-Type','application/json');
+        req.setEndpoint(fullResource);
+        req.setHeader('Authorization', 'OAuth ' + token);
+        req.setBody(jsonBody);
+
+        return new RequestWrap(ResponseCategory.UNSENT, req);
+    }
+    public static RequestWrap authRequest(RequestType type, String code) {
         Boolean authorize = false;
         Boolean refresh = false;
 
@@ -60,7 +93,7 @@ public class RESTutil {
             }
             when else {
                 System.debug('ERROR: grant_type cannot be ' + type);
-                return null;
+                return new RequestWrap(ResponseCategory.BAD_GRANT_TYPE, null);
             }
         }
 
@@ -87,20 +120,17 @@ public class RESTutil {
         }
         req.setBody(body);
         
-        return req;
+        return new RequestWrap(ResponseCategory.UNSENT, req);
     }
 
     // All types of contingencies on REST connection result
     public static ResponseCategory checkError(String response) {
-        JSONParser parser = JSON.createParser(response);
-
-        String accessToken;
-        String refreshToken;
-        
+        JSONParser parser = JSON.createParser(response);        
         String error;
         String errorDescription;
         String message;
         String errorCode;
+
         while (parser.NextToken() != null) {
             if (parser.getCurrentToken() == JSONToken.FIELD_NAME) {
                 switch on parser.getText() {
@@ -144,10 +174,15 @@ public class RESTutil {
                         System.debug('authorization code is already expired');
                         return ResponseCategory.EXPIRED_AUTH_CODE;
                     }
+                    if (errorDescription == 'token validity expired') {
+                        return AuthUtil.deauthenticate();
+                    }
+                }
+                when else {
+                    System.debug('Unrecognized response error: ' + error);
+                    return ResponseCategory.UNRECOGNIZED;
                 }
             }
-            System.debug('Unrecognized response error: ' + error);
-            return ResponseCategory.UNRECOGNIZED;
         }
         if (message != null) {
             if (message == 'Session expired or invalid') {
@@ -155,14 +190,17 @@ public class RESTutil {
                     System.debug('Expired session, updating status');
                     // Cannot send a new HttpRequest in same transaction after DML
                     // Must indicate to user that the transaction must be retried.
-                    AuthUtil.expireToken();
+                    // AuthUtil.expireToken();
+                    // // Newly set to expired... cannot potentially make callout yet
+                    // //AuthUtil.getAccessToken(); // Makes callout to refresh since now expired.
+                    AuthUtil.refreshSession();
                     return ResponseCategory.EXPIRED_TOKEN;
                 }
                 // If refresh token fails, the Server admin deleted the connection.
                 System.debug('Please get a new authentication code. Session was killed.');
                 return ResponseCategory.EXPIRED_AUTH_CODE;
             }
-            System.debug('Unrecognized response error: ' + error);
+            System.debug('Unrecognized response error: ' + message);
             return ResponseCategory.UNRECOGNIZED;
         }
         return ResponseCategory.GOOD;

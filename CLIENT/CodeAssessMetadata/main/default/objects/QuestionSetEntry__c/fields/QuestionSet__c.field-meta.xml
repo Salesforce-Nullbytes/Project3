@@ -4,7 +4,6 @@
     <externalId>false</externalId>
     <label>QuestionSet</label>
     <referenceTo>QuestionSet__c</referenceTo>
-    <relationshipLabel>QuestionSetEntries</relationshipLabel>
     <relationshipName>QuestionSetEntries</relationshipName>
     <relationshipOrder>0</relationshipOrder>
     <reparentableMasterDetail>false</reparentableMasterDetail>

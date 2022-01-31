@@ -4,6 +4,8 @@ public class AuthUtil {
     // public static Boolean tokenValid()
     // public static Boolean isAuthenticated()
     // public static String getAccessToken()
+    // public static RESTutil.ResponseCategory refreshSession()
+    // public static RESTutil.ResponseCategory deauthenticate()
 
     // Utility items
     private enum AuthStatus {UNAUTHENTICATED, EXPIRED, VALID}
@@ -26,39 +28,47 @@ public class AuthUtil {
     }
     public static void expireToken() {
         AuthenticationInfo__c authInfo = getAuthInfo();
-        authInfo.Status__c = 'Expired';
+        authInfo.Status__c = 'Expired';        
         Update authInfo;
     }
     public static Boolean isAuthenticated() {
         AuthenticationInfo__c authInfo = getAuthInfo();
-        if (enumStatus(authInfo.Status__c) != AuthStatus.UNAUTHENTICATED) {
+        if (authInfo == null) authInfo = makeAuthInfo();
+        if (enumStatus(authInfo.Status__c) == AuthStatus.UNAUTHENTICATED) {
             return false;
         }
         return true;
+    }
+    public static RESTutil.ResponseCategory refreshSession() {
+        AuthenticationInfo__c authInfo = getAuthInfo();
+        return serverAuthentication(RESTutil.RequestType.REFRESH, authInfo.RefreshToken__c);
     }
     public static String getAccessToken() {
         AuthenticationInfo__c authInfo = getAuthInfo();
         if (authInfo == null || enumStatus(authInfo.Status__c) == AuthStatus.UNAUTHENTICATED) {
             System.debug('ERROR: Cannot retrieve access token when unauthenticated!');
-            return null;
+            return RESTutil.ResponseCategory.UNAUTHENTICATED.name();
         }
         if (enumStatus(authInfo.Status__c) == AuthStatus.EXPIRED) {
             System.debug('Access Token Expired! Resetting...');
-            if (refreshAccessToken(authInfo.RefreshToken__c) == RESTutil.ResponseCategory.GOOD) {
+            if (refreshSession() == RESTutil.ResponseCategory.GOOD) {
                 System.debug('Successful refresh. Try callout again in a new transaction.');
                 return RESTutil.ResponseCategory.EXPIRED_TOKEN.name();
             }
-            System.debug('Refresh unsuccessful. Try callout again in a new transaction.');
-            return RESTutil.ResponseCategory.UNRECOGNIZED.name();
+            System.debug('Refresh unsuccessful. Try re-authenticating.');
+            return deauthenticate().name();
         }
         // Valid.
         return authInfo.AccessToken__c;
     }
+    public static RESTutil.ResponseCategory deauthenticate() {
+        AuthenticationInfo__c authInfo = getAuthInfo();
+        authInfo.Status__c = 'Unauthenticated';
+        Update authInfo;
+        return RESTutil.ResponseCategory.UNAUTHENTICATED;
+    }
 
     // Helper Methods
-    private static RESTutil.ResponseCategory refreshAccessToken(String refreshCode) {
-        return serverAuthentication(RESTutil.RequestType.REFRESH, refreshCode);
-    }
     private static AuthenticationInfo__c getAuthInfo() {
         ID currUser = UserInfo.getUserId();
         AuthenticationInfo__c[] auths = [
@@ -71,15 +81,41 @@ public class AuthUtil {
         }
         return null;
     }
-    private static RESTutil.ResponseCategory setInfoFromJSON(String jsonAuthResponse) {
+    private static AuthenticationInfo__c makeAuthInfo() {
+        ID currUser = UserInfo.getUserId();
+        AuthenticationInfo__c auth = new AuthenticationInfo__c();
+        auth.Status__c = 'Unauthenticated';
+        auth.User__c = currUser;
+        Insert auth;
+        return auth;
+    }
+    
+    // Handler for validating with server
+    @testVisible
+    private static RESTutil.ResponseCategory serverAuthentication(RESTutil.RequestType type, String authCode) {
+        if (type != RESTutil.RequestType.AUTHORIZE && type != RESTutil.RequestType.REFRESH) {
+            System.debug('ERROR: can not authenticate through ' + type);
+            return null;
+        }
+        Http http = new Http();
+        HttpRequest req = RESTutil.authRequest(type, authCode).request;
+        HTTPResponse res = http.send(req);
+
+        Boolean ifForceRefresh = (type == RESTutil.RequestType.REFRESH);
+        return setInfoFromJSON(res.getBody(), ifForceRefresh);
+    }
+    @testVisible
+    private static RESTutil.ResponseCategory setInfoFromJSON(String jsonAuthResponse, Boolean forceRefresh) {
         RESTutil.ResponseCategory result = RESTutil.checkError(jsonAuthResponse);
         AuthenticationInfo__c authInfo = getAuthInfo();
         if (authInfo == null) {
             authInfo = makeAuthInfo();
         }
 
-        if (AuthStatus.VALID == enumStatus(getAuthInfo().Status__c)) {
-            return result;
+        // Need to shortcut if refreshing session
+        Boolean alreadyValid = (AuthStatus.VALID == enumStatus(getAuthInfo().Status__c));
+        if (!forceRefresh && alreadyValid) {
+            return RESTutil.ResponseCategory.ALREADY_VALID;
         }
         if (result != RESTutil.ResponseCategory.GOOD) {
             return result;
@@ -102,27 +138,6 @@ public class AuthUtil {
         authInfo.Status__c = strStatus(AuthStatus.VALID);
 
         Update authInfo;
-    }
-    private static AuthenticationInfo__c makeAuthInfo() {
-        ID currUser = UserInfo.getUserId();
-        AuthenticationInfo__c auth = new AuthenticationInfo__c();
-        auth.Status__c = 'Unauthenticated';
-        auth.User__c = currUser;
-        Insert auth;
-        return auth;
-    }
-
-    // Handler for validating with server
-    private static RESTutil.ResponseCategory serverAuthentication(RESTutil.RequestType type, String authCode) {
-        if (type != RESTutil.RequestType.AUTHORIZE && type != RESTutil.RequestType.REFRESH) {
-            System.debug('ERROR: can not authenticate through ' + type);
-            return null;
-        }
-        Http http = new Http();
-        HttpRequest req = RESTutil.authRequest(type, authCode);
-        HTTPResponse res = http.send(req);
-
-        return setInfoFromJSON(res.getBody());
     }
 
     // Parser Utility: get body response with token(s)
