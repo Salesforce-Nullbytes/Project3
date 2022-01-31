@@ -1,0 +1,28 @@
+.th{
+    background-color: #3264a8;
+    color:white;
+    border-color: white;
+    border-style: solid;
+    border-width: thin;
+    
+}
+
+/*.td{
+    background-color: #c4dcfd;
+}*/
+
+table tr:nth-child(even) {
+    color: black;
+    background: #b8d1f5;
+    
+}
+table tr:nth-child(odd) {
+    background: #dce7f7;
+}
+
+table td{
+    border-color: white;
+    border-style: solid;
+    border-width: thin;
+
+}

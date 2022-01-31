@@ -1,8 +1,9 @@
 div {
     height: 100%;
 }
-/*
-.main {
-    
+
+.finish-btn-container{
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
 }
-*/

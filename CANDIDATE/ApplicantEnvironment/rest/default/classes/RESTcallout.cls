@@ -5,9 +5,11 @@ public class RESTcallout {
     }
 
     // CORE METHODS
+    @AuraEnabled(cacheable = true)
     public static String getQuestionSet(String url) {
         return getResource('questionset/', url);
     }
+    @AuraEnabled
     public static String postSubmission(String jsonBody) {
         return postResource('questionset/', jsonBody); // Simply returns 'SUCCESS' if successful. No validation necessary
     }
