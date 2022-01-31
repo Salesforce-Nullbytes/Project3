@@ -10,6 +10,9 @@ export default class candidateSummary extends LightningElement {
     minScore = 100;
     summaryPassFail = 'Fail';
 
+    startTime = 'NA';
+    submitTime = 'NA';
+
     sum = 0;
 
     componentRendered = false;
@@ -32,6 +35,9 @@ export default class candidateSummary extends LightningElement {
                 }
 
             }
+            
+            this.startTime = new Date(result[0].CandidateResult__r.StartTime__c);
+            this.submitTime = new Date(result[0].CandidateResult__r.SubmitTime__c);
  
             this.averageScore = Math.round(((this.sum / result.length) * 100) / 100);
 
