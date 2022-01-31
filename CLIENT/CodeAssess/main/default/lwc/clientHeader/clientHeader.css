@@ -1,5 +1,13 @@
-.client-home-header{
-    margin-left: auto;
-    margin-right: auto;
-    background-color: aliceblue;
+.client-home-header {
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(9,105,176);
+    padding: 20px;
+}
+
+.client-home-card {
+    min-width: 70%;
+    border-radius: 20px;
 }
