@@ -7,7 +7,7 @@ export default class CodeAssessor extends LightningElement {
 
     constructor(){
         super();
-        this.credentials = isAuth();
+        this.credentials = isAuth().data;
     }
 
     /*getUserDetails(event)
