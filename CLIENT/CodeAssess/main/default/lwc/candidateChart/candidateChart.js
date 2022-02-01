@@ -125,7 +125,7 @@ export default class candidateChart extends LightningElement {
             
         })
         .catch((error) => {
-            console.log("Failure");
+            console.log("Failure1");
         });
     }
 

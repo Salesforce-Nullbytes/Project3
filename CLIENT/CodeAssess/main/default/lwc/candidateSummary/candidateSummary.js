@@ -46,7 +46,7 @@ export default class candidateSummary extends LightningElement {
 
         })
         .catch((error) => {
-            console.log("Failure");
+            console.log("Failure2");
         });
     }
 
