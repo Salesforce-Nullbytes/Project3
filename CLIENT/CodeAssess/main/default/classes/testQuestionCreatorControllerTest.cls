@@ -1,5 +1,5 @@
 @isTest
-public  class testQuestionCreatorControllerTest {
+public class testQuestionCreatorControllerTest {
 
     @TestSetup
     static void createDataRecords(){

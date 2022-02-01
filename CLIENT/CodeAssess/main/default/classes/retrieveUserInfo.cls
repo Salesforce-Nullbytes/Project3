@@ -1,4 +1,4 @@
-public with sharing class retrieveUserInfo {
+public without sharing class retrieveUserInfo {
     //Use @AuraEnabled to enable client- and server-side access to the method
     @AuraEnabled
     public static User getCurrentUser(Id userIdInfo) {

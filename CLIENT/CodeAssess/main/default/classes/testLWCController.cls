@@ -1,4 +1,4 @@
-public with sharing class testLWCController {
+public without sharing class testLWCController {
     @AuraEnabled
     public static List<String> getStatusOptions(){
         List<Schema.PicklistEntry> valuesList = CandidateResult__c.Status__c.getDescribe().getPicklistValues();

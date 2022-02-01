@@ -1,5 +1,5 @@
 
-public  class CandidateResultController {
+public without sharing class CandidateResultController {
     @AuraEnabled
     public static List <CandidateResult__c> getCandidateResults() {
         return [SELECT Contact__r.Name, PassPercentage__c, StartTime__c, SubmitTime__c, Status__c FROM CandidateResult__c ORDER BY createdDate ASC];

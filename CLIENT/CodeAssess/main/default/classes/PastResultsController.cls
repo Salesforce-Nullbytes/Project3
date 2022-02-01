@@ -1,4 +1,4 @@
-public with sharing class PastResultsController {
+public without sharing class PastResultsController {
 
     private static ID contactId() {
         ID currentUserId = UserInfo.getUserId();

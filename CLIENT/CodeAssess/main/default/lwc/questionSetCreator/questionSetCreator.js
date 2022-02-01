@@ -10,40 +10,13 @@ export default class QuestionSetCreator extends LightningElement {
     qTreeFilledBool = false;
     @track
     addedQuestionsList = [];
-    qSetName;
+    qSetName = '';
     showLoading = false;
 
     constructor() {
         super();
         fetchQuestionList({searchTerm: ''}).then(result => {
-            let topicMap = {};
-
-            result.forEach(item => {
-                if (topicMap[item.QuestionTopic__c] == null) {
-                    topicMap[item.QuestionTopic__c] = [];
-                }
-                let buildingMetaText = item.Prompt__c.substring(0, 75);
-                if (item.Prompt__c.length > 75) {
-                    buildingMetaText += '...';
-                }
-                topicMap[item.QuestionTopic__c].push({
-                    label: item.Name,
-                    name: item.Name,
-                    disabled: false,
-                    expanded: false,
-                    metatext: buildingMetaText
-                });
-            });
-
-            Object.getOwnPropertyNames(topicMap).forEach(item => {
-                this.questionTree.push({
-                    label: item,
-                    name: 'INTERNAL_USE_topic',
-                    disabled: false,
-                    expanded: false,
-                    items: topicMap[item]
-                });
-            });
+            this.updateTree(result);
             this.qTreeFilledBool = true;
         });
     }
@@ -116,10 +89,16 @@ export default class QuestionSetCreator extends LightningElement {
                         variant: 'success'
                     });
                     this.dispatchEvent(event);
+                    this.qSetName = '';
+                    this.addedQuestionsList = [];
+                    this.template.querySelector('.searchInput').value = '';
+                    fetchQuestionList({searchTerm: ''}).then(result => {
+                        this.updateTree(result);
+                        this.showLoading = false;
+                    });
                 } else {
-    
+                    this.showLoading = false;
                 }
-                this.showLoading = false;
             });
         });
     }
@@ -132,38 +111,41 @@ export default class QuestionSetCreator extends LightningElement {
         if (event.keyCode === 13) {
             this.showLoading = true;
             fetchQuestionList({searchTerm: this.template.querySelector('.searchInput').value}).then(result => {
-                let topicMap = {};
-
-                result.forEach(item => {
-                    if (topicMap[item.QuestionTopic__c] == null) {
-                        topicMap[item.QuestionTopic__c] = [];
-                    }
-                    let buildingMetaText = item.Prompt__c.substring(0, 75);
-                    if (item.Prompt__c.length > 75) {
-                        buildingMetaText += '...';
-                    }
-                    topicMap[item.QuestionTopic__c].push({
-                        label: item.Name,
-                        name: item.Name,
-                        disabled: false,
-                        expanded: false,
-                        metatext: buildingMetaText
-                    });
-                });
-
-                this.questionTree = [];
-
-                Object.getOwnPropertyNames(topicMap).forEach(item => {
-                    this.questionTree.push({
-                        label: item,
-                        name: 'INTERNAL_USE_topic',
-                        disabled: false,
-                        expanded: false,
-                        items: topicMap[item]
-                    });
-                });
+                this.updateTree(result);
                 this.showLoading = false;
             });
         }
+    }
+
+    updateTree(result) {
+        let topicMap = {};
+
+        result.forEach(item => {
+            if (topicMap[item.QuestionTopic__c] == null) {
+                topicMap[item.QuestionTopic__c] = [];
+            }
+            let buildingMetaText = item.Prompt__c.substring(0, 75);
+            if (item.Prompt__c.length > 75) {
+                buildingMetaText += '...';
+            }
+            topicMap[item.QuestionTopic__c].push({
+                label: item.Name,
+                name: item.Name,
+                disabled: false,
+                expanded: false,
+                metatext: buildingMetaText
+            });
+        });
+
+        Object.getOwnPropertyNames(topicMap).forEach(item => {
+            this.questionTree.push({
+                label: item,
+                name: 'INTERNAL_USE_topic',
+                disabled: false,
+                expanded: false,
+                items: topicMap[item]
+            });
+        });
+        
     }
 }

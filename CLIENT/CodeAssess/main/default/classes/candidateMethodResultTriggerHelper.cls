@@ -1,4 +1,4 @@
-public with sharing class candidateMethodResultTriggerHelper {
+public without sharing class candidateMethodResultTriggerHelper {
     public static void onAfterUpdate(List<CandidateMethodResult__c> cmrList) {
         Set<Id> cqrIdSet = new Set<Id>();
         for (CandidateMethodResult__c cmr : cmrList) {
