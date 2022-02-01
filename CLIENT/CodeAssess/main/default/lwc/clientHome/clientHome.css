@@ -21,3 +21,9 @@
     --sds-c-tabs-item-text-color: black;
     --sds-c-tabs-item-text-color-active: green;
   }
+
+.packageBtnContainer {
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+}

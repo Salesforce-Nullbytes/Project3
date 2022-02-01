@@ -1,10 +1,7 @@
 .client-home-header {
-    border-radius: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(9,105,176);
-    padding: 20px;
 }
 
 .client-home-card {

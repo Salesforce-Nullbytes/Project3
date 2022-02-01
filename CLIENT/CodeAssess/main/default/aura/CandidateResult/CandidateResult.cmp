@@ -8,7 +8,7 @@
             <tr class="slds-text-heading_label">              
                 <!--<th scope="col"><div class="slds-truncate" title="Name">Name</div></th>-->
                 <!--<th scope="col"><div class="slds-truncate" title="Candidate__c">Candidate</div></th>-->         
-                 <th scope="col"><div class="slds-truncate" title="Candidate__c">Candidate Name</div></th>
+                <th scope="col"><div class="slds-truncate" title="Candidate__c">Candidate Name</div></th>
                 <th scope="col"><div class="slds-truncate" title="PassPercentage__c">PassPercentage</div></th> 
                 <!--<th scope="col"><div class="slds-truncate" title="QuestionsPassed__c">QuestionsPassed</div></th>-->
                 <th scope="col"><div class="slds-truncate" title="StartTime__c">StartTime</div></th> 
