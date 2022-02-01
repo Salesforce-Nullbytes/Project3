@@ -1,18 +1,29 @@
 <template>
-    <lightning-input value={searchTerm} type="search" label="Name Search Box" placeholder="Enter candidate name..." onchange={handleNameInput}></lightning-input>
-    <lightning-input value={passPercentage} type="text" label="Pass Percentage Search" placeholder="Enter a pass percentage..." onchange={handlePassPercentageInput}></lightning-input>
-    <lightning-combobox
-        name="status"
-        label="Result Status"
-        value={resultStatusSelected}
-        placeholder="Select Result Status"
-        options={statusOptions}
-        onchange={handleStatusSelection}
-    >
-    </lightning-combobox>
-
-    <lightning-button label="Search" title="search" onclick={handleSearchClicked} class="slds-m-left_x-small"></lightning-button>
-
-    <!-- TODO output here -->
-
+    <div class='mainContainer'>
+        <lightning-input value={searchTerm} type="search" label="Name Search Box" placeholder="Enter candidate name..." onchange={handleNameInput}></lightning-input>
+        <lightning-input value={passPercentage} type="text" label="Pass Percentage Search" placeholder="Enter a pass percentage..." onchange={handlePassPercentageInput}></lightning-input>
+        <lightning-combobox
+            name="status"
+            label="Result Status"
+            value={resultStatusSelected}
+            placeholder="Select Result Status"
+            options={statusOptions}
+            onchange={handleStatusSelection}
+        >
+        </lightning-combobox>
+    
+        <lightning-button label="Search" title="search" onclick={handleSearchClicked} class="slds-m-left_x-small"></lightning-button>
+    
+        <!-- TODO output here -->
+        <template if:true={data}>
+            <lightning-datatable
+                key-field="id"
+                columns={columns}
+                data={data}
+                hide-checkbox-column>
+            </lightning-datatable>
+        </template>
+    </div>
+    
+    
 </template>
