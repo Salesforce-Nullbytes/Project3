@@ -1,15 +1,12 @@
 <template>
     <!--Main App for client application-->
     <div class="tab-set-all client-home-body">
-        <lightning-tabset variant="scoped" active-tab-value="TestPackage" class="client-home-tab">
-            <lightning-tab label="TestPackage" value="TestPackage" class="slds-m-large">
-                <div>Home page</div>    
-                <!--Current include test question creator, will change later-->
-                <c-test-question-creator></c-test-question-creator>
-                <c-question-set-creator></c-question-set-creator>
+        <lightning-tabset variant="scoped" active-tab-value="Home" class="client-home-tab">
+            <lightning-tab label="Home" value="Home" class="slds-m-large">
+                <c-client-header></c-client-header>
             </lightning-tab>
     
-            <lightning-tab label="PreviousResult" value="PreviousResult" class="slds-m-top_large">
+            <lightning-tab label="Previous Results" value="PreviousResult" class="slds-m-top_large">
                 <div>Previous test result</div> 
                  <!--Current include test summary, will change later-->
                 <c-past-results></c-past-results>
