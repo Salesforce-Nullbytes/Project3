@@ -101,6 +101,7 @@ export default class TestQuestionCreator extends LightningElement {
                         this.questionPrompt = '';
                         this.questionTopic = '';
                         this.fileData = null;
+                        this.placeholderFileData = null;
                         this.template.querySelector('.classPlaceholderInput').disabled = false;
                     } else {
                         this.showAlert('Error', 'An error occured: ' + result, 'error');
