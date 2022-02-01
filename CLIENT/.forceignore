@@ -15,8 +15,10 @@ package.xml
 
 # custom ignores
 
-**/CodeAssessMetadata/**
+#**/CodeAssessMetadata/**
 
-#**/expCustom/**
-#**/expStandard/**
+**/expCustom/**
+**/expStandard/**
 **/connectedApps
+#**/CodeAssess/**
+**/CodeAssessExp/**
