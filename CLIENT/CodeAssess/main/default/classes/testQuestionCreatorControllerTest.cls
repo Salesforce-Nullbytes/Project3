@@ -1,11 +1,5 @@
 @isTest
 public  class testQuestionCreatorControllerTest {
-
-    @TestSetup
-    static void createDataRecords(){
-        
-    }
-
     @isTest
     public static void TP_topicPicklistVals (){
         Test.startTest();
@@ -20,10 +14,15 @@ public  class testQuestionCreatorControllerTest {
         }
         System.assertEquals(false, missingEntry);
         Test.stopTest();
+    }
 
-      
-
-        
+    @isTest
+    public static void TP_makeQuestion() {
+        Blob testblob = Blob.valueOf('@isTest public class mockTest {}');
+        String testClass = EncodingUtil.base64Encode(testBlob);
+        ID created = testQuestionCreatorController.insertQuestion('mock question', 'SOQL', 'placeholder', 'dothis', testClass); 
+        Question__c[] q = [SELECT id FROM Question__c WHERE id = :created];
+        System.assertEquals(1, q.size());
     }
     
 }
