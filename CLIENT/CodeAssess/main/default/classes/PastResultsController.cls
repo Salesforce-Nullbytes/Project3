@@ -1,4 +1,4 @@
-public with sharing class PastResultsController {
+public without sharing class PastResultsController {
 
     private static ID contactId() {
         ID currentUserId = UserInfo.getUserId();
@@ -10,6 +10,6 @@ public with sharing class PastResultsController {
     public static List <CandidateResult__c> getCandidateResults() {
         
         //For testing purposes
-        return [SELECT ID, PassPercentage__c, StartTime__c, SubmitTime__c FROM CandidateResult__c WHERE Status__c = 'Completed' AND Contact__c =: contactId() ];
+        return [SELECT ID, PassPercentage__c, StartTime__c, SubmitTime__c FROM CandidateResult__c WHERE Contact__c =: contactId() ];
     }
 }
