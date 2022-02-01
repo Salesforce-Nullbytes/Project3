@@ -19,7 +19,7 @@ export default class candidateTestResults extends LightningElement {
             }         
         })
         .catch((error) => {
-            console.log("Failure");
+            console.log("Failure3");
         });
     }
 

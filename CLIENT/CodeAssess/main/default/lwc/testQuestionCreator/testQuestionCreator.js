@@ -43,21 +43,25 @@ export default class TestQuestionCreator extends LightningElement {
                 'fileName': uFile.name,
                 'base64': base64
             }
+            this.loadingBool = false;
         }
+        this.loadingBool = true;
         reader.readAsDataURL(uFile);
     }
 
     handlePlaceholderFileUpload(event) {
         const uFile2 = event.target.files[0];
-        let reader = new FileReader();
-        reader.onload = () => {
-            let base64 = reader.result.split(',')[1];
+        let reader2 = new FileReader();
+        reader2.onload = () => {
+            let phbase64 = reader2.result.split(',')[1];
             this.placeholderFileData = {
                 'fileName': uFile2.name,
-                'base64': base64
+                'base64': phbase64
             }
+            this.loadingBool = false;
         }
-        reader.readAsDataURL(uFile2);
+        this.loadingBool = true;
+        reader2.readAsDataURL(uFile2);
         this.template.querySelector('.classPlaceholderInput').disabled = true;
     }
 
@@ -97,6 +101,7 @@ export default class TestQuestionCreator extends LightningElement {
                         this.questionPrompt = '';
                         this.questionTopic = '';
                         this.fileData = null;
+                        this.placeholderFileData = null;
                         this.template.querySelector('.classPlaceholderInput').disabled = false;
                     } else {
                         this.showAlert('Error', 'An error occured: ' + result, 'error');
