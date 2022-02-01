@@ -5,6 +5,7 @@ export default class pastResults extends LightningElement {
 
     componentRendered = false;
     candidateResults = [];
+    
 
     loadSummary() {
         getCandidateResults()
@@ -38,7 +39,6 @@ export default class pastResults extends LightningElement {
         if (this.componentRendered) {
             return;
         } 
-
         this.loadSummary();
 
         this.componentRendered = true;
