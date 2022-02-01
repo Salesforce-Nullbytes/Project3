@@ -8,7 +8,6 @@ export default class TestCenter extends LightningElement {
     
     handleSelect(event){
         this.questionList = event.detail;
-        console.log(event.detail);
     }
 
     handleSetFinish(){

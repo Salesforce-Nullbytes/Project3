@@ -23,7 +23,7 @@
             <template for:each={questionResults} for:item="questions" for:index="index">
                 <tr class="slds-hint-parent" key={questions.name}>
                     <td>
-                        Question {index}
+                        {questions.name}
                     </td>
                     <td>
                         {questions.passed}

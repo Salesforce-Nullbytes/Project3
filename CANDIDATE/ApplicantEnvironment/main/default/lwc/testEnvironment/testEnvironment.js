@@ -6,7 +6,6 @@ export default class TestEnvironment extends LightningElement {
 
     @api questionList;
     question;
-    questionName;
     questionIndex = 0;
     submissions;
     results;
@@ -24,7 +23,6 @@ export default class TestEnvironment extends LightningElement {
 
     renderedCallback(){
         this.question = this.questionList.questions[this.questionIndex];
-        this.questionName = "Question " + (this.questionIndex + 1);
     }
 
     addSubmission(event){
@@ -76,7 +74,7 @@ export default class TestEnvironment extends LightningElement {
             console.log("Time: "+testTime);
 
             let resultElement = {
-                name: null,
+                name: element.name,
                 passed: 0,
                 failed: 0,
                 time: this.getMinutesElapsed(new Date(element.startTime), new Date(element.endTime)),
@@ -94,7 +92,7 @@ export default class TestEnvironment extends LightningElement {
             });
             let tests = resultElement.passed + resultElement.failed;
             resultElement.score = tests == 0 ? 0 : Math.round((resultElement.passed / tests)*100);
-            resultElement.name = ""+resultElement.passed + resultElement.failed + resultElement.time + resultElement.score;
+            //resultElement.name = ""+resultElement.passed + resultElement.failed + resultElement.time + resultElement.score;
             results.questions.push(resultElement);
         });
 

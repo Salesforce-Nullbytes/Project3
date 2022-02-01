@@ -5,8 +5,6 @@ export default class QuestionContainer extends LightningElement {
     @api
     question;
 
-    @api questionName;
-
     @api
     submission;
 
