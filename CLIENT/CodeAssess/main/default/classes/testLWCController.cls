@@ -14,7 +14,7 @@ public without sharing class testLWCController {
     @AuraEnabled
     public static List<CandidateResult__c> searchForRecords(String searchTerm, String passPercentage, String statusSelected){
             List<String> queryTokens = new List<String>();
-            queryTokens.add('SELECT Contact__r.Name FROM CandidateResult__c');
+            queryTokens.add('SELECT Contact__r.Name, Status__c, SubmitTime__c, StartTime__c, PassPercentage__c FROM CandidateResult__c');
 
             if (searchTerm != '') {
                 searchTerm = String.escapeSingleQuotes(searchTerm);
@@ -25,7 +25,7 @@ public without sharing class testLWCController {
                 queryTokens.add('PassPercentage__c > ' + passPercentage);
             }
             if (statusSelected != '') {
-                queryTokens.add('Status__c = ' + statusSelected);
+                queryTokens.add('Status__c = \'' + statusSelected + '\'');
             }
             String buildingQuery = '';
             Integer baseLength = queryTokens[0].length();

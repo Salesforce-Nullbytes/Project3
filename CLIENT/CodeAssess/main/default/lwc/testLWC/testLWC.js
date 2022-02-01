@@ -10,6 +10,7 @@ export default class TestLWC extends LightningElement {
     statusOptions;
     recordList;
 
+    @track
     data = [];
 
     columns = [
@@ -28,16 +29,31 @@ export default class TestLWC extends LightningElement {
     constructor() {
         super();
         GetPicklist().then(result => {
-            this.statusOptions = result;
+            this.statusOptions = [];
+            this.statusOptions.push({label: 'All', value: ''});
+            result.forEach(item => {
+                this.statusOptions.push({label: item, value: item});
+            });
         });
         searchForRecords({searchTerm: '', passPercentage: '', statusSelected: ''}).then(result => {
             this.recordList = result;
 
+            let returnArr = [];
             result.forEach(item => {
-                let returnArr = [];
-                returnArr.push({id: item.Id, name: item.Contact__r.Name, passpercent: item.PassPercentage__c, start: item.StartTime__c, submit: item.SubmitTime__c, status: item.Status__c});
-                this.data = returnArr;
+                returnArr.push({id: item.Id, name: ((item.Contact__r) ? item.Contact__r.Name : 'defaultName'), passpercent: item.PassPercentage__c, start: item.StartTime__c, submit: item.SubmitTime__c, status: item.Status__c});
             });
+            this.data = returnArr;
+        });
+    }
+
+    handleSearchClicked(event) {
+        searchForRecords({searchTerm: this.searchTerm, passPercentage: this.passPercentage, statusSelected: this.resultStatusSelected}).then(result => {
+            this.recordList = result;
+            let returnArr = [];
+            result.forEach(item => {
+                returnArr.push({id: item.Id, name: ((item.Contact__r) ? item.Contact__r.Name : 'defaultName'), passpercent: item.PassPercentage__c, start: item.StartTime__c, submit: item.SubmitTime__c, status: item.Status__c});
+            });
+            this.data = returnArr;
         });
     }
 
@@ -51,16 +67,5 @@ export default class TestLWC extends LightningElement {
 
     handleStatusSelection(event) {
         this.resultStatusSelected = event.detail.value;
-    }
-
-    handleSearchClicked(event) {
-        searchForRecords({searchTerm: this.searchTerm, passPercentage: this.passPercentage, statusSelected: this.resultStatusSelected}).then(result => {
-            this.recordList = result;
-            result.forEach(item => {
-                let returnArr = [];
-                returnArr.push({id: item.Id, name: item.Name, passpercent: item.PassPercentage__c, start: item.StartTime__c, submit: item.SubmitTime__c, status: item.Status__c});
-                this.data = returnArr;
-            });
-        });
     }
 }
