@@ -15,21 +15,37 @@
             "default": true,
             "dependencies": [
                 {
-                    "package": "CodeAssessMetadata@0.1.0-4"
+                    "package": "CodeAssessMetadata@0.1.0-1"
+                }
+            ]
+        },
+        {
+            "path": "CodeAssessExp",
+            "package": "CodeAssessExp",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.0.NEXT",
+            "default": false,
+            "dependencies": [
+                {
+                    "package": "CodeAssessMetadata@0.1.0-1"
+                },
+                {
+                    "package": "CodeAssess@0.1.0-1"
                 }
             ]
         }
     ],
     "name": "CLIENT",
     "namespace": "",
-    "sfdcLoginUrl": "https://cunning-wolf-8s8n18-dev-ed.my.salesforce.com/",
+    "sfdcLoginUrl": "https://resilient-otter-3lcoo0-dev-ed.my.salesforce.com/",
     "sourceApiVersion": "52.0",
     "packageAliases": {
-        "CodeAssessMetadata": "0Ho8c000000Gmd3CAC",
-        "CodeAssess": "0Ho8c000000Gmd8CAC",
-        "CodeAssessMetadata@0.1.0-1": "04t8c000000cgWmAAI",
-        "CodeAssessMetadata@0.1.0-2": "04t8c000000cgWrAAI",
-        "CodeAssessMetadata@0.1.0-3": "04t8c000000ci52AAA",
-        "CodeAssessMetadata@0.1.0-4": "04t8c000000ckUPAAY"
+        "CodeAssessMetadata": "0Ho8c000000GmdSCAS",
+        "CodeAssess": "0Ho8c000000GmdXCAS",
+        "CodeAssessMetadata@0.1.0-1": "04t8c000000ckphAAA",
+        "CodeAssessExp": "0Ho8c000000GmdcCAC",
+        "CodeAssess@0.1.0-1": "04t8c000000ckpiAAA",
+        "CodeAssess@0.1.0-2": "04t8c000000ckpmAAA",
+        "CodeAssessExp@0.1.0-1": "04t8c000000ckprAAA"
     }
 }
