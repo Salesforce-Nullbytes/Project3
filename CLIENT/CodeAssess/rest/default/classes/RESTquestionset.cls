@@ -11,8 +11,8 @@ global without sharing class RESTquestionset {
             parseJSONtoSubmission(requestBody);
         } catch (Exception e) {
             System.debug('ERROR PARSING SUBMISSION: ' + e.getMessage());
-            //return 'FAILED';
-            return e.getMessage();
+            return 'FAILED';
+            //return e.getMessage();
         }
         return 'SUCCESS';
     }
