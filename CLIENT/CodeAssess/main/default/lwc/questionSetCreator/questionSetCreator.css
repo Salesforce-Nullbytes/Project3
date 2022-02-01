@@ -1,4 +1,59 @@
 .lgc-bg {
     background-color: rgb(242, 242, 242);
     border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.spinnerContainer {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.pillContainer {
+    border-width: 2px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: rgb(187, 187, 187);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 54px;
+}
+
+.pillContainerLabel {
+    margin-left: 5px;
+    font-size: 12px;
+    font-family: sans-serif;
+    color: rgb(62, 62, 60);
+}
+
+.qsNameInputContainer {
+    margin-bottom: 10px;
+}
+
+.qTreeContainer {
+    min-height: 300px;
+    border-width: 2px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: rgb(187, 187, 187);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.searchInputContainer {
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.qTree {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.buttonContainer {
+    margin-top: 10px;
+    display: flex;
 }

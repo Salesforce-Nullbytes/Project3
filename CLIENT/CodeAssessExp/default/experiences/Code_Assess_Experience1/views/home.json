@@ -34,6 +34,35 @@
       "renditionMap" : { },
       "scopedBrandingSetId" : null,
       "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "backgroundImageConfig" : "",
+        "backgroundImageOverlay" : "rgba(0,0,0,0)",
+        "sectionConfig" : "{\"UUID\":\"9cf9075e-67f6-4ec4-b2be-67fd727753c4\",\"columns\":[{\"UUID\":\"101f486b-d6fb-4feb-84a0-13267b17ced8\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":[]}]}"
+      },
+      "componentName" : "community_layout:section",
+      "id" : "9cf9075e-67f6-4ec4-b2be-67fd727753c4",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "candidatePackageUrl" : ""
+          },
+          "componentName" : "c:clientHome",
+          "id" : "8c343396-c034-4139-8ffb-342fadc7dc67",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "101f486b-d6fb-4feb-84a0-13267b17ced8",
+        "regionLabel" : "Column 1",
+        "regionName" : "col1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "scopedBrandingSetId" : null,
+      "type" : "component"
     } ],
     "id" : "4378297f-9498-4540-a61a-0d86e4c74fb3",
     "regionName" : "content",

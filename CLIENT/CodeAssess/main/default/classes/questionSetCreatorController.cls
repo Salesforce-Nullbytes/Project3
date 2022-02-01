@@ -1,8 +1,33 @@
 public with sharing class questionSetCreatorController {
     @AuraEnabled
-    public static List<Question__c> fetchQuestionList(){
+    public static List<Question__c> fetchQuestionList(String searchTerm){
         try {
-            return [SELECT Name, QuestionTopic__c, Prompt__c FROM Question__c];
+            if (searchTerm != '') {
+                searchTerm = String.escapeSingleQuotes(searchTerm);
+                return Database.query('SELECT Name, QuestionTopic__c, Prompt__c FROM Question__c WHERE Name LIKE \'%' + searchTerm + '%\'');
+            } else {
+                return [SELECT Name, QuestionTopic__c, Prompt__c FROM Question__c];
+            }
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static Boolean checkDuplicate(String qsName){
+        try {
+            List<QuestionSet__c> qList = [SELECT Name FROM QuestionSet__c];
+            Set<String> nameSet = new Set<String>();
+            for (QuestionSet__c questionSet : qList) {
+                nameSet.add(questionSet.Name);
+            }
+            Integer prevSize = nameSet.size();
+            nameSet.add(qsName);
+            if (nameSet.size() == prevSize) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
