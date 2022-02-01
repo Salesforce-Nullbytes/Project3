@@ -6,7 +6,7 @@ public class CandidateResultControllerTest
     public static void TestSOQL() 
 	{
         Contact newCandidate = new Contact();
-        newCandidate.FirstName = 'Test';
+        newCandidate.LastName = 'Test';
         insert newCandidate;
 
 		CandidateResult__c candr = new CandidateResult__c();

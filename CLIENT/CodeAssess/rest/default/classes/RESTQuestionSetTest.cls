@@ -37,6 +37,7 @@ public class RESTQuestionSetTest {
         Question__c[] questions = new List<Question__c>();
         for (Integer i = 0; i < 2; i++) {
             Question__c q = new Question__c();
+            q.name = 'some name';
             q.PlaceHolder__c = 'placeholder';
             q.Prompt__c = 'prompt';
             q.QuestionTopic__c = 'SOQL';
@@ -53,8 +54,8 @@ public class RESTQuestionSetTest {
     
         String actualValue = RESTquestionset.getFullQuestionSet(mock.id);
         String expectedValue = '{\"url\":\"' + mock.id + '\",\"questions\":'
-        +'[{\"topic\":\"SOQL\",\"testFile\":\"Some test class\",\"prompt\":\"prompt\",\"placeholder\":\"placeholder\",\"identifier\":\"' + questions[0].id + '\"},'
-        +'{\"topic\":\"SOQL\",\"testFile\":\"Some test class\",\"prompt\":\"prompt\",\"placeholder\":\"placeholder\",\"identifier\":\"' + questions[1].id + '\"}],'
+        +'[{\"topic\":\"SOQL\",\"testFile\":\"Some test class\",\"prompt\":\"prompt\",\"placeholder\":\"placeholder\",\"name\":\"some name\",\"identifier\":\"' + questions[0].id + '\"},'
+        +'{\"topic\":\"SOQL\",\"testFile\":\"Some test class\",\"prompt\":\"prompt\",\"placeholder\":\"placeholder\",\"name\":\"some name\",\"identifier\":\"' + questions[1].id + '\"}],'
         +'\"name\":\"TestSet\"}';
         
         Test.stopTest();
@@ -125,6 +126,7 @@ public class RESTQuestionSetTest {
         Question__c[] questions = new List<Question__c>();
         for (Integer i = 0; i < 2; i++) {
             Question__c q = new Question__c();
+            q.name = 'some name';
             q.PlaceHolder__c = 'placeholder';
             q.Prompt__c = 'prompt';
             q.QuestionTopic__c = 'SOQL';
@@ -151,8 +153,8 @@ public class RESTQuestionSetTest {
         String response = RESTquestionset.getList(); // makes call with specified questionset
         
         String expectedValue = '{\"url\":\"' + mock.id + '\",\"questions\":'
-        +'[{\"topic\":\"SOQL\",\"testFile\":\"Some test class\",\"prompt\":\"prompt\",\"placeholder\":\"placeholder\",\"identifier\":\"' + questions[0].id + '\"},'
-        +'{\"topic\":\"SOQL\",\"testFile\":\"Some test class\",\"prompt\":\"prompt\",\"placeholder\":\"placeholder\",\"identifier\":\"' + questions[1].id + '\"}],'
+        +'[{\"topic\":\"SOQL\",\"testFile\":\"Some test class\",\"prompt\":\"prompt\",\"placeholder\":\"placeholder\",\"name\":\"some name\",\"identifier\":\"' + questions[0].id + '\"},'
+        +'{\"topic\":\"SOQL\",\"testFile\":\"Some test class\",\"prompt\":\"prompt\",\"placeholder\":\"placeholder\",\"name\":\"some name\",\"identifier\":\"' + questions[1].id + '\"}],'
         +'\"name\":\"TestSet\"}';
         
         Test.stopTest();
