@@ -153,14 +153,14 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>CandidateQuestionResult</label>
+    <label>Candidate Question Result</label>
     <nameField>
         <displayFormat>Question Result {000000000}</displayFormat>
         <label>Question Result Name</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>CandidateQuestionResults</pluralLabel>
+    <pluralLabel>Candidate Question Results</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
