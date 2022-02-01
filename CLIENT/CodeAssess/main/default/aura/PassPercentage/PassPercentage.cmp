@@ -1,37 +1,36 @@
-<aura:component controller="PassPercentageController"  implements="flexipage:availableForAllPageTypes" access="global"   >
+<aura:component controller="PassPercentageController"  implements="flexipage:availableForAllPageTypes" access="global" >
     <aura:attribute name="passpercentages" type="List" />
     <aura:attribute name="key" type="Decimal" /> 
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
     <!--Code for combobox line12-16-->  
        
-    <lightning:input type="number" name="searchPercent" label="Enter" aura:id="searchPercent" onchange="{!c.searchPercentChange}" placeholder="Search" /> 
+    <lightning:input type="number" name="searchPassPercentage" label="Enter" aura:id="searchPercent" onchange="{!c.searchPassPercentChange}" placeholder="Search" /> 
           
     <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
         <thead>
             <tr class="slds-text-heading_label">              
                 <!--<th scope="col"><div class="slds-truncate" title="Name">Name</div></th>-->
                 <!--<th scope="col"><div class="slds-truncate" title="Candidate__c">Candidate</div></th>-->         
-                 <th scope="col"><div class="slds-truncate" title="Candidate__c">Candidate Name</div></th>
+                 <th scope="col"><div class="slds-truncate" title="Contact__c">Candidate Name</div></th>
                 <th scope="col"><div class="slds-truncate" title="PassPercentage__c">PassPercentage</div></th> 
                                           
             </tr>
         </thead>
         <tbody>
-            <aura:iteration items="{!v.passpercentages}" var="passpercent">
+            <aura:iteration items="{!v.passpercentages}" var="passpercentage">
                 <tr>  
                     <!--<td><div class="slds-truncate" title="{!candidateresult.Name}">{!candidateresult.Name}</div></td>-->
                     <!--<td><div class="slds-truncate" title="{!candidateresult.Candidate__c}">{!candidateresult.Candidate__c}</div></td>-->                   
-                    <td><div class="slds-truncate" title="{!candidateresult.Candidate__r.Name}">{!candidateresult.Candidate__r.Name}</div></td>
+                    <td><div class="slds-truncate" title="{!candidateresult.Contact__r.Name}">{!candidateresult.Contact__r.Name}</div></td>
                     <td><div class="slds-truncate" title="{!candidateresult.PassPercentage__c}">{!candidateresult.PassPercentage__c}</div></td>  
                    
                 </tr>
             </aura:iteration>
         </tbody>
     </table>
-    
-               </aura:iteration>
-        </tbody>
-    </table>
+               <!--</aura:iteration>-->
+        <!--</tbody>-->
+    <!--</table>-->
 </aura:component>
 

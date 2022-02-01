@@ -5,7 +5,7 @@
 //})
 
 ({      
-    getPassPercentagetList: function(component) {
+    getPassPercentage: function(component) {
         var action = component.get('c.getPassPercentages');
         var self = this;
         action.setCallback(this, function(actionResult) {

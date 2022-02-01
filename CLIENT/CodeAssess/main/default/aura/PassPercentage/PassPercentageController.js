@@ -6,19 +6,19 @@
 
 ({
     doInit: function(component, event, helper) {
-        helper.getPassPercentageList(component);
+        helper.getPassPercentage(component);
 
     },
   
 
-    searchKeyChange: function(component, event) {
-        var searchKey = component.find("searchPercent").get("v.value");
+    searchPassPercentChange: function(component, event) {
+        var searchPassPercentage = component.find("searchPassPercentage").get("v.value");
        
         //console.log('searchPercent:::::'+searchPercent);
-        var action = component.get("c.findByPercent");
+        var action = component.get("c.findByPassPercentage");
         
         action.setParams({
-            "searchPercent": searchPercent
+            "searchPassPercentage": searchPassPercentage
             
         });
 
