@@ -25,7 +25,7 @@ public with sharing class testLWCController {
                 queryTokens.add('PassPercentage__c > ' + passPercentage);
             }
             if (statusSelected != '') {
-                queryTokens.add('Status__c = ' + statusSelected);
+                queryTokens.add('Status__c = \'' + statusSelected + '\'');
             }
             String buildingQuery = '';
             Integer baseLength = queryTokens[0].length();
@@ -39,6 +39,9 @@ public with sharing class testLWCController {
                     }
                 }
             }
+            // if (Test.isRunningTest()) {
+            //     System.assert(false, buildingQuery);
+            // }
             return Database.query(buildingQuery);
     }
 
