@@ -175,7 +175,8 @@ public class RESTutil {
                         return ResponseCategory.EXPIRED_AUTH_CODE;
                     }
                     if (errorDescription == 'token validity expired') {
-                        return AuthUtil.deauthenticate();
+                        //return AuthUtil.deauthenticate();
+                        return ResponseCategory.UNRECOGNIZED;
                     }
                 }
                 when else {

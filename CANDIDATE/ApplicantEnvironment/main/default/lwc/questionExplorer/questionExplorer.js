@@ -5,24 +5,41 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class QuestionExplorer extends LightningElement {
     
     @track questionSet = [];
+    retryAuthentication = false;
 
     constructor(){
         super();
         if(this.questionSet.length == 0){
-            getQuestionSet({url:""}).then((result) =>{
-                if(result){
-                    result = JSON.parse(JSON.parse(result));
-                    result.entries.forEach(element => {
-                        getQuestionSet({url:element.url}).then((questions) =>{
-                            if(questions){
-                                questions = JSON.parse(JSON.parse(questions));
-                                this.questionSet.push(questions);
-                            }
-                        });
-                    });
+            this.getQuestionSets();
+        }
+    }
+
+    getQuestionSets(){
+        getQuestionSet({url:""}).then((result) =>{
+            if(result == "UNAUTHENTICATED"){
+                return;
+            }
+            if(result == "EXPIRED_TOKEN" && !this.retryAuthentication){
+                this.retryAuthentication == true;
+                this.getQuestionSets();
+            }
+            else if(result){
+                this.retryAuthentication = false;
+                result = JSON.parse(JSON.parse(result));
+                this.getQuestions(result.entries);
+            }
+        });
+    }
+
+    getQuestions(sets){
+        sets.forEach(element => {
+            getQuestionSet({url:element.url}).then((questions) =>{
+                if(questions){
+                    questions = JSON.parse(JSON.parse(questions));
+                    this.questionSet.push(questions);
                 }
             });
-        }
+        });
     }
 
     retryGetList() {
@@ -31,25 +48,7 @@ export default class QuestionExplorer extends LightningElement {
         })
         .catch(error => {this.showErrorToast(error)});
     }
-    /*
-    @wire(getQuestionSet,{url: ''})
-    getQuestionList({error, data}) {
-        
-        console.log(data);
-        
-        if(data) {
-            data = JSON.parse(data);
-            if(data=='TRY_AGAIN') {
-                this.retryGetList();
-            }
-            this.questionSet = JSON.parse(data);
-            console.log(data);
-        }
-        else if(error) {
-            this.retryGetList();
-        }
-    }
-    */
+
     handleSelect(event) {
         let selectevent = new CustomEvent('questionselect',{
             detail: event.detail
