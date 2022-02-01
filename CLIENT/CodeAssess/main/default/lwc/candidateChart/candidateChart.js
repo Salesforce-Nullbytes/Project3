@@ -28,7 +28,7 @@ export default class candidateChart extends LightningElement {
     apexTriggersScore = 0;
     auraComponentsScore = 0;
     eventsScore = 0;
-    lwcScore = 0;
+    apexFundamentalsScore = 0;
     soqlScore = 0;
     soslScore = 0;
 
@@ -36,7 +36,7 @@ export default class candidateChart extends LightningElement {
     apexTriggersCount = 0;
     auraComponentsCount = 0;
     eventsCount = 0;
-    lwcCount = 0;
+    apexFundamentalsCount = 0;
     soqlCount = 0;
     soslCount = 0;
 
@@ -64,9 +64,9 @@ export default class candidateChart extends LightningElement {
                         this.eventsScore += (result[i].MethodsPassed__c / result[i].TotalMethods__c * 100);
                         this.eventsCount++;
                         break;
-                    case "LWC":
-                        this.lwcScore += (result[i].MethodsPassed__c / result[i].TotalMethods__c * 100);
-                        this.lwcCount++;
+                    case "Apex Fundamentals":
+                        this.apexFundamentalsScore += (result[i].MethodsPassed__c / result[i].TotalMethods__c * 100);
+                        this.apexFundamentalsCount++;
                         break;
                     case "SOQL":
                         this.soqlScore += (result[i].MethodsPassed__c / result[i].TotalMethods__c * 100);
@@ -100,9 +100,9 @@ export default class candidateChart extends LightningElement {
                 this.count++;
             }
 
-            if (this.lwcCount > 0) {
-                this.statNamesList[this.count] = "LWC";
-                this.statList[this.count] = this.lwcScore / this.lwcCount;
+            if (this.apexFundamentalsCount > 0) {
+                this.statNamesList[this.count] = "Apex Fundamentals";
+                this.statList[this.count] = this.apexFundamentalsScore / this.apexFundamentalsCount;
                 this.count++;
             }
 

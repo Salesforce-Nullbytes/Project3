@@ -5,6 +5,7 @@ import checkDupe from '@salesforce/apex/questionSetCreatorController.checkDuplic
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class QuestionSetCreator extends LightningElement {
+    @track
     questionTree = [];
     qTreeFilledBool = false;
     @track
@@ -14,19 +15,23 @@ export default class QuestionSetCreator extends LightningElement {
 
     constructor() {
         super();
-        fetchQuestionList().then(result => {
+        fetchQuestionList({searchTerm: ''}).then(result => {
             let topicMap = {};
 
             result.forEach(item => {
                 if (topicMap[item.QuestionTopic__c] == null) {
                     topicMap[item.QuestionTopic__c] = [];
                 }
+                let buildingMetaText = item.Prompt__c.substring(0, 75);
+                if (item.Prompt__c.length > 75) {
+                    buildingMetaText += '...';
+                }
                 topicMap[item.QuestionTopic__c].push({
                     label: item.Name,
                     name: item.Name,
                     disabled: false,
                     expanded: false,
-                    metatext: item.Prompt__c.substring(0, 50) + '...'
+                    metatext: buildingMetaText
                 });
             });
 
@@ -121,5 +126,44 @@ export default class QuestionSetCreator extends LightningElement {
 
     handleNameInput(event) {
         this.qSetName = event.detail.value;
+    }
+
+    handleSearchInput(event) {
+        if (event.keyCode === 13) {
+            this.showLoading = true;
+            fetchQuestionList({searchTerm: this.template.querySelector('.searchInput').value}).then(result => {
+                let topicMap = {};
+
+                result.forEach(item => {
+                    if (topicMap[item.QuestionTopic__c] == null) {
+                        topicMap[item.QuestionTopic__c] = [];
+                    }
+                    let buildingMetaText = item.Prompt__c.substring(0, 75);
+                    if (item.Prompt__c.length > 75) {
+                        buildingMetaText += '...';
+                    }
+                    topicMap[item.QuestionTopic__c].push({
+                        label: item.Name,
+                        name: item.Name,
+                        disabled: false,
+                        expanded: false,
+                        metatext: buildingMetaText
+                    });
+                });
+
+                this.questionTree = [];
+
+                Object.getOwnPropertyNames(topicMap).forEach(item => {
+                    this.questionTree.push({
+                        label: item,
+                        name: 'INTERNAL_USE_topic',
+                        disabled: false,
+                        expanded: false,
+                        items: topicMap[item]
+                    });
+                });
+                this.showLoading = false;
+            });
+        }
     }
 }
