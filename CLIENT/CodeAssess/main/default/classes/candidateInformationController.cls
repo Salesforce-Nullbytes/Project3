@@ -1,4 +1,4 @@
-public with sharing class candidateInformationController {
+public without sharing class candidateInformationController {
     
     @AuraEnabled
     public static CandidateResult__c getCandidateInfo(id record) {

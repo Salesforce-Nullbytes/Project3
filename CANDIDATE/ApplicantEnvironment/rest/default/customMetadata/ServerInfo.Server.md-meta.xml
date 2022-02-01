@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Key__c</field>
-        <value xsi:type="xsd:string">3MVG9riCAn8HHkYVZ5_vOd9_Ge0JN0MtTvus0RSrL5.3bQLfOtL4CNGNU0MWc07nx2Lrwi5Vm7Vhp5EhfmKfY</value>
+        <value xsi:type="xsd:string">3MVG9riCAn8HHkYVpz5sF3v9rxL8XCtJACDmmXUz5jVNpEiqWQfRWdt.2JB7TegmqQY74WOjtsqZ0DJ7ElmZS</value>
     </values>
     <values>
         <field>LoginUrl__c</field>
@@ -12,10 +12,10 @@
     </values>
     <values>
         <field>Secret__c</field>
-        <value xsi:type="xsd:string">296AADB49B7A31EA57AD4F95705E299A8624BF65CE4C25039B0A7B9EF9F4E03F</value>
+        <value xsi:type="xsd:string">90D37DC45C9904F63F3AC9886BFB3B1082E8F39B8E1380513C36ADA2B604B0B8</value>
     </values>
     <values>
         <field>ServerUrl__c</field>
-        <value xsi:type="xsd:string">https://codeassessclienttest1-developer-edition.na213.force.com/</value>
+        <value xsi:type="xsd:string">https://revaturecodeassess-developer-edition.na213.force.com/</value>
     </values>
 </CustomMetadata>

@@ -19,7 +19,7 @@ export default class candidateInformation extends LightningElement {
             this.candidatePhoneNumber = result.Contact__r.Phone;
         })
         .catch((error) => {
-            console.log("Failure");
+            console.log("Failure4");
         });
     }
 

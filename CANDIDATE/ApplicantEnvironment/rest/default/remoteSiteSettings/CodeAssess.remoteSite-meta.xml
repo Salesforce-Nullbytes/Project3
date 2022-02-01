@@ -3,5 +3,5 @@
     <description>Code Assess Server for api calls</description>
     <disableProtocolSecurity>false</disableProtocolSecurity>
     <isActive>true</isActive>
-    <url>https://codeassessclienttest1-developer-edition.na213.force.com</url>
+    <url>https://revaturecodeassess-developer-edition.na213.force.com</url>
 </RemoteSiteSetting>

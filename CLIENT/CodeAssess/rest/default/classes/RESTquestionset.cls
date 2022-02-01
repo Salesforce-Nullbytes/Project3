@@ -12,6 +12,7 @@ global without sharing class RESTquestionset {
         } catch (Exception e) {
             System.debug('ERROR PARSING SUBMISSION: ' + e.getMessage());
             return 'FAILED';
+            //return e.getMessage();
         }
         return 'SUCCESS';
     }
@@ -112,13 +113,14 @@ global without sharing class RESTquestionset {
             qIDs.add(link.Question__c);
         }
         List<Question__c> questions = [
-            SELECT id, PlaceHolder__c, Prompt__c, QuestionTopic__c, TestClassText__c FROM Question__c WHERE id IN :qIDs
+            SELECT id, Name, PlaceHolder__c, Prompt__c, QuestionTopic__c, TestClassText__c FROM Question__c WHERE id IN :qIDs
         ];
 
         QuestionSet result = new QuestionSet(entries[0].id, entries[0].name);
         for (Question__c question : questions) {
             Question temp = new Question(
                 question.id, 
+                question.Name,
                 question.Placeholder__c, 
                 question.Prompt__c, 
                 question.QuestionTopic__c, 
@@ -165,12 +167,14 @@ global without sharing class RESTquestionset {
     }
     private class Question{
         ID identifier;
+        String name;
         String placeholder;
         String prompt;
         String topic;
         String testFile;
-        Question(ID myIdentifier, String myPlaceholder, String myPrompt, String myTopic, String myTestFile) {
+        Question(ID myIdentifier, String myName, String myPlaceholder, String myPrompt, String myTopic, String myTestFile) {
             identifier = myIdentifier;
+            name = myName;
             placeholder = myplaceholder;
             prompt = myprompt;
             topic = mytopic;
@@ -187,6 +191,7 @@ global without sharing class RESTquestionset {
     }
     private class QuestionResult {
         String url;
+        String name;
         String startTime;
         String endTime;
         public List<MethodResult> methods;

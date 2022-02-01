@@ -1,5 +1,5 @@
 @IsTest
-public class PastResultsControllerTest {
+public without sharing class PastResultsControllerTest {
 
     @TestSetup
     static void setUpTestData(){
