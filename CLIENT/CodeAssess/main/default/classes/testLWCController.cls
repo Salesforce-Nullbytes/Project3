@@ -41,5 +41,4 @@ public with sharing class testLWCController {
             }
             return Database.query(buildingQuery);
     }
-
 }

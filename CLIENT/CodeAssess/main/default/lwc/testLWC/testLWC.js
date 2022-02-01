@@ -18,7 +18,6 @@ export default class TestLWC extends LightningElement {
             label: 'Pass Percentage',
             fieldName: 'passpercent',
             type: 'number',
-            sortable: true,
             cellAttributes: { alignment: 'left' },
         },
         { label: 'Start Time', fieldName: 'start', type: 'string' },
