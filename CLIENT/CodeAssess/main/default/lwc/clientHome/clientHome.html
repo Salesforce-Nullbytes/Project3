@@ -1,18 +1,34 @@
 <template>
     <!--Main App for client application-->
     <div class="tab-set-all client-home-body">
-        <lightning-tabset active-tab-value="TestPackage" >
-            <lightning-tab label="TestPackage" value="TestPackage" class="slds-m-large">
-                <div>Home page</div>    
-                <!--Current include test question creator, will change later-->
-                <c-test-question-creator></c-test-question-creator>
-            </lightning-tab>
-    
-            <lightning-tab label="PreviousResult" value="PreviousResult" class="slds-m-top_large">
-                <div>Previous test result</div> 
-                 <!--Current include test summary, will change later-->
-                <c-candidate-summary></c-candidate-summary>
-            </lightning-tab>
+        <lightning-tabset variant="scoped" active-tab-value="Home" class="client-home-tab">
+            <template if:true={isGuestUser}>
+                <lightning-tab label="Home" value="Home" class="slds-m-large">
+                    <h1>Welcome to Code Assess</h1>
+                    <p>Please login or register to request an exam or view past results.</p>
+
+                    <a href='./login'>
+                        <button>Login/Register</button>
+                    </a>
+                </lightning-tab>
+            </template>
+
+            <template if:false={isGuestUser}>
+                <lightning-tab label="Home" value="Home" class="slds-m-large">
+                    <c-client-header></c-client-header>
+                    <div class='packageBtnContainer'>
+                        <a href={candidatePackageUrl}>
+                            <button>Install Exam Environment Package</button>
+                        </a>
+                    </div>
+                    
+                </lightning-tab>
+        
+                <lightning-tab label="Previous Results" value="PreviousResult" class="slds-m-top_large">
+                     <!--Current include test summary, will change later-->
+                    <c-past-results></c-past-results>
+                </lightning-tab>
+            </template>
     
         </lightning-tabset>  
     </div>

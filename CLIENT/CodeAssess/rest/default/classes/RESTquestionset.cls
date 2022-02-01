@@ -1,5 +1,5 @@
 @RestResource(urlMapping='/questionset/*')
-global class RESTquestionset {
+global without sharing class RESTquestionset {
     private static ID getContactId() {
         return [SELECT ContactId FROM User WHERE id = :UserInfo.getUserId() LIMIT 1]?.ContactId;
     }
@@ -11,8 +11,7 @@ global class RESTquestionset {
             parseJSONtoSubmission(requestBody);
         } catch (Exception e) {
             System.debug('ERROR PARSING SUBMISSION: ' + e.getMessage());
-            //return 'FAILED';
-            return requestBody;
+            return 'FAILED';
         }
         return 'SUCCESS';
     }

@@ -1,13 +1,35 @@
 <template>
     <div class="slds-p-around_medium lgc-bg">
-        <lightning-pill-container items={addedQuestionsList} onitemremove={handlePillRemove}></lightning-pill-container>
 
-        <lightning-input type="text" label="Question Set Name" placeholder="Enter question set name..." required onchange={handleNameInput}></lightning-input>
-
-        <template if:true={qTreeFilledBool}>
-            <lightning-tree items={questionTree} header="Questions" onselect={handleOnSelect}></lightning-tree>
+        <template if:true={showLoading}>
+            <div class='spinnerContainer'>
+                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+            </div>
         </template>
+        
+        <div class='qsNameInputContainer'>
+            <lightning-input value='' type="text" label="Question Set Name" placeholder="Enter question set name..." required onchange={handleNameInput}></lightning-input>
+        </div>
 
-        <lightning-button label="Submit" title="Non-primary action" onclick={handleSubmitClicked} class="elements slds-m-left_x-small"></lightning-button>
+        <div class='pillContainer'>
+            <label class='pillContainerLabel'>Selected Questions</label>
+            <lightning-pill-container items={addedQuestionsList} onitemremove={handlePillRemove}></lightning-pill-container>
+        </div>
+
+        <div class='qTreeContainer'>
+            <div class='searchInputContainer' onkeyup={handleSearchInput}>
+                <lightning-input value='' type="search" label="Search for Questions by Name" placeholder="Enter search..." class='searchInput'></lightning-input>
+            </div>
+            <div class='qTree'>
+                <template if:true={qTreeFilledBool}>
+                    <lightning-tree items={questionTree} header="Questions" onselect={handleOnSelect}></lightning-tree>
+                </template>
+            </div>
+        </div>
+
+        <div class='buttonContainer'>
+            <lightning-button label="Submit" title="Non-primary action" onclick={handleSubmitClicked} class="elements slds-m-left_x-small"></lightning-button>
+        </div>
+        
     </div>
 </template>

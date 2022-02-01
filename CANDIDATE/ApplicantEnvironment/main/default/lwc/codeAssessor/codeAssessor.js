@@ -1,8 +1,14 @@
 import { LightningElement } from 'lwc';
+import isAuth from "@salesforce/apex/AuthenticationController.isAuthenticated";
 
 export default class CodeAssessor extends LightningElement {
 
-    credentials = true;
+    credentials = false;
+
+    constructor(){
+        super();
+        this.credentials = isAuth().data;
+    }
 
     /*getUserDetails(event)
     {

@@ -4,18 +4,18 @@
     <protected>true</protected>
     <values>
         <field>Key__c</field>
-        <value xsi:type="xsd:string">3MVG9JamK_x9K2XLOYpKsfux2z8pug_26k8NbsHCdjUpqp.mR3znT8oc66E.ZN_a11qeYINgInT3_pcremetG</value>
+        <value xsi:type="xsd:string">3MVG9riCAn8HHkYVZ5_vOd9_Ge0JN0MtTvus0RSrL5.3bQLfOtL4CNGNU0MWc07nx2Lrwi5Vm7Vhp5EhfmKfY</value>
     </values>
     <values>
         <field>LoginUrl__c</field>
-        <value xsi:type="xsd:string">https://test.salesforce.com/</value>
+        <value xsi:type="xsd:string">https://login.salesforce.com/</value>
     </values>
     <values>
         <field>Secret__c</field>
-        <value xsi:type="xsd:string">EF486190714B1FF418D8DAAC3AA04AF1084983C97E9B1E3FFEA15D04E953208C</value>
+        <value xsi:type="xsd:string">296AADB49B7A31EA57AD4F95705E299A8624BF65CE4C25039B0A7B9EF9F4E03F</value>
     </values>
     <values>
         <field>ServerUrl__c</field>
-        <value xsi:type="xsd:string">https://sandbox-dxghxfghdfgjcxfbj-developer-edition.cs92.force.com/</value>
+        <value xsi:type="xsd:string">https://codeassessclienttest1-developer-edition.na213.force.com/</value>
     </values>
 </CustomMetadata>

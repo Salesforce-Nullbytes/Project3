@@ -9,7 +9,7 @@
     <template if:false={showResults}>
         <div class="slds-grid main">
             <div class="slds-col slds-size_1-of-5" if:true={question}>
-                <c-question-container question={question}></c-question-container>
+                <c-question-container question={question} question-name={questionName}></c-question-container>
             </div>
             <div class="slds-col slds-size_4-of-5">
                 <c-answer-container question={question} onsubmission={addSubmission}></c-answer-container>
