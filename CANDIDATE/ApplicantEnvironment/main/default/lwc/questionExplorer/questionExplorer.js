@@ -1,5 +1,7 @@
 import { LightningElement, wire, track } from 'lwc';
 import getQuestionSet from '@salesforce/apex/RESTcallout.getQuestionSet';
+import setUnauth from '@salesforce/apex/AuthenticationController.deAuthenticate';
+import setExpire from '@salesforce/apex/AuthenticationController.expireToken';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class QuestionExplorer extends LightningElement {
@@ -21,6 +23,7 @@ export default class QuestionExplorer extends LightningElement {
             }
             if(result == "EXPIRED_TOKEN" && !this.retryAuthentication){
                 this.retryAuthentication == true;
+                setExpire();
                 this.getQuestionSets();
             }
             else if(result){
@@ -28,6 +31,10 @@ export default class QuestionExplorer extends LightningElement {
                 result = JSON.parse(JSON.parse(result));
                 this.getQuestions(result.entries);
             }
+        })
+        .catch(error => {
+            setUnauth();
+            this.showErrorToast('Session lost; please refresh page.');
         });
     }
 
@@ -64,5 +71,9 @@ export default class QuestionExplorer extends LightningElement {
             message: error
         });
         this.dispatchEvent(event);
+    }
+
+    get hasQuestions() {
+        return (this.questionSet.length != 0);
     }
 }
