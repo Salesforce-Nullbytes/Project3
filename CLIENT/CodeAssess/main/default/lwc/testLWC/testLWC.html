@@ -11,8 +11,18 @@
     >
     </lightning-combobox>
 
-    <lightning-button label="Search" title="search" onclick={handleSearchClicked} class="slds-m-left_x-small"></lightning-button>
+    <!--<lightning-button label="Search" title="search" onclick={handleSearchClicked} class="slds-m-left_x-small"></lightning-button>-->
 
     <!-- TODO output here -->
-
+    <!--<template if:true= {data}>-->
+    <lightning-card title=" CANDIDATE DATA">  
+        <lightning-button label="Search" title="search" onclick={handleSearchClicked} class="slds-m-left_x-small"></lightning-button> 
+        <div class="slds-box">  
+          <lightning-datatable  
+          data={data} columns={cols} key-field="id">  
+          </lightning-datatable>  
+        </div>  
+      </lightning-card> 
+    <!--</template>-->
 </template>
+
