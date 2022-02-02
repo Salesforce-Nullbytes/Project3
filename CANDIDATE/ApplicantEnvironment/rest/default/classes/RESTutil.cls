@@ -175,8 +175,8 @@ public class RESTutil {
                         return ResponseCategory.EXPIRED_AUTH_CODE;
                     }
                     if (errorDescription == 'token validity expired') {
-                        //return AuthUtil.deauthenticate();
-                        return ResponseCategory.UNRECOGNIZED;
+                        return AuthUtil.deauthenticate();
+                        //return ResponseCategory.UNRECOGNIZED;
                     }
                 }
                 when else {
@@ -191,7 +191,7 @@ public class RESTutil {
                     System.debug('Expired session, updating status');
                     // Cannot send a new HttpRequest in same transaction after DML
                     // Must indicate to user that the transaction must be retried.
-                    // AuthUtil.expireToken();
+                    //AuthUtil.expireToken();
                     // // Newly set to expired... cannot potentially make callout yet
                     // //AuthUtil.getAccessToken(); // Makes callout to refresh since now expired.
                     AuthUtil.refreshSession();

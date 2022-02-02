@@ -19,4 +19,15 @@ public without sharing class AuthenticationController {
     public static Boolean isAuthenticated(){
         return AuthUtil.isAuthenticated();
     }
+
+    @AuraEnabled
+    public static Boolean deAuthenticate(){
+        AuthUtil.deauthenticate();
+        return true;
+    }
+    @AuraEnabled
+    public static Boolean expireToken(){
+        AuthUtil.expireToken();
+        return true;
+    }
 }
