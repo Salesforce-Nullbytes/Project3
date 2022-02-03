@@ -1,27 +1,27 @@
-The team members on this project and their contributions are as follow:
+The team members on this project and their contributions are as follows:
 1)  - Zachary Zeli
       * System architecture, project management, repo and package control, authentication
 2)  - John Cho
-      * questionExplorer and questionCard component
+      * LWC component creation for question sets
 3)  - Rebecca Hahn
       * Wireframing, components for individual candidate results, component for viewing past results on experience site, some testing/code coverage for related components
 4)  - Matthew Diaz
       * Testing & Code Coverage, LWC component creation
 5)  - Joshua Andrew 
       * REST POST Request
-6)  - 
-      * 
+6)  - Nicholas Yoon
+      * testQuestionCreator, candidateChart, and questionSetCreator LWC, aided in creating custom objects/fields, client package branch management, placing components in custom apps/experience site
 7)  - 
       * 
-8)  - 
-      * 
-9)  - 
-      * 
-10) - 
-      * 
-11) - 
-      * 
-12) - 
-      * 
+8)  - David D'Alessandro
+      * writing, compiling, testing, and entering sample questions, unit testing questions, documentation, both video and text, of deployment process, created and illustrated the guide
+9)  - Raymond Fajardo
+      * API REST Logic/Parser, Testing and Code coverage, LWC troubleshooting, UAT (User acceptance testing)
+10) - Ryan McDowell
+      * Test question library
+11) - Miles Foydl
+      * Wireframing the Candidate ORG, Developed the SOAP API calls for Compilation and Testing, created LWC frontend controllers for parsing and passing data bewteen components. Integrated other team members LWC components into one application.
+12) - Yuhong Liu
+      * Client home page component, create objects and fields in ERD
 13) - 
       * 
